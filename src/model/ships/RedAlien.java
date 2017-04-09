@@ -1,4 +1,4 @@
-package Ships;
+package model.ships;
 
 import display.view.GameWindow;
 
@@ -17,8 +17,8 @@ public class RedAlien extends Alien {
     private static final int circleDiameter = 30;
 
     public RedAlien(int toEdge, int toRight) {
-        this.toEdge = toEdge;
-        this.toRight = toRight;
+        this.y = toEdge;
+        this.x = toRight;
         row = toEdge;
         column = toRight;
         angle = 0;
@@ -38,7 +38,7 @@ public class RedAlien extends Alien {
                     break;
                 case 1:
                     if(count % (DELAY*1.5) == 0)
-                        toEdge++;
+                        y++;
                     if(this.getFormattedEdge() >= GameWindow.getBoardHeight()*.6 &&
                             this.getFormattedEdge() <= GameWindow.getBoardHeight() * .61)
                         fire();
@@ -52,24 +52,24 @@ public class RedAlien extends Alien {
                         radTemp = Math.toRadians(angle);
                     else
                         radTemp = Math.toRadians(180-angle);
-                    toRight = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
-                    toEdge = 95 - (int)(Math.sin(radTemp)*circleDiameter/2);
+                    x = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
+                    y = 95 - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if(angle >= 180) {
                         angle = 0;
-                        toEdge = 0;
+                        y = 0;
                         toSpot++;
                     }
                     break;
                 case 3:
                     if(count%DELAY == 0)
-                        toEdge++;
-                    if(toEdge == row) {
+                        y++;
+                    if(y == row) {
                         if(count % DELAY == 0)
                             Alien.amountAttacking--;
                         isAttacking = false;
                         isMoving = true;
                         toSpot = 0;
-                        toRight = column;
+                        x = column;
                     }
                     break;
                 default:

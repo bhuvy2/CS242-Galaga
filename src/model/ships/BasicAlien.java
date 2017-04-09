@@ -1,4 +1,4 @@
-package Ships;
+package model.ships;
 
 import display.view.GameWindow;
 
@@ -22,8 +22,8 @@ public class BasicAlien extends Alien {
      *                it is the x coordinate.
      */
     public BasicAlien(int toEdge, int toRight) {
-        this.toEdge = toEdge;
-        this.toRight = toRight;
+        this.y = toEdge;
+        this.x = toRight;
         column = toRight;
         row = toEdge;
         isMovingRight = true;
@@ -35,19 +35,19 @@ public class BasicAlien extends Alien {
     public void attack() {
         if (isAttacking) {
             if (count % DELAY == 0)
-                toEdge++;
+                y++;
 
-            if (toEdge == row + 1) {
+            if (y == row + 1) {
                 Alien.amountAttacking++;
-                toEdge++;
+                y++;
             }
 
             if (this.getFormattedEdge() >= GameWindow.getBoardHeight() * .6 &&
                     this.getFormattedEdge() <= GameWindow.getBoardHeight() * .61)
                 fire();
             else if (this.getFormattedEdge() >= GameWindow.getBoardHeight())
-                toEdge = 0;
-            else if (toEdge == row) {
+                y = 0;
+            else if (y == row) {
                 isAttacking = false;
                 if (count % DELAY == 0)
                     Alien.amountAttacking--;

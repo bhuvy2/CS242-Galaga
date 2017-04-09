@@ -1,7 +1,7 @@
-package Ships;
+package model.ships;
 
-import Gametypes.GameSprite;
 import display.view.GameWindow;
+import model.superclasses.GameSprite;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -63,8 +63,8 @@ public abstract class Alien extends GameSprite {
      * Returns the alien to the position
      */
     public void returnToPosition() {
-        toRight = column;
-        toEdge = row;
+        x = column;
+        y = row;
 
     }
 
@@ -94,12 +94,12 @@ public abstract class Alien extends GameSprite {
         if(storage.size() == 0)
             return false;
 
-        int right = this.getToRight() / 100 * GameWindow.getBoardWidth();
-        int edge = this.getToEdge() / 100 * GameWindow.getBoardHeight();
+        int right = this.getX() / 100 * GameWindow.getBoardWidth();
+        int edge = this.getY() / 100 * GameWindow.getBoardHeight();
 
         for(Missile a: storage) {
-            if(a.getToRight() >= right && a.getToRight() <= right + image.getIconWidth())
-                if(a.getToEdge() >= edge &&  a.getToEdge() <= edge + image.getIconHeight()) {
+            if(a.getX() >= right && a.getX() <= right + image.getIconWidth())
+                if(a.getY() >= edge &&  a.getY() <= edge + image.getIconHeight()) {
                     storage.remove(a);
                     if(isAttacking)
                         Alien.amountAttacking--;
@@ -116,17 +116,17 @@ public abstract class Alien extends GameSprite {
         if(isMoving) {
             if(count % (DELAY*1.5) == 0) {
                 if(isMovingRight) {
-                    toRight++;
+                    x++;
                     column++;
                 } else {
-                    toRight--;
+                    x--;
                     column--;
                 }
 
-                if(toRight <= 3) {
+                if(x <= 3) {
                     isMovingRight = true;
-                    toRight+= 2;
-                } else if (toRight >= 97) {
+                    x+= 2;
+                } else if (x >= 97) {
                     isMovingRight = false;
                 }
             }

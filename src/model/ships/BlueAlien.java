@@ -1,4 +1,4 @@
-package Ships;
+package model.ships;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class BlueAlien extends Alien {
      *            it is the x coordinate.
      */
     public BlueAlien(int toEdge, int toRight) {
-        this.toEdge = toEdge;
-        this.toRight = toRight;
+        this.y = toEdge;
+        this.x = toRight;
         column = toRight;
         row = toEdge;
         isMovingRight = true;
@@ -46,8 +46,8 @@ public class BlueAlien extends Alien {
                     break;
                 case 1:
                     if(count % DELAY == 0)
-                        toEdge++;
-                    if(toEdge == rowAttack) {
+                        y++;
+                    if(y == rowAttack) {
                         isMoving = false;
                         toSpot++;
                     }
@@ -63,8 +63,8 @@ public class BlueAlien extends Alien {
                     break;
                 case 3:
                     if(count % DELAY == 0)
-                        toEdge--;
-                    if(toEdge == row) {
+                        y--;
+                    if(y == row) {
                         toSpot++;
                         isMoving = true;
                         isAttacking = false;

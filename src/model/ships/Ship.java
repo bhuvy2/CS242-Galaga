@@ -1,29 +1,38 @@
-package Ships;
+package model.ships;
 
-import Gametypes.GameSprite;
 import display.view.GameWindow;
+import model.superclasses.GameSprite;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
  * Created by mscislowski on 4/9/17.
  */
-public abstract class Ship extends GameSprite {
+public class Ship extends GameSprite {
     // Missile storage
     ArrayList<Missile> storage;
 
     // Number of lives ship has
-    private int lives;
+    protected int lives;
 
     // Maximum number of shots allowed
-    private static int MAX_SHOTS = 2;
+    protected static int MAX_SHOTS = 2;
 
     // Valid options for ship
-    private boolean canMove, canFire,
-    isInvincible = false,
-    canThrottle = false,
-    multipleShots = false;
+    protected boolean canMove, canFire,
+	    isInvincible,
+	    canThrottle,
+	    multipleShots;
+    
+    public Ship(String str){
+    	super(str);
+    	this.lives = 2;
+    	this.canMove = true;
+    	this.canFire = true;
+    	this.isInvincible = false;
+    	this.canThrottle = false;
+    	this.multipleShots = false;
+    }
 
 
     public void fire() {
@@ -39,7 +48,7 @@ public abstract class Ship extends GameSprite {
     }
 
     private void addMissile(int offset1, int offset2) {
-        Missile missile = new Missile((int)(GameWindow.getBoardWidth()*(double)this.toRight/100) +
+        Missile missile = new Missile((int)(GameWindow.getBoardWidth()*(double)this.x/100) +
                 image.getIconWidth()/2+offset1, GameWindow.getBoardHeight()-this.image.getIconHeight()+offset2 + Missile.HEIGHT);
         storage.add(missile);
     }
@@ -63,15 +72,15 @@ public abstract class Ship extends GameSprite {
      * @return true if is hit
      */
     public boolean isHit(ArrayList<Alien> input) {
-        int right = this.getFormattedRight();
-        int edge = this.getFormattedEdge();
+        int right = this.getFormattedX();
+        int edge = this.getFormattedY();
         int nextRight;
         int nextEdge;
 
         for(Alien b : input) {
             for(AlienMissile a : b.list) {
-                nextRight = this.getFormattedRight(a.toRightNext);
-                nextEdge = this.getFormattedEdge(a.toEdgeNext);
+                nextRight = this.getFormattedX(a.toRightNext);
+                nextEdge = this.getFormattedY(a.toEdgeNext);
                 if(nextRight >= right && nextRight <= right + image.getIconWidth()) {
                     if(nextEdge >= edge &&  nextEdge <= edge + image.getIconHeight()) {
                         b.list.remove(a);
@@ -80,8 +89,8 @@ public abstract class Ship extends GameSprite {
                 }
             }
 
-            nextRight = b.getFormattedRight();
-            nextEdge = b.getFormattedEdge();
+            nextRight = b.getFormattedX();
+            nextEdge = b.getFormattedY();
 
             if(nextRight >= right && nextRight <= right + image.getIconWidth() ||
                     nextRight + b.getImage().getIconWidth() >= right && nextRight +

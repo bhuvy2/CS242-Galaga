@@ -1,4 +1,4 @@
-package Ships;
+package model.ships;
 
 import display.view.GameWindow;
 
@@ -15,10 +15,11 @@ public class BasicShip extends Ship {
     private Set<Integer> pressed = new HashSet<Integer>();
 
     public BasicShip() {
-        toRight = 50; //An integer between 0 and 100 that is a percent of how far over the ship is
-        this.setToEdge((int) ((GameWindow.getBoardHeight()-(double)getImage().getIconHeight())*100.0/GameWindow.getBoardHeight()));
-        storage = new ArrayList<Missile>(2);
-        setLives(2);
+    	super("res/img/ship/ship.png");
+        this.x = 0;
+        this.y = 50;
+        this.storage = new ArrayList<Missile>(2);
+        this.lives = 2;
     }
 
     /**
@@ -47,12 +48,12 @@ public class BasicShip extends Ship {
         if(canMove()) {
             if(pressed.contains(KeyEvent.VK_SHIFT)) {
                 if(pressed.contains(KeyEvent.VK_RIGHT)) {
-                    if(toRight <= 90)
-                        toRight+=16;
+                    if(x <= 90)
+                        x+=16;
                 }
                 if(pressed.contains(KeyEvent.VK_LEFT)) {
-                    if(toRight >= 4)
-                        toRight -= 16;
+                    if(x >= 4)
+                        x -= 16;
                 }
             }
 
@@ -60,12 +61,12 @@ public class BasicShip extends Ship {
             for(int in: pressed) {
                 switch(in) {
                     case KeyEvent.VK_RIGHT:
-                        if(toRight <= 90)
-                            toRight+=4;
+                        if(x <= 90)
+                            x+=4;
                         break;
                     case KeyEvent.VK_LEFT:
-                        if(toRight >= 4)
-                            toRight -= 4;
+                        if(x >= 4)
+                            x -= 4;
                         break;
                     case KeyEvent.VK_SPACE:
                         fire();
