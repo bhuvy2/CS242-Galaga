@@ -9,13 +9,18 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import model.ships.BasicShip;
+import model.ships.Ship;
+import model.superclasses.GameSprite;
+
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private Timer timer;
-	private int time;
+	private double time;
 	private SpriteManager manager;
-	
+	private long prev;
+	private Ship ship;
 	
 	public GamePanel(){
 		GamePanel self = this;
@@ -29,23 +34,31 @@ public class GamePanel extends JPanel {
 		this.time = 0;
 		
 		manager = new SpriteManager();
+		prev = System.currentTimeMillis();
+		ship = new BasicShip();
 	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawString(String.valueOf(this.time), 50, 50);
-		this.time += 1;
+		double diff = System.currentTimeMillis() - this.prev;
+		if(diff != 0)
+			g.drawString(String.valueOf(1000/(diff)), 20, 20);
+		ship.drawSelf(this, g);
+		ship.setX(ship.getX()+1);
+		this.prev = System.currentTimeMillis();
 	}
 	
 	private class SpriteManager{
-		private ArrayList<Sprites> sprites;
+		private ArrayList<GameSprite> sprites;
 		
 		public SpriteManager() {
 			this.sprites = new ArrayList<>();
 		}
 		
 		public void tick(){
-			
+			for(GameSprite spr: sprites){
+				//spr.tick();
+			}
 		}
 	}
 }
