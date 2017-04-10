@@ -1,4 +1,4 @@
-package Ships;
+package model.ships;
 
 import display.view.GameWindow;
 
@@ -16,9 +16,15 @@ public class RedAlien extends Alien {
     private int toSpot;
     private static final int circleDiameter = 30;
 
+    /**
+     * Constructor for red alien
+     * @param toEdge distance to edge
+     * @param toRight distance to right side
+     */
     public RedAlien(int toEdge, int toRight) {
-        this.toEdge = toEdge;
-        this.toRight = toRight;
+        super("res/img/alien/red_alien.png");
+        this.y = toEdge;
+        this.x = toRight;
         row = toEdge;
         column = toRight;
         angle = 0;
@@ -30,6 +36,9 @@ public class RedAlien extends Alien {
         toSpot = 0;
     }
 
+    /**
+     * Handles attack patterns for Red alien
+     */
     public void attack() {
         if(isAttacking) {
             double radTemp;
@@ -38,11 +47,11 @@ public class RedAlien extends Alien {
                     break;
                 case 1:
                     if(count % (DELAY*1.5) == 0)
-                        toEdge++;
-                    if(this.getFormattedEdge() >= GameWindow.getBoardHeight()*.6 &&
-                            this.getFormattedEdge() <= GameWindow.getBoardHeight() * .61)
+                        y++;
+                    if(this.getFormattedY() >= GameWindow.getBoardHeight()*.6 &&
+                            this.getFormattedY() <= GameWindow.getBoardHeight() * .61)
                         fire();
-                    if(this.getFormattedEdge() >= GameWindow.getBoardHeight())
+                    if(this.getFormattedY() >= GameWindow.getBoardHeight())
                         toSpot++;
                     break;
                 case 2:
@@ -52,24 +61,24 @@ public class RedAlien extends Alien {
                         radTemp = Math.toRadians(angle);
                     else
                         radTemp = Math.toRadians(180-angle);
-                    toRight = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
-                    toEdge = 95 - (int)(Math.sin(radTemp)*circleDiameter/2);
+                    x = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
+                    y = 95 - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if(angle >= 180) {
                         angle = 0;
-                        toEdge = 0;
+                        y = 0;
                         toSpot++;
                     }
                     break;
                 case 3:
                     if(count%DELAY == 0)
-                        toEdge++;
-                    if(toEdge == row) {
+                        y++;
+                    if(y == row) {
                         if(count % DELAY == 0)
                             Alien.amountAttacking--;
                         isAttacking = false;
                         isMoving = true;
                         toSpot = 0;
-                        toRight = column;
+                        x = column;
                     }
                     break;
                 default:
@@ -78,6 +87,9 @@ public class RedAlien extends Alien {
         }
     }
 
+    /**
+     * Starts attack for alien
+     */
     public void startAttack() {
         if(toSpot == 0) {
             toSpot++;

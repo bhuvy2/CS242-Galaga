@@ -10,8 +10,7 @@ public class Runner {
 	public static void main(String[] args) {
 		GameSoundboard brd = new GameSoundboard();
 		brd.playFlying();
-		for(int i = 0; i < 100; i++)
-			brd.playMissile();
+		brd.playMissile();
 		new GameWindow();
 	}
 

@@ -1,9 +1,9 @@
-package Ships;
-
-import Gametypes.GameSprite;
-import Gametypes.Projectile;
+package model.ships;
 
 import java.awt.*;
+
+import model.superclasses.GameSprite;
+import model.superclasses.Projectile;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -21,24 +21,40 @@ public class Missile extends GameSprite implements Projectile {
      * @param edge the edge coordinate NOT A 0-100
      */
     public Missile(int right, int edge) {
-        toRight = right;
-        toEdge = edge;
+        super("res/img/alien/alien_lazer.png");
+        x = right;
+        y = edge;
         image = null;
         setMyColor(Color.GREEN);
     }
 
+    /**
+     * Moves missile towards edge
+     */
     public void move() {
-        toEdge-=2;
+        y-=2;
     }
 
+    /**
+     * Checks if missile is visible
+     * @return true if is visible
+     */
     public boolean isVisible() {
-        return toEdge > 0;
+        return y > 0;
     }
 
+    /**
+     * Gets color of missile
+     * @return color of missile
+     */
     public Color getMyColor() {
         return myColor;
     }
 
+    /**
+     * Sets missile color
+     * @param myColor new color of missile
+     */
     public void setMyColor(Color myColor) {
         this.myColor = myColor;
     }

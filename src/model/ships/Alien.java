@@ -1,7 +1,7 @@
-package Ships;
+package model.ships;
 
-import Gametypes.GameSprite;
 import display.view.GameWindow;
+import model.superclasses.GameSprite;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -40,21 +40,45 @@ public abstract class Alien extends GameSprite {
                     {45, 10}, {55, 10}, {65, 10},
                     {75, 10}, {85, 10}}; //Same but boss Formation
 
+    /**
+     * Gamesprite contructor
+     *
+     * @param image string to image file
+     */
+    protected Alien(String image) {
+        super(image);
+    }
+
     public abstract void attack(); //A specific attack for each alien
 
-
+    /**
+     * Retrieves health of alien
+     * @return health value
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * Sets health value of alien
+     * @param input new health value
+     */
     public void setHealth(int input) {
         health = input;
     }
 
+    /**
+     * Retrieves points alien is worth
+     * @return points alien is worth
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Sets points alien is worth
+     * @param input new point value
+     */
     public void setPoints(int input) {
         points = input;
     }
@@ -63,8 +87,8 @@ public abstract class Alien extends GameSprite {
      * Returns the alien to the position
      */
     public void returnToPosition() {
-        toRight = column;
-        toEdge = row;
+        x = column;
+        y = row;
     }
 
     //subtracts one from health
@@ -93,12 +117,12 @@ public abstract class Alien extends GameSprite {
         if(storage.size() == 0)
             return false;
 
-        int right = this.getToRight() / 100 * GameWindow.getBoardWidth();
-        int edge = this.getToEdge() / 100 * GameWindow.getBoardHeight();
+        int right = this.getX() / 100 * GameWindow.getBoardWidth();
+        int edge = this.getY() / 100 * GameWindow.getBoardHeight();
 
         for(Missile a: storage) {
-            if(a.getToRight() >= right && a.getToRight() <= right + image.getIconWidth())
-                if(a.getToEdge() >= edge &&  a.getToEdge() <= edge + image.getIconHeight()) {
+            if(a.getX() >= right && a.getX() <= right + image.getIconWidth())
+                if(a.getY() >= edge &&  a.getY() <= edge + image.getIconHeight()) {
                     storage.remove(a);
                     if(isAttacking)
                         Alien.amountAttacking--;
@@ -115,17 +139,17 @@ public abstract class Alien extends GameSprite {
         if(isMoving) {
             if(count % (DELAY*1.5) == 0) {
                 if(isMovingRight) {
-                    toRight++;
+                    x++;
                     column++;
                 } else {
-                    toRight--;
+                    x--;
                     column--;
                 }
 
-                if(toRight <= 3) {
+                if(x <= 3) {
                     isMovingRight = true;
-                    toRight+= 2;
-                } else if (toRight >= 97) {
+                    x+= 2;
+                } else if (x >= 97) {
                     isMovingRight = false;
                 }
             }
