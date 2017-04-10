@@ -78,7 +78,6 @@ public class RedAlien extends Alien {
         }
     }
 
-
     public void startAttack() {
         if(toSpot == 0) {
             toSpot++;

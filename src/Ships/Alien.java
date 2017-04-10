@@ -65,7 +65,6 @@ public abstract class Alien extends GameSprite {
     public void returnToPosition() {
         toRight = column;
         toEdge = row;
-
     }
 
     //subtracts one from health

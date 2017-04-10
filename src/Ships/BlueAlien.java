@@ -12,18 +12,10 @@ public class BlueAlien extends Alien {
     private int toSpot = 0; //if 0, it is at spot, if 1 it is moving toward spot, if 2 if attacking, 3 if moving back
 
     /**
-     * Instantiates a new blue alien, saves the column
-     * and row as a backup in case need to be reset
-     * as well as loads the image, initializes points,
-     * creates a new list of Alien Missiles and set health
-     *
-     * @param toEdge
-     *            the to edge is a percentage from
-     *            left to right, of 100, how up or
-     *            down the alien is the y coordinate.
-     * @param toRight
-     *            the to right is the same as toEdge but
-     *            it is the x coordinate.
+     * Instantiates a new blue alien, saves the column and row as a backup in case need to be reset
+     * as well as loads the image, initializes points, creates a new list of Alien Missiles and set health
+     * @param toEdge the to edge is a percentage from left to right, of 100, how up or down the alien is the y coordinate.
+     * @param toRight the to right is the same as toEdge but it is the x coordinate.
      */
     public BlueAlien(int toEdge, int toRight) {
         this.toEdge = toEdge;
