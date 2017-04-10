@@ -22,7 +22,11 @@ public class GameSprite {
     protected int x, y;
 
     protected ImageIcon image;
-    
+
+    /**
+     * Gamesprite contructor
+     * @param image string to image file
+     */
     protected GameSprite(String image){
     	BufferedImage temp = null;
 		try{

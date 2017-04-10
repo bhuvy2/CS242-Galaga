@@ -37,6 +37,9 @@ public class BlueAlien extends Alien {
         health = baseHealth+2;
     }
 
+    /**
+     * Handles attack pattern for blue alien
+     */
     public void attack() {
         if(isAttacking) {
             if(toSpot == 4)

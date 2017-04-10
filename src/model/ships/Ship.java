@@ -23,7 +23,11 @@ public class Ship extends GameSprite {
 	    isInvincible,
 	    canThrottle,
 	    multipleShots;
-    
+
+    /**
+     * Ship constructor
+     * @param str String to image file passed to Gamesprite
+     */
     public Ship(String str){
     	super(str);
     	this.lives = 2;

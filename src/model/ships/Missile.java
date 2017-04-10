@@ -27,18 +27,33 @@ public class Missile extends GameSprite implements Projectile {
         setMyColor(Color.GREEN);
     }
 
+    /**
+     * Moves missile towards edge
+     */
     public void move() {
         y-=2;
     }
 
+    /**
+     * Checks if missile is visible
+     * @return true if is visible
+     */
     public boolean isVisible() {
         return y > 0;
     }
 
+    /**
+     * Gets color of missile
+     * @return color of missile
+     */
     public Color getMyColor() {
         return myColor;
     }
 
+    /**
+     * Sets missile color
+     * @param myColor new color of missile
+     */
     public void setMyColor(Color myColor) {
         this.myColor = myColor;
     }

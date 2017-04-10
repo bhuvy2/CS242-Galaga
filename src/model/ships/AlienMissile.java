@@ -44,6 +44,9 @@ public class AlienMissile extends Missile implements Projectile {
         count = 0;
     }
 
+    /**
+     * Handles movement for alien missiles
+     */
     public void move() {
         if(count % Alien.DELAY == 0) {
             switch(slope) {
@@ -84,6 +87,10 @@ public class AlienMissile extends Missile implements Projectile {
 
     }
 
+    /**
+     * Checks if missile is visible
+     * @return true if missile is visible
+     */
     public boolean isVisible() {
         return (y < GameWindow.getBoardHeight() && y > 0) && (x < GameWindow.getBoardWidth() && x > 0);
     }

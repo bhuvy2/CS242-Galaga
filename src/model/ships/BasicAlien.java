@@ -32,6 +32,9 @@ public class BasicAlien extends Alien {
         health = baseHealth + 1;
     }
 
+    /**
+     * Handles attacks for aliens
+     */
     public void attack() {
         if (isAttacking) {
             if (count % DELAY == 0)

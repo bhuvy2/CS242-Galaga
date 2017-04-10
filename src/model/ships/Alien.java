@@ -42,19 +42,34 @@ public abstract class Alien extends GameSprite {
 
     public abstract void attack(); //A specific attack for each alien
 
-
+    /**
+     * Retrieves health of alien
+     * @return health value
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * Sets health value of alien
+     * @param input new health value
+     */
     public void setHealth(int input) {
         health = input;
     }
 
+    /**
+     * Retrieves points alien is worth
+     * @return points alien is worth
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Sets points alien is worth
+     * @param input new point value
+     */
     public void setPoints(int input) {
         points = input;
     }

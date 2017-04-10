@@ -16,6 +16,11 @@ public class RedAlien extends Alien {
     private int toSpot;
     private static final int circleDiameter = 30;
 
+    /**
+     * Constructor for red alien
+     * @param toEdge distance to edge
+     * @param toRight distance to right side
+     */
     public RedAlien(int toEdge, int toRight) {
         this.y = toEdge;
         this.x = toRight;
@@ -30,6 +35,9 @@ public class RedAlien extends Alien {
         toSpot = 0;
     }
 
+    /**
+     * Handles attack patterns for Red alien
+     */
     public void attack() {
         if(isAttacking) {
             double radTemp;
@@ -78,7 +86,9 @@ public class RedAlien extends Alien {
         }
     }
 
-
+    /**
+     * Starts attack for alien
+     */
     public void startAttack() {
         if(toSpot == 0) {
             toSpot++;
