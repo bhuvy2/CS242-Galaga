@@ -40,6 +40,15 @@ public abstract class Alien extends GameSprite {
                     {45, 10}, {55, 10}, {65, 10},
                     {75, 10}, {85, 10}}; //Same but boss Formation
 
+    /**
+     * Gamesprite contructor
+     *
+     * @param image string to image file
+     */
+    protected Alien(String image) {
+        super(image);
+    }
+
     public abstract void attack(); //A specific attack for each alien
 
     /**
@@ -80,7 +89,6 @@ public abstract class Alien extends GameSprite {
     public void returnToPosition() {
         x = column;
         y = row;
-
     }
 
     //subtracts one from health

@@ -21,6 +21,7 @@ public class Missile extends GameSprite implements Projectile {
      * @param edge the edge coordinate NOT A 0-100
      */
     public Missile(int right, int edge) {
+        super("res/img/alien/alien_lazer.png");
         x = right;
         y = edge;
         image = null;

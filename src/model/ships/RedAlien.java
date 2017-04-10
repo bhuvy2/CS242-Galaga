@@ -22,6 +22,7 @@ public class RedAlien extends Alien {
      * @param toRight distance to right side
      */
     public RedAlien(int toEdge, int toRight) {
+        super("res/img/alien/red_alien.png");
         this.y = toEdge;
         this.x = toRight;
         row = toEdge;
@@ -47,10 +48,10 @@ public class RedAlien extends Alien {
                 case 1:
                     if(count % (DELAY*1.5) == 0)
                         y++;
-                    if(this.getFormattedEdge() >= GameWindow.getBoardHeight()*.6 &&
-                            this.getFormattedEdge() <= GameWindow.getBoardHeight() * .61)
+                    if(this.getFormattedY() >= GameWindow.getBoardHeight()*.6 &&
+                            this.getFormattedY() <= GameWindow.getBoardHeight() * .61)
                         fire();
-                    if(this.getFormattedEdge() >= GameWindow.getBoardHeight())
+                    if(this.getFormattedY() >= GameWindow.getBoardHeight())
                         toSpot++;
                     break;
                 case 2:

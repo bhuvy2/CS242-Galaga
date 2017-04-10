@@ -22,6 +22,7 @@ public class BasicAlien extends Alien {
      *                it is the x coordinate.
      */
     public BasicAlien(int toEdge, int toRight) {
+        super("res/img/alien/green_alien.png");
         this.y = toEdge;
         this.x = toRight;
         column = toRight;
@@ -45,10 +46,10 @@ public class BasicAlien extends Alien {
                 y++;
             }
 
-            if (this.getFormattedEdge() >= GameWindow.getBoardHeight() * .6 &&
-                    this.getFormattedEdge() <= GameWindow.getBoardHeight() * .61)
+            if (this.getFormattedY() >= GameWindow.getBoardHeight() * .6 &&
+                    this.getFormattedY() <= GameWindow.getBoardHeight() * .61)
                 fire();
-            else if (this.getFormattedEdge() >= GameWindow.getBoardHeight())
+            else if (this.getFormattedY() >= GameWindow.getBoardHeight())
                 y = 0;
             else if (y == row) {
                 isAttacking = false;
