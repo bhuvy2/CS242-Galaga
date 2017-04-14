@@ -20,7 +20,6 @@ import javax.swing.*;
 public class GameSprite {
 
     protected int x, y;
-
     protected ImageIcon image;
 
     /**

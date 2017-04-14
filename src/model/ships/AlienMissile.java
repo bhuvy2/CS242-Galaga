@@ -48,6 +48,7 @@ public class AlienMissile extends Missile implements Projectile {
      * Handles movement for alien missiles
      */
     public void move() {
+        // Cases denoted by slope angle type
         if(count % Alien.DELAY == 0) {
             switch(slope) {
                 case 0:
