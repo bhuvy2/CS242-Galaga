@@ -1,7 +1,11 @@
 package display.view;
 
+import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.GameController;
 
 /**
  * @author Bhuvan Venkatesh
@@ -18,6 +22,8 @@ public class GameWindow extends JFrame {
 	 * Unresizable height of the board
 	 */
 	protected static final int BOARD_HEIGHT = 740;
+	
+	public static final Font gameFont = new Font("impact", 0, 16); // SE
 	
 	/**
 	 * Reference to the current panel
@@ -38,6 +44,7 @@ public class GameWindow extends JFrame {
 		this.setTitle("Galaga");
 		this.setResizable(false);
 		this.setVisible(true);
+		this.setFocusable(true);
 	}
 	
 	/**
