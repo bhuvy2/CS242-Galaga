@@ -1,9 +1,9 @@
 package model.ships;
 
-import java.awt.*;
-
 import model.superclasses.GameSprite;
 import model.superclasses.Projectile;
+
+import java.awt.*;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -24,7 +24,6 @@ public class Missile extends GameSprite implements Projectile {
         super("res/img/alien/alien_lazer.png");
         x = right;
         y = edge;
-        image = null;
         setMyColor(Color.GREEN);
     }
 

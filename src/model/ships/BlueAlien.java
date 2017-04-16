@@ -1,13 +1,16 @@
 package model.ships;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Created by mscislowski on 4/9/17.
  */
 public class BlueAlien extends Alien {
-    private static final int rowAttack = 60; //The Row in 0-100 where they attack fully
+    private static final int rowAttack = 400; //The Row in 0-100 where they attack fully
     private int otherCount = 0; //Another count if needed
     private int toSpot = 0; //if 0, it is at spot, if 1 it is moving toward spot, if 2 if attacking, 3 if moving back
 
@@ -32,6 +35,9 @@ public class BlueAlien extends Alien {
 
     /**
      * Handles attack pattern for blue alien
+     * 1 - Moving into position
+     * 2 - Attack
+     * 3 - Return
      */
     public void attack() {
         if(isAttacking) {
@@ -42,7 +48,7 @@ public class BlueAlien extends Alien {
                     break;
                 case 1:
                     if(count % DELAY == 0)
-                        y++;
+                        y+=2;
                     if(y == rowAttack) {
                         isMoving = false;
                         toSpot++;
@@ -52,14 +58,14 @@ public class BlueAlien extends Alien {
                     otherCount++;
                     if(count % DELAY == 0)
                         fire();
-                    if(otherCount == 500) {
+                    if(otherCount == 100) {
                         otherCount = 0;
                         toSpot++;
                     }
                     break;
                 case 3:
                     if(count % DELAY == 0)
-                        y--;
+                        y-=2;
                     if(y == row) {
                         toSpot++;
                         isMoving = true;
@@ -83,5 +89,17 @@ public class BlueAlien extends Alien {
             isMoving = false;
             Alien.amountAttacking++;
         }
+    }
+
+
+    /**
+     * Changes the Image from a fully healthy blue alien to an
+     * injured Blue Alien
+     */
+    public void change() {
+        BufferedImage img = null;
+        try{img = ImageIO.read(getClass().getResource("BlueAlien2.png"));}
+        catch(IOException e){e.printStackTrace();}
+        image = new ImageIcon(img);
     }
 }

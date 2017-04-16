@@ -1,11 +1,8 @@
 package model.ships;
 
 import display.view.GameWindow;
+import main.Game;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +11,7 @@ import java.util.ArrayList;
 public class RedAlien extends Alien {
     private double angle;
     private int toSpot;
-    private static final int circleDiameter = 30;
+    private static final int circleDiameter = 100;
 
     /**
      * Constructor for red alien
@@ -46,23 +43,22 @@ public class RedAlien extends Alien {
                 case 0:
                     break;
                 case 1:
-                    if(count % (DELAY*1.5) == 0)
-                        y++;
-                    if(this.getFormattedY() >= GameWindow.getBoardHeight()*.6 &&
-                            this.getFormattedY() <= GameWindow.getBoardHeight() * .61)
+                    if(count % (DELAY) == 0)
+                        y+=2;
+                    if(this.getY() >= 400 && this.getY() <= 405)
                         fire();
-                    if(this.getFormattedY() >= GameWindow.getBoardHeight())
+                    if(this.getY() >= GameWindow.getBoardHeight())
                         toSpot++;
                     break;
                 case 2:
                     if(count % DELAY == 0)
-                        angle +=2;
+                        angle +=4;
                     if(isLeft())
                         radTemp = Math.toRadians(angle);
                     else
                         radTemp = Math.toRadians(180-angle);
                     x = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
-                    y = 95 - (int)(Math.sin(radTemp)*circleDiameter/2);
+                    y = Game.getPlayerShip().getY() - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if(angle >= 180) {
                         angle = 0;
                         y = 0;
@@ -71,10 +67,9 @@ public class RedAlien extends Alien {
                     break;
                 case 3:
                     if(count%DELAY == 0)
-                        y++;
+                        y+=2;
                     if(y == row) {
-                        if(count % DELAY == 0)
-                            Alien.amountAttacking--;
+                        Alien.amountAttacking--;
                         isAttacking = false;
                         isMoving = true;
                         toSpot = 0;
@@ -104,6 +99,6 @@ public class RedAlien extends Alien {
      * @return true, if is left
      */
     private boolean isLeft() {
-        return column < 50;
+        return x < GameWindow.getBoardWidth()/2;
     }
 }

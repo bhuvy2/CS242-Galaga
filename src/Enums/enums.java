@@ -1,7 +1,10 @@
 package Enums;
 
 /**
- * Created by mscislowski on 4/16/17.
+ * Enums for display setups
  */
-public enum enums {
+public class enums {
+    public enum AlienSetup {
+        BASIC, BASIC_RED, BASIC_BLUE, BASIC_RGB, BOSS
+    }
 }

@@ -1,18 +1,15 @@
 package display.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
+import controller.ShipController;
+import main.Game;
+import model.ships.*;
+import model.superclasses.GameSprite;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
-import model.ships.BasicShip;
-import model.ships.Ship;
-import model.superclasses.GameSprite;
 
 
 /**
@@ -32,8 +29,13 @@ public class GamePanel extends JPanel {
 		super();
 		GamePanel self = this;
 		this.setBackground(Color.BLACK);
+		ShipController controller = new ShipController();
+		controller.setShipControls(self);
 		timer = new Timer(1000/60, new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				if (Game.isGameover()) {
+					// TODO kill me
+				}
 				self.tick();
 				self.repaint();
 			}
@@ -43,8 +45,12 @@ public class GamePanel extends JPanel {
 		
 		manager = new SpriteManager();
 		prev = System.currentTimeMillis();
-		ship = new BasicShip();
+		ship = Game.getPlayerShip();
 		manager.addSprite(ship);
+		populate();
+		for (int i = 0; i < Game.getEnemies().size(); i++) {
+			manager.addSprite(Game.getEnemies().get(i));
+		}
 	}
 	
 	public void paintComponent(Graphics g){
@@ -53,7 +59,7 @@ public class GamePanel extends JPanel {
 		if(diff != 0)
 			g.drawString(String.valueOf(1000/(diff)), 20, 20);
 		manager.draw(this, g);
-		ship.setX(ship.getX()+1);
+//		ship.setX(ship.getX()+1);
 		this.prev = System.currentTimeMillis();
 	}
 	
@@ -70,7 +76,7 @@ public class GamePanel extends JPanel {
 		
 		public void tick(){
 			for(GameSprite spr: sprites){
-				//spr.tick();
+				spr.tick();
 			}
 		}
 		
@@ -83,5 +89,27 @@ public class GamePanel extends JPanel {
 				spr.drawSelf(cmp, g);
 			}
 		}
+	}
+
+	public void populate() {
+		ArrayList<Alien> enemies = new ArrayList<>();
+		Alien in;
+		for (int[] a : Alien.BasicPosition) {
+			in = new BasicAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(in);
+		}
+		for (int[] a : Alien.RedPosition) {
+			in = new RedAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(new RedAlien(a[1], a[0]));
+		}
+		for (int[] a : Alien.BossPosition) {
+			in = new BlueAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(new BlueAlien(a[1], a[0]));
+		}
+		Game.setEnemies(enemies);
+
 	}
 }

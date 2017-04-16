@@ -2,17 +2,12 @@ package model.superclasses;
 
 import display.view.GameWindow;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -35,9 +30,9 @@ public class GameSprite {
 			e.printStackTrace();
 		}
 		
-		if(temp != null){
+		if(temp != null) {
 			this.image = new ImageIcon((Image)temp);
-		}else{
+		} else {
 			this.image = null;
 		}
     }
@@ -84,6 +79,10 @@ public class GameSprite {
     
     public void drawSelf(Component c, Graphics g){
     	this.image.paintIcon(c, g, this.x, this.y);
+    }
+
+    public void tick() {
+
     }
 
     /**

@@ -1,26 +1,28 @@
 package main;
 
-import model.*;
+import model.ships.*;
+import java.util.ArrayList;
 
 /**
  * Stores basic information and data for current game.
  */
 public abstract class Game {
     private static ArrayList<Alien> enemies;
-    private static Ship playerShip;
+    private static Ship playerShip = new BasicShip();
     private static int shotsFired,
             shotsHit,
             points,
             enemiesKilled,
             toNextLife;
-    private static volatile int level;
+    private static volatile int level = 1;
+    private static boolean gameover;
 
     public static ArrayList<Alien> getEnemies() {
         return enemies;
     }
 
-    public void setEnemies(ArrayList<Alien> enemies) {
-        this.enemies = enemies;
+    public static void setEnemies(ArrayList<Alien> aliens) {
+        enemies = aliens;
     }
 
     public static Ship getPlayerShip() {
@@ -77,5 +79,13 @@ public abstract class Game {
 
     public static void setLevel(int level) {
         Game.level = level;
+    }
+
+    public static boolean isGameover() {
+        return gameover;
+    }
+
+    public static void setGameover(boolean over) {
+        gameover = over;
     }
 }

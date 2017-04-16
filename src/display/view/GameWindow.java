@@ -69,7 +69,7 @@ public class GameWindow extends JFrame {
 	}
 	
 	/**
-	 * @param Panel to switch to
+	 * @param pnl to switch to
 	 * Switches the current panel to the current JPanel
 	 */
 	private void switchPanel(JPanel pnl){

@@ -2,7 +2,9 @@ package model.ships;
 
 import display.view.GameWindow;
 import model.superclasses.GameSprite;
+import main.Game;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -45,16 +47,31 @@ public class Ship extends GameSprite {
         if (storage.size() < MAX_SHOTS) {
             if (!multipleShots) {
                 addMissile(-4, -35);
+                Game.setShotsFired(Game.getShotsFired() + 1);
             } else {
-                // TODO Multiple shots here
+                addMissile(-4, 0);
+                addMissile(-4, -35);
+                addMissile(-4, 70);
+                addMissile(-35, 35);
+                addMissile(25, 35);
+                addMissile(-20, 35);
+                addMissile(10, 35);
+                Game.setShotsFired(Game.getShotsFired() + 7);
             }
         }
     }
 
     private void addMissile(int offset1, int offset2) {
-        Missile missile = new Missile((int)(GameWindow.getBoardWidth()*(double)this.x/100) +
-                image.getIconWidth()/2+offset1, GameWindow.getBoardHeight()-this.image.getIconHeight()+offset2 + Missile.HEIGHT);
+        Missile missile = new Missile(this.x +
+                image.getIconWidth()/2+offset1+3, GameWindow.getBoardHeight()-this.image.getIconHeight()+offset2 - Missile.HEIGHT);
         storage.add(missile);
+    }
+
+    public void drawSelf(Component c, Graphics g) {
+        this.image.paintIcon(c, g, this.x, this.y);
+        for (Missile m : storage) {
+            m.getImage().paintIcon(c, g, m.getX(), m.getY());
+        }
     }
 
     /**
@@ -75,6 +92,8 @@ public class Ship extends GameSprite {
      * @param input the input isn't null and does has all of the aliens
      * @return true if is hit
      */
+
+    //TODO FIX this from fromatted
     public boolean isHit(ArrayList<Alien> input) {
         int right = this.getFormattedX();
         int edge = this.getFormattedY();
@@ -103,11 +122,32 @@ public class Ship extends GameSprite {
                         nextEdge + b.getImage().getIconHeight() >= edge &&  nextEdge +
                                 b.getImage().getIconHeight() <= edge + image.getIconHeight()) {
                     input.remove(b);
-                    Alien.amountAttacking--;
+//                    Alien.amountAttacking--;
                     return true;
                 }
         }
         return false;
+    }
+
+    public void tick() {
+        Missile m;
+        for (int i = 0; i < storage.size(); i++) {
+            m = storage.get(i);
+            m.setY(m.getY() - 4);
+            if (m.getY() < 0) {
+                storage.remove(i);
+                i--;
+            }
+        }
+        if (!isInvincible() && isHit(Game.getEnemies())) {
+            if (lives > 0) {
+                lives--;
+                Alien.resetAttack();
+            } else {
+                Game.setGameover(true);
+            }
+        }
+
     }
 
     public boolean canFire() {
@@ -164,5 +204,13 @@ public class Ship extends GameSprite {
 
     public void setMultipleShots(boolean multipleShots) {
         this.multipleShots = multipleShots;
+    }
+
+    public static int getMaxShots() {
+        return MAX_SHOTS;
+    }
+
+    public static void setMaxShots(int maxShots) {
+        MAX_SHOTS = maxShots;
     }
 }

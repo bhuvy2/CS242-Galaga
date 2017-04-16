@@ -2,7 +2,6 @@ package model.ships;
 
 import display.view.GameWindow;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -38,24 +37,31 @@ public class BasicAlien extends Alien {
      */
     public void attack() {
         if (isAttacking) {
-            if (count % DELAY == 0)
-                y++;
-
-            if (y == row + 1) {
-                Alien.amountAttacking++;
-                y++;
+            if (count % DELAY == 0) {
+                y+=4;
             }
 
-            if (this.getFormattedY() >= GameWindow.getBoardHeight() * .6 &&
-                    this.getFormattedY() <= GameWindow.getBoardHeight() * .61)
+            if (this.getY() >= 400 && this.getY() <= 405)
                 fire();
-            else if (this.getFormattedY() >= GameWindow.getBoardHeight())
+            else if (this.getY() >= GameWindow.getBoardHeight())
                 y = 0;
             else if (y == row) {
                 isAttacking = false;
+                isMoving = true;
                 if (count % DELAY == 0)
                     Alien.amountAttacking--;
             }
         }
+    }
+
+    /**
+     * This method should be used instead of just increasing
+     * toSpot because it updates all of the other field variables
+     * to accurate reflect the state of the alien
+     */
+    public void startAttack() {
+            isAttacking = true;
+            isMoving = false;
+            Alien.amountAttacking++;
     }
 }
