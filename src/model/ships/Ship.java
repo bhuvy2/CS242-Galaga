@@ -1,8 +1,8 @@
 package model.ships;
 
 import display.view.GameWindow;
+import model.Game;
 import model.superclasses.GameSprite;
-import main.Game;
 
 import java.awt.*;
 import java.util.ArrayList;

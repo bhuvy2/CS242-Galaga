@@ -2,6 +2,9 @@ package model.ships;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import io.GameConfig;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ public class BlueAlien extends Alien {
      * @param toRight the to right is the same as toEdge but it is the x coordinate.
      */
     public BlueAlien(int toEdge, int toRight) {
-        super("res/img/alien/blue_alien.png");
+        super(GameConfig.getBluePath());
         this.y = toEdge;
         this.x = toRight;
         column = toRight;

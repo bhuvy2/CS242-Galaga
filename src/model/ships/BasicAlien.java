@@ -1,6 +1,7 @@
 package model.ships;
 
 import display.view.GameWindow;
+import io.GameConfig;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class BasicAlien extends Alien {
      *                it is the x coordinate.
      */
     public BasicAlien(int toEdge, int toRight) {
-        super("res/img/alien/green_alien.png");
+        super(GameConfig.getGreenPath());
         this.y = toEdge;
         this.x = toRight;
         column = toRight;
