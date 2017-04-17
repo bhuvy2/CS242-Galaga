@@ -1,8 +1,9 @@
 package controller;
 
+import display.audio.GameSoundboard;
 import display.view.GamePanel;
 import display.view.GameWindow;
-import main.Game;
+import model.Game;
 import model.ships.Alien;
 import model.ships.Ship;
 
@@ -48,6 +49,7 @@ public class ShipController {
     }
 
     private void setBasicMovement() {
+    	GameSoundboard brd = new GameSoundboard();
         right = new AbstractAction(RIGHT) {
             public void actionPerformed(ActionEvent e) {
                 if (player.getX() <= GameWindow.getBoardWidth()-player.getImage().getIconWidth() - 2)
