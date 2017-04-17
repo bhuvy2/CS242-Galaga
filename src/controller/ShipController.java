@@ -1,8 +1,8 @@
 package controller;
 
 import display.audio.GameSoundboard;
-import display.view.GamePanel;
 import display.view.GameWindow;
+import display.view.panels.GamePanel;
 import model.Game;
 import model.ships.Alien;
 import model.ships.Ship;
