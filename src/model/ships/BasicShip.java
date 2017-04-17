@@ -12,6 +12,9 @@ public class BasicShip extends Ship {
     private static final int NUM_LIVES = 2;
     private static final int NUM_MISSILES = 2;
 
+    /**
+     * Creates a generic ship for the player
+     */
     public BasicShip() {
     	super(GameConfig.getShipPath());
         this.x = 0;

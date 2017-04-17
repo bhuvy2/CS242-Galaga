@@ -2,8 +2,6 @@ package model.ships
 
 import controller.ShipController
 import display.view.panels.GamePanel
-import java.awt.event.KeyEvent
-
 /**
  * Created by mscislowski on 4/17/17.
  */
@@ -22,17 +20,25 @@ class ShipTest extends GroovyTestCase {
 
     void testIsInvincible() {
         assert !ship.isInvincible()
-        controller.setShipControls(panel)
-        KeyEvent keyEvent = new KeyEvent(panel, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_UP);
-        panel.getKeyListeners()[0].keyPressed(keyEvent);
-        assert testShip.isInvincible();
+        ship.setInvincible(!ship.isInvincible())
+        assert ship.isInvincible()
     }
 
     void testCanThrottle() {
-
+        assert !ship.canThrottle()
+        ship.setCanThrottle(!ship.canThrottle())
+        assert ship.canThrottle()
     }
 
-    void testShip() {
-        assert ship.is(BasicShip)
+    void testMaxShots() {
+        assert ship.getMaxShots() == 2
+        ship.setMaxShots(500)
+        assert ship.getMaxShots() == 500
+    }
+
+    void testMultiShot() {
+        assert !ship.isMultipleShots()
+        ship.setMultipleShots(!ship.isMultipleShots())
+        assert ship.isMultipleShots()
     }
 }

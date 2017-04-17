@@ -160,7 +160,7 @@ public abstract class Alien extends GameSprite {
 
     public void tick() {
 //        System.out.println(DELAY);
-        System.out.println(amountAttacking);
+//        System.out.println(amountAttacking);
         setAttackers();
         move();
         attack();

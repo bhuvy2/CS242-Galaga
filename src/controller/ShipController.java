@@ -48,6 +48,9 @@ public class ShipController {
         setThrottling();
     }
 
+    /**
+     * Sets basic movement keybinds including left/right, jumping left/right, and firing
+     */
     private void setBasicMovement() {
     	GameSoundboard brd = new GameSoundboard();
         right = new AbstractAction(RIGHT) {
@@ -85,6 +88,9 @@ public class ShipController {
         };
     }
 
+    /**
+     * Sets Power modification key binds for ship
+     */
     private void setShipMods() {
         invincible = new AbstractAction(INVINCIBLE) {
             public void actionPerformed(ActionEvent e) {
@@ -111,6 +117,9 @@ public class ShipController {
         };
     }
 
+    /**
+     * Sets Throttling key binds for ship. Changes game delay.
+     */
     private void setThrottling() {
         throttleup = new AbstractAction(THROTTLEUP) {
             public void actionPerformed(ActionEvent e) {
@@ -127,6 +136,10 @@ public class ShipController {
         };
     }
 
+    /**
+     * Creates mappings between actions and key presses for provided JPanel
+     * @param jpl panel to react with key presses
+     */
     private void setMappings(JPanel jpl) {
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0) , LEFT, left);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), RIGHT, right);
@@ -141,6 +154,13 @@ public class ShipController {
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0) , THROTTLEDOWN, throttledown);
     }
 
+    /**
+     * Adds key bind to panel
+     * @param jpl panel to add key to
+     * @param key key to be added
+     * @param mapKey mapped action for key
+     * @param value action taken
+     */
     private void addKey(JPanel jpl, KeyStroke key, String mapKey, Action value){
         jpl.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, mapKey);
         jpl.getActionMap().put(mapKey, value);
