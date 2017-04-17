@@ -5,7 +5,9 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.GameController;
+import display.view.panels.GamePanel;
+import display.view.panels.LeaderBoardPanel;
+import display.view.panels.MenuPanel;
 
 /**
  * @author Bhuvan Venkatesh
@@ -17,13 +19,16 @@ public class GameWindow extends JFrame {
 	/**
 	 * Unresizable width of the board
 	 */
-	protected static final int BOARD_WIDTH = 480; 
+	public static final int BOARD_WIDTH = 480; 
 	/**
 	 * Unresizable height of the board
 	 */
-	protected static final int BOARD_HEIGHT = 740;
+	public static final int BOARD_HEIGHT = 740;
 	
-	public static final Font gameFont = new Font("impact", 0, 16); // SE
+	/**
+	 * Used in systems that offer impact font
+	 */
+	public static final Font gameFont = new Font("impact", 0, 16);
 	
 	/**
 	 * Reference to the current panel

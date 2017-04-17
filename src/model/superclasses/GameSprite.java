@@ -27,7 +27,6 @@ public class GameSprite {
 			temp = ImageIO.read(new File(image));
 		}catch(IOException | NullPointerException e){
 			System.out.println("Error");
-			e.printStackTrace();
 		}
 		
 		if(temp != null) {
