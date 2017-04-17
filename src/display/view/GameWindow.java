@@ -77,7 +77,7 @@ public class GameWindow extends JFrame {
 	 * @param pnl to switch to
 	 * Switches the current panel to the current JPanel
 	 */
-	private void switchPanel(JPanel pnl){
+	public void switchPanel(JPanel pnl){
 		this.remove(this.panel);
 		this.panel = pnl;
 		this.add(this.panel);

@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import display.view.GameWindow;
 
@@ -48,6 +52,9 @@ public class MenuPanel extends JPanel {
 		setUpLeaderButton();
 	}
 
+	/**
+	 * Adds the galaga logo to the screen
+	 */
 	private void setUpLogo() {
 		BufferedImage temp = null;
 		try{
@@ -65,9 +72,13 @@ public class MenuPanel extends JPanel {
 		this.add(lbl);
 	}
 
+	/**
+	 * Constructs the go to leaderboard button
+	 * With a specific style
+	 */
 	private void setUpLeaderButton() {
 		MenuPanel self = this;
-		leaderButton = new JButton();
+		leaderButton = createSimpleButton("Leaderboard");
 		leaderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				GameWindow f2 = (GameWindow) SwingUtilities.getWindowAncestor(self);
@@ -75,13 +86,15 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		leaderButton.setBounds(200, 150, 100, 100);
-		leaderButton.setText("Leaderboard");
 		this.add(leaderButton);
 	}
 
+	/**
+	 * Sets up the play button with a specific style
+	 */
 	private void setUpPlayButton() {
 		MenuPanel self = this;
-		playButton = new JButton();
+		playButton = createSimpleButton("Go to game!");
 		playButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				GameWindow f2 = (GameWindow) SwingUtilities.getWindowAncestor(self);
@@ -89,7 +102,21 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		playButton.setBounds(200, 50, 100, 100);
-		playButton.setText("Go to game!");
 		this.add(playButton);
+	}
+	
+	/*
+	 * Stack overflow 
+	 * http://stackoverflow.com/questions/1839074/howto-make-jbutton-with-simple-flat-style/1839826
+	 */
+	private static JButton createSimpleButton(String text) {
+	  JButton button = new JButton(text);
+	  button.setForeground(Color.BLACK);
+	  button.setBackground(Color.WHITE);
+	  Border line = new LineBorder(Color.BLACK);
+	  Border margin = new EmptyBorder(5, 15, 5, 15);
+	  Border compound = new CompoundBorder(line, margin);
+	  button.setBorder(compound);
+	  return button;
 	}
 }

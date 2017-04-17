@@ -16,11 +16,15 @@ import javax.swing.Timer;
 
 /**
  * @author Bhuvan Venkatesh
- *
+ *	Is the view in the MVC
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	
+	/**
+	 * @author Bhuvan Venkatesh
+	 *	Performs the main game loop in the panel
+	 */
 	private final class TimerListener implements ActionListener {
 		GamePanel pnl;
 		public TimerListener(GamePanel pnl){
@@ -36,33 +40,68 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Abstraction layer from the view
+	 */
 	private SpriteManager manager;
+	/**
+	 * The previous time the frame was drawn
+	 */
 	private long prev;
+	/**
+	 * The timer that fires off the event to update and redraw
+	 */
+	private Timer timer;
 	
 	public GamePanel(){
 		this(true);
 	}
 	
+	/**
+	 * Constructs a new gamepanel with bindings and
+	 * sets up the timer
+	 * @param start, whether to start the game or not.
+	 */
 	public GamePanel(boolean start){
 		super();
 		GamePanel self = this;
 		ShipController controller = new ShipController();
 		controller.setShipControls(self);
 		addModelToManager();
-		Timer timer = new Timer(1000/60, new TimerListener(this));
+		timer = new Timer(1000/60, new TimerListener(this));
 		if(start){
 			timer.start();
 		}
 		prev = System.currentTimeMillis();
 		setPanelOptions();
 	}
+	
+	/**
+	 * Starts the game if not started before
+	 */
+	public void start(){
+		timer.start();
+	}
+	
+	/**
+	 * Forces the manager to update
+	 */
+	public void tick(){
+		manager.tick();
+	}
 
+	/**
+	 * Customizes the panel for game playing
+	 */
 	private void setPanelOptions() {
 		this.setBackground(Color.BLACK);
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 	}
 
+	/**
+	 * Adds all the sprites in the model to manager
+	 */
 	private void addModelToManager() {
 		manager = new SpriteManager();
 		manager.addSprite(Game.getPlayerShip());
@@ -79,6 +118,9 @@ public class GamePanel extends JPanel {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		double diff = System.currentTimeMillis() - this.prev;

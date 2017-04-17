@@ -24,6 +24,9 @@ import io.Player;
 @SuppressWarnings("serial")
 public class LeaderBoardPanel extends JPanel {
 	
+	/**
+	 * Keeps track of the IO
+	 */
 	private Leaderboard leader;
 	
 	/**
@@ -45,6 +48,9 @@ public class LeaderBoardPanel extends JPanel {
 		this.add(ret);
 	}
 
+	/**
+	 * Adds the jlabel to the view
+	 */
 	private void addScores() {
 		leader = null;
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -65,6 +71,9 @@ public class LeaderBoardPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Puts the leaderboard at the top
+	 */
 	private void addTopLeaderLabel() {
 		JLabel label = new JLabel("Leaderboard!");
 		label.setForeground(Color.WHITE);
