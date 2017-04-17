@@ -1,4 +1,4 @@
-package main;
+package model;
 
 import model.ships.*;
 import java.util.ArrayList;
@@ -16,6 +16,27 @@ public abstract class Game {
             toNextLife;
     private static volatile int level = 1;
     private static boolean gameover;
+    
+    public static void populate() {
+		ArrayList<Alien> enemies = new ArrayList<>();
+		Alien in;
+		for (int[] a : Alien.BasicPosition) {
+			in = new BasicAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(in);
+		}
+		for (int[] a : Alien.RedPosition) {
+			in = new RedAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(new RedAlien(a[1], a[0]));
+		}
+		for (int[] a : Alien.BossPosition) {
+			in = new BlueAlien(a[1], a[0]);
+			in.isMoving = true;
+			enemies.add(new BlueAlien(a[1], a[0]));
+		}
+		Game.setEnemies(enemies);
+	}
 
     public static ArrayList<Alien> getEnemies() {
         return enemies;
@@ -30,7 +51,7 @@ public abstract class Game {
     }
 
     public void setPlayerShip(Ship playerShip) {
-        this.playerShip = playerShip;
+        Game.playerShip = playerShip;
     }
 
     public static int getShotsFired() {
