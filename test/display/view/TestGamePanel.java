@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import display.util.TestUtil;
+import display.view.panels.GamePanel;
 
 public class TestGamePanel {
 
