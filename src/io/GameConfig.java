@@ -5,10 +5,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * @author Bhuvan Venkatesh
+ *	Class to manage the configuration file for the paths of the sprites
+ */
 public class GameConfig {
+	/**
+	 * The properties file
+	 */
 	private static final Properties prop = getMappings();
+	/**
+	 * Path from the root of the sprite
+	 */
 	private static final String imageFileName = "config/sprites.config";
 	
+	/**
+	 * All the keys in the config file to the path
+	 */
 	private static final String shipIconKey = "shipIcon",
 		missileKey="shipMissile",
 		explode1Key="explodePart1",
@@ -42,10 +55,16 @@ public class GameConfig {
 		return prop.getProperty(redKey);
 	}
 	
+	/**
+	 * @return The path of the image file fro the yellow alien
+	 */
 	public static String getYellowPath(){
 		return prop.getProperty(yellowKey);
 	}
 	
+	/**
+	 * @return The config file that has been loaded into memory
+	 */
 	private static Properties getMappings(){
 		
 		Properties prop = new Properties();
