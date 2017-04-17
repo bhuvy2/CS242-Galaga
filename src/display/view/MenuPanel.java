@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,6 +30,9 @@ public class MenuPanel extends JPanel {
 	 */
 	JButton playButton;
 	
+	/**
+	 * Switches to the leaderboard
+	 */
 	JButton leaderButton;
 	
 	/**
@@ -33,10 +40,31 @@ public class MenuPanel extends JPanel {
 	 */
 	public MenuPanel(){
 		super();
-		MenuPanel self = this;
 		this.setBackground(Color.BLACK);
+		setUpLogo();
 		setUpPlayButton();
-		
+		setUpLeaderButton();
+	}
+
+	private void setUpLogo() {
+		BufferedImage temp = null;
+		try{
+			temp = ImageIO.read(new File("res/galaga.png"));
+		}catch(IOException | NullPointerException e){
+			System.out.println("res/galaga.png");
+			e.printStackTrace();
+		}
+		ImageIcon img = null;
+		if(temp != null){
+			img = new ImageIcon((Image)temp);
+		}
+		JLabel lbl = new JLabel(img);
+		lbl.setBounds(20, 20, img.getIconWidth(), img.getIconHeight());
+		this.add(lbl);
+	}
+
+	private void setUpLeaderButton() {
+		MenuPanel self = this;
 		leaderButton = new JButton();
 		leaderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -47,11 +75,6 @@ public class MenuPanel extends JPanel {
 		leaderButton.setBounds(200, 150, 100, 100);
 		leaderButton.setText("Leaderboard");
 		this.add(leaderButton);
-
-		ImageIcon img = new ImageIcon("res/galaga.png", "Title");
-		JLabel lbl = new JLabel(img);
-		lbl.setBounds(20, 20, img.getIconWidth(), img.getIconHeight());
-		this.add(lbl);
 	}
 
 	private void setUpPlayButton() {

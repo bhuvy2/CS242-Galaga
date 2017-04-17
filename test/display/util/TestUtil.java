@@ -1,10 +1,12 @@
 package display.util;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 public class TestUtil {
 	
@@ -16,10 +18,9 @@ public class TestUtil {
 	                    return false;
 	            }
 	        }
-	    } else {
-	        return false;
+	        return true;
 	    }
-	    return true;
+	    return false;
 	}
 
 	public static boolean diffImages(BufferedImage img, String path){
@@ -40,5 +41,14 @@ public class TestUtil {
 		}
 		
 		return TestUtil.bufferedImagesEqual(img, temp);
+	}
+	
+	public static BufferedImage createImage(JPanel panel) {
+	    int w = panel.getWidth();
+	    int h = panel.getHeight();
+	    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D g = bi.createGraphics();
+	    panel.paint(g);
+	    return bi;
 	}
 }
