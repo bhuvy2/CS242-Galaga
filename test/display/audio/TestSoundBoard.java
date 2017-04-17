@@ -17,9 +17,9 @@ public class TestSoundBoard {
 	@Test
 	public void testSounds() {
 		GameSoundboard brd = new GameSoundboard();
-		brd.playFlying();
-		brd.playKill();
-		brd.playLevelUp();
+		//brd.playFlying();
+		//brd.playKill();
+		//brd.playLevelUp();
 	}
 
 }
