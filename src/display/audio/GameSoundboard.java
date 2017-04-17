@@ -52,7 +52,6 @@ public class GameSoundboard {
 		Properties prop = new Properties();
 		InputStream input = null;
 
-
 		try {
 			input = new FileInputStream(audioConfigName);
 			prop.load(input);
