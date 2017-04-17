@@ -22,7 +22,7 @@ public class GameConfig {
 	/**
 	 * All the keys in the config file to the path
 	 */
-	private static final String shipIconKey = "shipIcon",
+	public static final String shipIconKey = "shipIcon",
 		missileKey="shipMissile",
 		explode1Key="explodePart1",
 		explode2Key="explodePart2",
