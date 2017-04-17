@@ -1,4 +1,4 @@
-package display.view;
+package display.view.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import display.view.GameWindow;
 import io.Leaderboard;
 import io.Player;
 

@@ -1,4 +1,4 @@
-package display.view;
+package display.view.panels;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import display.view.GameWindow;
 
 /**
  * @author Bhuvan Venkatesh
