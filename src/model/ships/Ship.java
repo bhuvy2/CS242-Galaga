@@ -41,10 +41,8 @@ public class Ship extends GameSprite {
     }
 
 
-    public void fire() {
-        if (!canFire)
-            return;
-        if (storage.size() < MAX_SHOTS) {
+    public boolean fire() {
+        if (canFire && storage.size() < MAX_SHOTS) {
             if (!multipleShots) {
                 addMissile(-4, -35);
                 Game.setShotsFired(Game.getShotsFired() + 1);
@@ -58,7 +56,9 @@ public class Ship extends GameSprite {
                 addMissile(10, 35);
                 Game.setShotsFired(Game.getShotsFired() + 7);
             }
+            return true;
         }
+        return false;
     }
 
     private void addMissile(int offset1, int offset2) {

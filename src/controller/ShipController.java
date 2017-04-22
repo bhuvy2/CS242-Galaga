@@ -36,6 +36,8 @@ public class ShipController {
             throttleup,
             throttledown,
             shots;
+    
+    GameSoundboard brd = new GameSoundboard();
 
     public void setShipControls(GamePanel pnl) {
         setControls();
@@ -83,7 +85,8 @@ public class ShipController {
 
         fire = new AbstractAction(FIRE) {
             public void actionPerformed(ActionEvent e) {
-                player.fire();
+                if(player.fire())
+                	brd.playMissile();
             }
         };
     }

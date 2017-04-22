@@ -25,6 +25,8 @@ public class Star extends GameSprite
 	private Color starColor;
 	private int count;
 	public static final int length = 1;
+	private static final int[] parallaxLengths = {1, 2, 4};
+	private int step;
 	
 	/**
 	 * @param x, the x position of the start
@@ -48,14 +50,15 @@ public class Star extends GameSprite
 		count = 0;
 		setStarColor(a);
 		image = null;
+		step = parallaxLengths[(int)(Math.random() * parallaxLengths.length)];
 	}
 	
 	/**
 	 * Moves the alien given a delay
 	 */
 	public void move(){
-		if(count%(Alien.DELAY) == 0)
-			this.y++;
+		//if(count%(Alien.DELAY) == 0)
+		this.y += step;
 		if(this.y > GameWindow.BOARD_HEIGHT)
 			this.y = 0;
 		count++;
@@ -65,30 +68,12 @@ public class Star extends GameSprite
 	 * Fades the star randomly
 	 */
 	public void fade(){
-		if(!(count%(Alien.DELAY*2) == 0))
-			return;
-		
-		switch(count/10 % 10)
-		{
-		case 0:
-			break;
-		case 1:
+		int choice = (int)(Math.random() * 10);
+		if(choice <= 4){
 			setStarColor(getStarColor().brighter());
-			break;
-		case 2:
-			break;
-		case 3:
-			setStarColor(getStarColor().brighter());
-		case 4:
-			break;
-		case 5:
-			setStarColor(getStarColor().brighter());
-		case 6:
-			break;
-		case 7:
+		}else if(choice <= 6){
 			setStarColor(getStarColor().darker());
 		}
-		
 	}
 	
 	/* (non-Javadoc)

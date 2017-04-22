@@ -1,7 +1,9 @@
 package display.view.panels;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -37,14 +39,14 @@ public class LeaderBoardPanel extends JPanel {
 		JPanel self = this;
 		this.setBackground(Color.BLACK);
 		addScores();
-		JButton ret = new JButton();
+		this.add(Box.createRigidArea(new Dimension(0, 40)));
+		JButton ret = MenuPanel.createSimpleButton("Menu");
 		ret.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(self);
 				parent.switchToMenu();
 			}
 		});
-		ret.setText("Menu");
 		this.add(ret);
 	}
 
@@ -53,7 +55,7 @@ public class LeaderBoardPanel extends JPanel {
 	 */
 	private void addScores() {
 		leader = null;
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		int pos = 0;
 		addTopLeaderLabel();
 		try {
@@ -62,7 +64,8 @@ public class LeaderBoardPanel extends JPanel {
 				String txt = ""+ (pos+1) + ". " + plr.name + ": " + plr.score;
 				JLabel lbl = new JLabel(txt);
 				lbl.setFont(GameWindow.gameFont);
-				lbl.setForeground(Color.WHITE);
+				lbl.setForeground(Color.YELLOW);
+				lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 				pos += 1;
 				this.add(lbl);
 			}
@@ -75,8 +78,9 @@ public class LeaderBoardPanel extends JPanel {
 	 * Puts the leaderboard at the top
 	 */
 	private void addTopLeaderLabel() {
-		JLabel label = new JLabel("Leaderboard!");
-		label.setForeground(Color.WHITE);
+		JLabel label = new JLabel("---- Leaderboard ----");
+		label.setForeground(Color.RED);
+		label.setFont(new Font("impact", 0, 32));
 		this.add(label);
 		this.add(Box.createRigidArea(new Dimension(0, 40)));
 	}

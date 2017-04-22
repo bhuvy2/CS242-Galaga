@@ -1,6 +1,7 @@
 package display.view.panels;
 
 import display.view.GameWindow;
+import model.Star;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Bhuvan Venkatesh
@@ -28,22 +30,44 @@ public class MenuPanel extends JPanel {
 	/**
 	 * The "Go to game" button
 	 */
-	JButton playButton;
+	private JButton playButton;
 	
 	/**
 	 * Switches to the leaderboard
 	 */
-	JButton leaderButton;
+	private JButton leaderButton;
+	
+	private ArrayList<Star> stars;
 	
 	/**
 	 * Sets up the callbacks and whatnot.
 	 */
 	public MenuPanel(){
 		super();
+		stars = new ArrayList<Star>();
 		this.setBackground(Color.BLACK);
-//		setUpLogo();
+		setUpLogo();
 		setUpPlayButton();
 		setUpLeaderButton();
+		addStars();
+	}
+	
+	private void addStars() {
+		for (int i = 0; i < GameWindow.BOARD_HEIGHT * 1.5; i += Star.length) {
+			for (int j = 0; j < GameWindow.BOARD_WIDTH * 1.5; j += Star.length) {
+				if (Math.random() > .999){
+					Star str = new Star(i, j);
+					stars.add(str);
+				}
+			}
+		}
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		for(Star str: stars){
+			str.drawSelf(this, g);
+		}
 	}
 
 	/**
@@ -103,7 +127,7 @@ public class MenuPanel extends JPanel {
 	 * Stack overflow 
 	 * http://stackoverflow.com/questions/1839074/howto-make-jbutton-with-simple-flat-style/1839826
 	 */
-	private static JButton createSimpleButton(String text) {
+	public static JButton createSimpleButton(String text) {
 	  JButton button = new JButton(text);
 	  button.setForeground(Color.BLACK);
 	  button.setBackground(Color.WHITE);
@@ -112,5 +136,9 @@ public class MenuPanel extends JPanel {
 	  Border compound = new CompoundBorder(line, margin);
 	  button.setBorder(compound);
 	  return button;
+	}
+	
+	public ArrayList<Star> getStars(){
+		return this.stars;
 	}
 }

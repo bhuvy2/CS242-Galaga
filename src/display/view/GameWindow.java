@@ -28,7 +28,7 @@ public class GameWindow extends JFrame {
 	/**
 	 * Used in systems that offer impact font
 	 */
-	public static final Font gameFont = new Font("impact", 0, 16);
+	public static final Font gameFont = new Font("impact", 0, 24);
 	
 	/**
 	 * Reference to the current panel
@@ -56,7 +56,8 @@ public class GameWindow extends JFrame {
 	 * Starts a new game
 	 */
 	public void switchToGame(){
-		this.switchPanel((JPanel)new GamePanel());
+		MenuPanel pnl = (MenuPanel)this.panel;
+		this.switchPanel((JPanel)new GamePanel(pnl.getStars(), true));
 	}
 	
 	/**

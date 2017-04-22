@@ -10,6 +10,7 @@ import model.ships.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -52,17 +53,14 @@ public class GamePanel extends JPanel {
 	 * The timer that fires off the event to update and redraw
 	 */
 	private Timer timer;
-	
-	public GamePanel(){
-		this(true);
-	}
+
 	
 	/**
 	 * Constructs a new gamepanel with bindings and
 	 * sets up the timer
 	 * @param start, whether to start the game or not.
 	 */
-	public GamePanel(boolean start){
+	public GamePanel(ArrayList<Star> strs, boolean start){
 		super();
 		GamePanel self = this;
 		ShipController controller = new ShipController();
@@ -74,6 +72,7 @@ public class GamePanel extends JPanel {
 		}
 		prev = System.currentTimeMillis();
 		setPanelOptions();
+		this.addStars(strs);
 	}
 	
 	/**
@@ -109,12 +108,11 @@ public class GamePanel extends JPanel {
 		for (Alien al : Game.getEnemies()) {
 			manager.addSprite(al);
 		}
-		
-		for (int i = 0; i < GameWindow.BOARD_HEIGHT * 1.5; i += Star.length) {
-			for (int j = 0; j < GameWindow.BOARD_WIDTH * 1.5; j += Star.length) {
-				if (Math.random() > .995)
-					manager.addSprite(new Star(i, j));
-			}
+	}
+	
+	public void addStars(ArrayList<Star> strs) {
+		for(Star str: strs){
+			manager.addSprite(str);
 		}
 	}
 	
