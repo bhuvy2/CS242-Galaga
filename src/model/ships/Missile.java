@@ -27,7 +27,7 @@ public class Missile extends GameSprite implements Projectile {
      * Moves missile towards edge
      */
     public void move() {
-        y-=2;
+        y -= 12;
     }
 
     /**

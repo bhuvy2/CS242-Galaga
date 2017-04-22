@@ -60,7 +60,7 @@ public class RedAlien extends Alien {
             else
                 radTemp = Math.toRadians(180-angle);
             x = column + circleDiameter/2+ (int)(Math.cos(radTemp)*circleDiameter);
-            y = Game.getPlayerShip().getY() - (int)(Math.sin(radTemp)*circleDiameter/2);
+            //y = Game.getPlayerShip().getY() - (int)(Math.sin(radTemp)*circleDiameter/2);
             if(angle >= 180) {
                 angle = 0;
                 y = 0;
@@ -71,7 +71,6 @@ public class RedAlien extends Alien {
             if(count%DELAY == 0)
                 y+=2;
             if(y == row) {
-                Alien.amountAttacking--;
                 isAttacking = false;
                 isMoving = true;
                 toSpot = 0;
@@ -89,7 +88,6 @@ public class RedAlien extends Alien {
     public void startAttack() {
         if(toSpot == 0) {
             toSpot++;
-            Alien.amountAttacking++;
             isMoving = false;
             isAttacking = true;
         }

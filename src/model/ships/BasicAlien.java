@@ -49,8 +49,6 @@ public class BasicAlien extends Alien {
             else if (y == row) {
                 isAttacking = false;
                 isMoving = true;
-                if (count % DELAY == 0)
-                    Alien.amountAttacking--;
             }
         }
     }
@@ -63,6 +61,5 @@ public class BasicAlien extends Alien {
     public void startAttack() {
             isAttacking = true;
             isMoving = false;
-            Alien.amountAttacking++;
     }
 }

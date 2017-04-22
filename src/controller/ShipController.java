@@ -13,7 +13,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class ShipController {
-    private Ship player = Game.getPlayerShip();
+    private Ship player;
     private final String LEFT = "left",
             RIGHT = "right",
             JLEFT = "jleft",
@@ -42,6 +42,7 @@ public class ShipController {
     public void setShipControls(GamePanel pnl) {
         setControls();
         setMappings(pnl);
+        player = pnl.getGame().getPlayerShip();
     }
 
     private void setControls() {

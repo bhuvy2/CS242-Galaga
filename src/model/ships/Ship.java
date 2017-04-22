@@ -45,7 +45,6 @@ public class Ship extends GameSprite {
         if (canFire && storage.size() < MAX_SHOTS) {
             if (!multipleShots) {
                 addMissile(-4, -35);
-                Game.setShotsFired(Game.getShotsFired() + 1);
             } else {
                 addMissile(-4, 0);
                 addMissile(-4, -35);
@@ -54,7 +53,6 @@ public class Ship extends GameSprite {
                 addMissile(25, 35);
                 addMissile(-20, 35);
                 addMissile(10, 35);
-                Game.setShotsFired(Game.getShotsFired() + 7);
             }
             return true;
         }
@@ -72,6 +70,11 @@ public class Ship extends GameSprite {
         for (Missile m : storage) {
             m.getImage().paintIcon(c, g, m.getX(), m.getY());
         }
+        for(int i = 0; i < this.lives; i++){
+        	this.image.paintIcon(c, g, 
+        			i*this.image.getIconWidth(), 
+        			GameWindow.BOARD_HEIGHT-this.image.getIconHeight()-30);
+        }
     }
 
     /**
@@ -87,67 +90,15 @@ public class Ship extends GameSprite {
         }
     }
 
-    /**
-     * Checks if is hit.
-     * @param input the input isn't null and does has all of the aliens
-     * @return true if is hit
-     */
-
-    //TODO FIX this from fromatted
-    public boolean isHit(ArrayList<Alien> input) {
-        int right = this.getFormattedX();
-        int edge = this.getFormattedY();
-        int nextRight;
-        int nextEdge;
-
-        for(Alien b : input) {
-            for(AlienMissile a : b.list) {
-                nextRight = this.getFormattedX(a.toRightNext);
-                nextEdge = this.getFormattedY(a.toEdgeNext);
-                if(nextRight >= right && nextRight <= right + image.getIconWidth()) {
-                    if(nextEdge >= edge &&  nextEdge <= edge + image.getIconHeight()) {
-                        b.list.remove(a);
-                        return true;
-                    }
-                }
-            }
-
-            nextRight = b.getFormattedX();
-            nextEdge = b.getFormattedY();
-
-            if(nextRight >= right && nextRight <= right + image.getIconWidth() ||
-                    nextRight + b.getImage().getIconWidth() >= right && nextRight +
-                            b.getImage().getIconWidth() <= right + image.getIconWidth())
-                if(nextEdge >= edge &&  nextEdge <= edge + image.getIconHeight() ||
-                        nextEdge + b.getImage().getIconHeight() >= edge &&  nextEdge +
-                                b.getImage().getIconHeight() <= edge + image.getIconHeight()) {
-                    input.remove(b);
-//                    Alien.amountAttacking--;
-                    return true;
-                }
-        }
-        return false;
-    }
-
     public void tick() {
-        Missile m;
         for (int i = 0; i < storage.size(); i++) {
-            m = storage.get(i);
-            m.setY(m.getY() - 4);
+        	Missile m = storage.get(i);
+            m.move();
             if (m.getY() < 0) {
                 storage.remove(i);
                 i--;
             }
         }
-        if (!isInvincible() && isHit(Game.getEnemies())) {
-            if (lives > 0) {
-                lives--;
-                Alien.resetAttack();
-            } else {
-                Game.setGameover(true);
-            }
-        }
-
     }
 
     public boolean canFire() {

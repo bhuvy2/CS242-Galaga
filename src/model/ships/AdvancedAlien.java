@@ -73,7 +73,6 @@ public class AdvancedAlien extends Alien {
                         toSpot++;
                         isMoving = true;
                         isAttacking = false;
-                        Alien.amountAttacking--;
                     }
                     break;
             }
@@ -90,7 +89,6 @@ public class AdvancedAlien extends Alien {
             toSpot++;
             isAttacking = true;
             isMoving = false;
-            Alien.amountAttacking++;
         }
     }
 

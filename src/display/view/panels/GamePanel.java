@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -21,7 +23,7 @@ import javax.swing.Timer;
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
-	
+
 	/**
 	 * @author Bhuvan Venkatesh
 	 *	Performs the main game loop in the panel
@@ -33,8 +35,9 @@ public class GamePanel extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent arg0) {
-			if (Game.isGameover()) {
-				// TODO kill me
+			if (pnl.getGame().isGameOver()) {
+				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(pnl);
+				parent.switchToLeaderBoard();
 			}
 			pnl.manager.tick();
 			pnl.repaint();
@@ -45,15 +48,13 @@ public class GamePanel extends JPanel {
 	 * Abstraction layer from the view
 	 */
 	private SpriteManager manager;
-	/**
-	 * The previous time the frame was drawn
-	 */
-	private long prev;
+	
 	/**
 	 * The timer that fires off the event to update and redraw
 	 */
 	private Timer timer;
 
+	private Game game;
 	
 	/**
 	 * Constructs a new gamepanel with bindings and
@@ -62,17 +63,34 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(ArrayList<Star> strs, boolean start){
 		super();
-		GamePanel self = this;
+		game = new Game();
 		ShipController controller = new ShipController();
-		controller.setShipControls(self);
-		addModelToManager();
+		controller.setShipControls(this);
+		addModelToManager(strs);
+		this.setLayout(null);
 		timer = new Timer(1000/60, new TimerListener(this));
 		if(start){
 			timer.start();
 		}
-		prev = System.currentTimeMillis();
+
 		setPanelOptions();
-		this.addStars(strs);
+		
+		JLabel oneUp = createSimpleLabel("1up");
+		oneUp.setBounds(0, 0, 100, 30);
+		JLabel score = createSimpleLabel("Score");
+		score.setBounds(220, 0, 100, 30);
+		JLabel lbl = createSimpleLabel("High Score");
+		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
+		this.add(oneUp);
+		this.add(score);
+		this.add(lbl);
+	}
+	
+	public JLabel createSimpleLabel(String lbl){
+		JLabel jlbl = new JLabel(lbl);
+		jlbl.setFont(new Font("impact", 0, 16));
+		jlbl.setForeground(Color.RED);
+		return jlbl;
 	}
 	
 	/**
@@ -101,15 +119,19 @@ public class GamePanel extends JPanel {
 	/**
 	 * Adds all the sprites in the model to manager
 	 */
-	private void addModelToManager() {
+	private void addModelToManager(ArrayList<Star> strs) {
 		manager = new SpriteManager();
-		manager.addSprite(Game.getPlayerShip());
-		Game.populate();
-		for (Alien al : Game.getEnemies()) {
+		manager.addSprite(game.getPlayerShip());
+		game.populate();
+		for (Alien al : game.getEnemies()) {
 			manager.addSprite(al);
 		}
+		this.addStars(strs);
 	}
 	
+	/**
+	 * @param strs, from the previous panel
+	 */
 	public void addStars(ArrayList<Star> strs) {
 		for(Star str: strs){
 			manager.addSprite(str);
@@ -121,10 +143,10 @@ public class GamePanel extends JPanel {
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		double diff = System.currentTimeMillis() - this.prev;
-		if(diff != 0)
-			g.drawString(String.valueOf(1000/(diff)), 20, 20);
 		manager.draw(this, g);
-		this.prev = System.currentTimeMillis();
+	}
+	
+	public Game getGame(){
+		return this.game;
 	}
 }

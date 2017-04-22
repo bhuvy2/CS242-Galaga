@@ -37,6 +37,9 @@ public class MenuPanel extends JPanel {
 	 */
 	private JButton leaderButton;
 	
+	/**
+	 * COntains the stars on the page
+	 */
 	private ArrayList<Star> stars;
 	
 	/**
