@@ -34,9 +34,9 @@ public abstract class Game {
 			enemies.add(new RedAlien(a[1], a[0]));
 		}
 		for (int[] a : Alien.BossPosition) {
-			in = new BlueAlien(a[1], a[0]);
+			in = new AdvancedAlien(a[1], a[0]);
 			in.isMoving = true;
-			enemies.add(new BlueAlien(a[1], a[0]));
+			enemies.add(new AdvancedAlien(a[1], a[0]));
 		}
 		Game.setEnemies(enemies);
 	}

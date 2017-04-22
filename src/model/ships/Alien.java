@@ -176,8 +176,8 @@ public abstract class Alien extends GameSprite {
                 if (a instanceof BasicAlien) {
                     ((BasicAlien) a).startAttack();
                     System.out.println("BASIC : " + i);
-                } else if (a instanceof BlueAlien) {
-                    ((BlueAlien) a).startAttack();
+                } else if (a instanceof AdvancedAlien) {
+                    ((AdvancedAlien) a).startAttack();
                     System.out.println("BLUE : " + i);
                 } else if (a instanceof RedAlien) {
                     ((RedAlien) a).startAttack();
@@ -199,8 +199,8 @@ public abstract class Alien extends GameSprite {
         } else if ((alien.getHealth() > 1)) { // Blue alien with more than one health
             alien.hit();
             alien.move();
-            if (alien instanceof BlueAlien)
-                ((BlueAlien) alien).change();
+            if (alien instanceof AdvancedAlien)
+                ((AdvancedAlien) alien).change();
         } else { // Killed alien
             //Update points
             Game.setPoints(alien.getPoints());

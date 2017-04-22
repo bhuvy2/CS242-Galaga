@@ -22,7 +22,7 @@ public class BasicAlien extends Alien {
      *                it is the x coordinate.
      */
     public BasicAlien(int toEdge, int toRight) {
-        super(GameConfig.getGreenPath());
+        super(GameConfig.getYellowPath());
         this.y = toEdge;
         this.x = toRight;
         column = toRight;

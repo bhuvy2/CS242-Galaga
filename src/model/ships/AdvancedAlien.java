@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by mscislowski on 4/9/17.
  */
-public class BlueAlien extends Alien {
+public class AdvancedAlien extends Alien {
     private static final int rowAttack = 400; //The Row in 0-100 where they attack fully
     private int otherCount = 0; //Another count if needed
     private int toSpot = 0; //if 0, it is at spot, if 1 it is moving toward spot, if 2 if attacking, 3 if moving back
@@ -23,8 +23,8 @@ public class BlueAlien extends Alien {
      * @param toEdge the to edge is a percentage from left to right, of 100, how up or down the alien is the y coordinate.
      * @param toRight the to right is the same as toEdge but it is the x coordinate.
      */
-    public BlueAlien(int toEdge, int toRight) {
-        super(GameConfig.getBluePath());
+    public AdvancedAlien(int toEdge, int toRight) {
+        super(GameConfig.getGreenPath());
         this.y = toEdge;
         this.x = toRight;
         column = toRight;
