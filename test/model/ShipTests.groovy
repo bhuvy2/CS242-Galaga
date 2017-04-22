@@ -1,15 +1,17 @@
 package tests
 
-import groovy.util.GroovyTestCase
-import model.ships.*
+import model.ships.BasicAlien
+import model.ships.BasicShip
+import model.ships.BlueAlien
+import model.ships.RedAlien
 
 class ShipTests extends GroovyTestCase {
     void testBasicShip() {
         BasicShip ship = new BasicShip()
         assert ship.getLives() == 2
         assert ship.getX() == 0
-        assert ship.getY() == 50
-        assert ship.getStorage() == NULL
+        assert ship.getY() == 692
+        assert ship.getStorage() == []
         assert ship.canFire()
         assert ship.canMove()
         assert !ship.isInvincible()

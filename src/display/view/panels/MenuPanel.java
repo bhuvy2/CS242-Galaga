@@ -1,25 +1,19 @@
 package display.view.panels;
 
-import java.awt.Color;
-import java.awt.Image;
+import display.view.GameWindow;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
-import display.view.GameWindow;
 
 /**
  * @author Bhuvan Venkatesh
@@ -47,7 +41,7 @@ public class MenuPanel extends JPanel {
 	public MenuPanel(){
 		super();
 		this.setBackground(Color.BLACK);
-		setUpLogo();
+//		setUpLogo();
 		setUpPlayButton();
 		setUpLeaderButton();
 	}
