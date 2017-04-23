@@ -2,10 +2,8 @@ package display.view.panels;
 
 import controller.ShipController;
 import display.view.GameWindow;
-import display.view.SpriteManager;
 import model.Game;
 import model.Star;
-import model.ships.Alien;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +31,8 @@ public class GamePanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			if (pnl.getGame().isGameOver()) {
 				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(pnl);
-				parent.switchToLeaderBoard();
+				if (parent != null)
+					parent.switchToLeaderBoard();
 			}
 			pnl.tick();
 			pnl.updateLabels();

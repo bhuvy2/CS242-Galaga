@@ -45,7 +45,7 @@ public class RedAlien extends Alien {
                 case 1:
                     if (count % (DELAY) == 0)
                         y += 2;
-                    if (this.getY() >= 400 && this.getY() <= 405)
+                    if (this.getY() >= 400 && this.getY() <= 401)
                         fire();
                     if (this.getY() >= GameWindow.getBoardHeight())
                         toSpot++;
@@ -58,7 +58,7 @@ public class RedAlien extends Alien {
                     else
                         radTemp = Math.toRadians(180 - angle);
                     x = column + circleDiameter / 2 + (int) (Math.cos(radTemp) * circleDiameter);
-                    //y = Game.getPlayerShip().getY() - (int)(Math.sin(radTemp)*circleDiameter/2);
+                    y = 644 - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if (angle >= 180) {
                         angle = 0;
                         y = 0;

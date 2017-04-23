@@ -3,6 +3,7 @@ package model.ships;
 import display.view.GameWindow;
 import model.superclasses.GameSprite;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public abstract class Alien extends GameSprite {
             column,         //To keep a running column so that the alien can revert back to this
             count = 0;      //As a mediator count to not go so fast
 
-    public volatile java.util.ArrayList<AlienMissile> list; //Like Storage for ship
+    public volatile ArrayList<AlienMissile> list; //Like Storage for ship
 
     protected static boolean isMovingRight;
     public boolean isAttacking;
@@ -77,13 +78,21 @@ public abstract class Alien extends GameSprite {
                 if(isMovingRight) {
                     x+=2;
                 } else {
-                    x -= 2;
+                    x-=2;
                 }
             }
         }
     }
 
+    public void drawSelf(Component c, Graphics g) {
+        this.image.paintIcon(c, g, this.x, this.y);
+        for (AlienMissile m : list) {
+            m.getImage().paintIcon(c, g, m.getX(), m.getY());
+        }
+    }
+
     public void tick() {
+        // Missile movement
         AlienMissile m;
         for (int i = 0; i < list.size(); i++) {
             m = list.get(i);
@@ -94,6 +103,7 @@ public abstract class Alien extends GameSprite {
             }
         }
 
+        // Alien move and attack
         move();
         attack();
         this.count++;

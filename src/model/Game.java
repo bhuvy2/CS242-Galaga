@@ -1,9 +1,9 @@
 package model;
 
 import model.ships.*;
-
 import java.awt.Component;
 import java.awt.Graphics;
+import model.superclasses.GameSprite;
 import java.util.ArrayList;
 
 /**
@@ -51,10 +51,16 @@ public class Game {
     public void tick(){
     	playerShip.tick();
     	this.setAttackers();
-    	for(Alien al: enemies){
+    	Alien al;
+    	for (int i = 0; i< getEnemies().size(); i++) {
+    	    al = getEnemies().get(i);
     		al.tick();
+    		if(checkKilled(al)) {
+                getEnemies().remove(i);
+                i--;
+            }
     	}
-//    	this.checkShipHit();
+    	this.checkShipHit();
     }
     
     /**
@@ -70,7 +76,7 @@ public class Game {
     }
     
     private boolean checkShipHit(){
-    	if (!playerShip.isInvincible() && isHit(this.getEnemies())) {
+    	if (!playerShip.isInvincible() && isHit()) {
             if (playerShip.getLives() > 0) {
             	playerShip.setLives(playerShip.getLives() - 1);
                 this.resetAttack();
@@ -81,31 +87,21 @@ public class Game {
     	return true;
     }
     
-    private boolean checkHit(Alien alien) {
-        if (!alien.isHit(getPlayerShip().getStorage())) {
-            alien.move();
-        } else if ((alien.getHealth() > 1)) { // Blue alien with more than one health
-            alien.hit();
-            alien.move();
-            if (alien instanceof AdvancedAlien)
-                ((AdvancedAlien) alien).change();
-        } else {
-
-            setPoints(alien.getPoints());
-            setToNextLife(getToNextLife() + alien.getPoints());
-            if (getToNextLife() >= 5000) {
-                setToNextLife(getToNextLife() - 5000);
-                if (getPlayerShip().getLives() <= 16)
-                    getPlayerShip().setLives(getPlayerShip().getLives() + 1);
+    private boolean checkKilled(Alien alien) {
+        Missile m;
+        for (int i = 0; i < playerShip.getStorage().size(); i++) {
+            m = playerShip.getStorage().get(i);
+            if (checkBounds(alien, m)) {
+                if (alien.getHealth() > 0) {
+                    alien.setHealth(alien.getHealth() - 1);
+//                    alien.change();
+                } else {
+                    points += alien.getPoints();
+                    return true;
+                }
             }
-            // Remove alien
-            getEnemies().get(0).getList().addAll(alien.getList());
-            getEnemies().remove(alien);
-            getEnemies().trimToSize();
-            Alien.DELAY++;
-            setEnemiesKilled(getEnemiesKilled() + 1);
-            return true;
         }
+
         return false;
     }
     
@@ -144,39 +140,30 @@ public class Game {
 		return i;
 	}
 
-	public boolean isHit(ArrayList<Alien> input) {
-    	/*
-        int nextRight;
-        int nextEdge;
-
-        for(Alien b : input) {
-            for(AlienMissile a : b.list) {
-                nextRight = this.getFormattedX(a.toRightNext);
-                nextEdge = this.getFormattedY(a.toEdgeNext);
-                if(nextRight >= right && nextRight <= right + image.getIconWidth()) {
-                    if(nextEdge >= edge &&  nextEdge <= edge + image.getIconHeight()) {
-                        b.list.remove(a);
-                        return true;
-                    }
-                }
-            }
-
-            nextRight = b.getFormattedX();
-            nextEdge = b.getFormattedY();
-
-            if(nextRight >= right && nextRight <= right + image.getIconWidth() ||
-                    nextRight + b.getImage().getIconWidth() >= right && nextRight +
-                            b.getImage().getIconWidth() <= right + image.getIconWidth())
-                if(nextEdge >= edge &&  nextEdge <= edge + image.getIconHeight() ||
-                        nextEdge + b.getImage().getIconHeight() >= edge &&  nextEdge +
-                                b.getImage().getIconHeight() <= edge + image.getIconHeight()) {
-                    input.remove(b);
-//                    Alien.amountAttacking--;
+	public boolean isHit() {
+        Alien a;
+        for (int i = 0; i < getEnemies().size(); i++) {
+            a = getEnemies().get(i);
+            AlienMissile m;
+            for (int j = 0; j < a.getList().size(); j++) {
+                m = a.getList().get(j);
+                if (checkBounds(playerShip, m)) {
+                    a.getList().remove(j);
+                    j--;
                     return true;
                 }
+            }
+            if (checkBounds(playerShip, a))
+                return true;
         }
-        return false;*/
-    	return false;
+        return false;
+    }
+    
+    public boolean checkBounds(GameSprite a, GameSprite g) {
+       return a.getXCenter() >= g.getX() &&
+                a.getXCenter() <= g.getX() + g.getImage().getIconWidth() &&
+                a.getYCenter() >= g.getY() &&
+                a.getYCenter() <= g.getY() + g.getImage().getIconHeight();
     }
 
     /**

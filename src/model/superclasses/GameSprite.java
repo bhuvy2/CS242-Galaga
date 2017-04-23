@@ -92,6 +92,14 @@ public class GameSprite {
         this.image = image;
     }
 
+    public int getXCenter() {
+        return this.x + this.getImage().getIconWidth()/2;
+    }
+
+    public int getYCenter() {
+        return this.y + this.getImage().getIconHeight()/2;
+    }
+
     public int getFormattedY() {
         return this.getFormattedY(this.y);
     }
