@@ -16,6 +16,8 @@ public class ShipController {
     private Ship player;
     private final String LEFT = "left",
             RIGHT = "right",
+            KULEFT = "kuleft",
+            KURIGHT = "kuright",
             JLEFT = "jleft",
             JRIGHT = "jright",
             MAX = "max",
@@ -35,9 +37,15 @@ public class ShipController {
             throttle,
             throttleup,
             throttledown,
+            kuleft,
+            kuright,
             shots;
     
     GameSoundboard brd = new GameSoundboard();
+    
+    private Boolean rightPressed = false, leftPressed = false;
+    
+    int jump = 64;
 
     public void setShipControls(GamePanel pnl) {
         setControls();
@@ -56,31 +64,65 @@ public class ShipController {
      */
     private void setBasicMovement() {
     	GameSoundboard brd = new GameSoundboard();
+    	
+    	ShipController self = this;
         right = new AbstractAction(RIGHT) {
             public void actionPerformed(ActionEvent e) {
-                if (player.getX() <= GameWindow.getBoardWidth()-player.getImage().getIconWidth() - 2)
-                    player.setX(player.getX()+2);
+            	synchronized(player){
+	            	self.rightPressed = true;
+	                player.setRight();
+            	}
             }
         };
 
         left = new AbstractAction(LEFT) {
             public void actionPerformed(ActionEvent e) {
-                if (player.getX() >= 2)
-                    player.setX(player.getX()-2);
+            	synchronized(player){
+	            	self.leftPressed = true;
+	                player.setLeft();
+            	}
+            }
+        };
+        
+        kuright = new AbstractAction(KURIGHT) {
+            public void actionPerformed(ActionEvent e) {
+            	synchronized(player){
+	            	self.rightPressed = false;
+	            	if(!self.leftPressed)
+	            		player.setStop();
+	            	else
+	            		player.setLeft();
+            	}
+            }
+        };
+        
+        kuleft = new AbstractAction(KULEFT) {
+            public void actionPerformed(ActionEvent e) {
+            	synchronized(player){
+	            	self.leftPressed = false;
+	            	if(!self.rightPressed)
+	            		player.setStop();
+	            	else
+	            		player.setRight();
+            	}
             }
         };
 
         jright = new AbstractAction(JRIGHT) {
             public void actionPerformed(ActionEvent e) {
-                if (player.getX() <= GameWindow.getBoardWidth() - player.getImage().getIconWidth() - 8)
-                    player.setX(player.getX()+8);
+            	synchronized(player){
+                if (player.getX() <= GameWindow.getBoardWidth() - player.getImage().getIconWidth() - jump)
+                    player.setX(player.getX()+jump);
+            	}
             }
         };
 
         jleft = new AbstractAction(JLEFT) {
             public void actionPerformed(ActionEvent e) {
-                if (player.getX() >= 8)
-                    player.setX(player.getX()-8);
+            	synchronized(player){
+                if (player.getX() >= jump)
+                    player.setX(player.getX()-jump);
+            	}
             }
         };
 
@@ -145,8 +187,10 @@ public class ShipController {
      * @param jpl panel to react with key presses
      */
     private void setMappings(JPanel jpl) {
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0) , LEFT, left);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), RIGHT, right);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false) , LEFT, left);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), RIGHT, right);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true) , KULEFT, kuleft);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), KURIGHT, kuright);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.SHIFT_DOWN_MASK), JLEFT, jleft);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.SHIFT_DOWN_MASK), JRIGHT, jright);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0) , FIRE, fire);

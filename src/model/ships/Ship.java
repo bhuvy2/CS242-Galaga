@@ -24,6 +24,14 @@ public class Ship extends GameSprite {
 	    isInvincible,
 	    canThrottle,
 	    multipleShots;
+    
+    enum ShipState {
+    	LEFT,
+    	RIGHT,
+    	STOP
+    };
+    
+    ShipState current;
 
     /**
      * Ship constructor
@@ -37,6 +45,7 @@ public class Ship extends GameSprite {
     	this.isInvincible = false;
     	this.canThrottle = false;
     	this.multipleShots = false;
+    	current = ShipState.STOP;
     }
 
 
@@ -76,21 +85,9 @@ public class Ship extends GameSprite {
         }
     }
 
-//    /**
-//     * Removes the invisible Missiles that have reached the end of the screen.
-//     * @return All Missiles that have flew off the screen have been gotten rid of
-//     */
-//    public void removeInvisible() {
-//        for(int i = 0; i < storage.size(); i++)  {
-//            if(!storage.get(i).isVisible()) {
-//                storage.remove(i);
-//                i--;
-//            }
-//        }
-//    }
-
     /**
-     * Draws and moves ship's missiles each tick then removes them once they leave the screen
+     * Draws and moves ship's missiles each tick then removes 
+     * them once they leave the screen
      */
     public void tick() {
         for (int i = 0; i < storage.size(); i++) {
@@ -101,6 +98,32 @@ public class Ship extends GameSprite {
                 i--;
             }
         }
+        switch(current){
+		case LEFT:
+			if(this.x > 0)
+				this.x -= 2;
+			break;
+		case RIGHT:
+			if(this.x < GameWindow.BOARD_WIDTH-this.image.getIconWidth())
+				this.x += 2;
+			break;
+		case STOP:
+			break;
+		default:
+			break;
+        }
+    }
+    
+    public void setLeft(){
+    	current = ShipState.LEFT;
+    }
+    
+    public void setRight(){
+    	current = ShipState.RIGHT;
+    }
+    
+    public void setStop(){
+    	current = ShipState.STOP;
     }
 
     public boolean canFire() {
