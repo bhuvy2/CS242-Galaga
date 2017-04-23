@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import model.superclasses.*;
 import model.ships.Alien;
 import display.view.GameWindow;
+import io.GameConfig;
 
 /**
  * The Class Star s a star to be painted.
@@ -23,7 +24,6 @@ public class Star extends GameSprite
 			Color.PINK, Color.RED, Color.YELLOW
 	};
 	private Color starColor;
-	private int count;
 	public static final int length = 1;
 	private static final int[] parallaxLengths = {1, 2, 4};
 	private int step;
@@ -44,11 +44,10 @@ public class Star extends GameSprite
 	 * @param a
 	 */
 	public Star(int x, int y, Color a){
-		super("");
+		super(GameConfig.getBluePath());
 		this.x = x;
 		this.y = y;
-		count = 0;
-		setStarColor(a);
+		this.starColor = a;
 		image = null;
 		step = parallaxLengths[(int)(Math.random() * parallaxLengths.length)];
 	}
@@ -57,11 +56,9 @@ public class Star extends GameSprite
 	 * Moves the alien given a delay
 	 */
 	public void move(){
-		//if(count%(Alien.DELAY) == 0)
 		this.y += step;
 		if(this.y > GameWindow.BOARD_HEIGHT)
 			this.y = 0;
-		count++;
 	}
 	
 	/**
@@ -70,9 +67,9 @@ public class Star extends GameSprite
 	public void fade(){
 		int choice = (int)(Math.random() * 10);
 		if(choice <= 4){
-			setStarColor(getStarColor().brighter());
+			this.starColor = this.starColor.brighter();
 		}else if(choice <= 6){
-			setStarColor(getStarColor().darker());
+			this.starColor = this.starColor.darker();
 		}
 	}
 	
@@ -92,18 +89,5 @@ public class Star extends GameSprite
 		g.setColor(starColor);
 		g.drawRect(x, y, Star.length, Star.length);
 		g.fillRect(x, y, Star.length, Star.length);
-	}
-
-	/**
-	 * @return The color of the star
-	 */
-	public Color getStarColor() {
-		return starColor;
-	}
-	/**
-	 * @param starColor, sets the color to what the star has
-	 */
-	public void setStarColor(Color starColor) {
-		this.starColor = starColor;
 	}
 }

@@ -1,6 +1,9 @@
 package model;
 
 import model.ships.*;
+
+import java.awt.Component;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +44,11 @@ public class Game {
     	BonusStage,
     };
     
-    public void tick() {
+    public Game(){
+    	this.populate();
+    }
+    
+    public void tick(){
     	playerShip.tick();
     	this.setAttackers();
     	for(Alien al: enemies){
@@ -176,7 +183,7 @@ public class Game {
      * Populates game window with aliens in their given positions.
      */
     public void populate() {
-		ArrayList<Alien> enemies = new ArrayList<>();
+		enemies = new ArrayList<>();
 		Alien in;
 		for (int[] a : Game.BasicPosition) {
 			in = new BasicAlien(a[1], a[0]);
@@ -193,7 +200,6 @@ public class Game {
 			in.isMoving = true;
 			enemies.add(new AdvancedAlien(a[1], a[0]));
 		}
-		this.setEnemies(enemies);
 	}
 
     /**
@@ -326,5 +332,12 @@ public class Game {
     
     public boolean isGameOver(){
     	return this.gameOver;
+    }
+    
+    public void draw(Component c, Graphics g){
+    	this.playerShip.drawSelf(c, g);
+    	for(Alien al: this.getEnemies()){
+    		al.drawSelf(c, g);
+    	}
     }
 }

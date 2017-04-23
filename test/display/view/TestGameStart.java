@@ -1,15 +1,19 @@
 package display.view;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import display.view.panels.GamePanel;
-
+import model.Star;
+import static org.mockito.Mockito.*;
 public class TestGameStart {
 
 	@Test
 	public void testPaint() {
 		GameWindow window = new GameWindow();
-		GamePanel panel = new GamePanel(false);
+		ArrayList<Star> a = mock(ArrayList.class);
+		GamePanel panel = new GamePanel(a, false);
 		for(int i = 0; i < 180; i++){
 			panel.tick();
 		}

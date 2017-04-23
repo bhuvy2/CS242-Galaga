@@ -36,21 +36,36 @@ public class GamePanel extends JPanel {
 				parent.switchToLeaderBoard();
 			}
 			pnl.tick();
+			pnl.updateLabels();
 			pnl.repaint();
 		}
 	}
-
-	/**
-	 * Abstraction layer from the view
-	 */
-	private SpriteManager manager;
 	
 	/**
 	 * The timer that fires off the event to update and redraw
 	 */
 	private Timer timer;
 
+	/**
+	 * Model for the game
+	 */
 	private Game game;
+	
+	/**
+	 * Points to next life
+	 */
+	private JLabel toNext;
+	
+	private JLabel scoreLabel;
+	
+	private JLabel highScoreLabel;
+	
+	private ArrayList<Star> stars;
+	
+	public void updateLabels(){
+		toNext.setText("" + game.getToNextLife());
+		scoreLabel.setText("0");
+	}
 	
 	/**
 	 * Constructs a new gamepanel with bindings and
@@ -62,24 +77,41 @@ public class GamePanel extends JPanel {
 		game = new Game();
 		ShipController controller = new ShipController();
 		controller.setShipControls(this);
-		addModelToManager(strs);
 		this.setLayout(null);
 		timer = new Timer(1000/60, new TimerListener(this));
 		if(start){
 			timer.start();
 		}
+		stars = strs;
 
 		setPanelOptions();
 		
 		JLabel oneUp = createSimpleLabel("1up");
-		oneUp.setBounds(0, 0, 100, 30);
+		oneUp.setBounds(0, 0, 100, 25);
+		this.add(oneUp);
+		
+		toNext = createSimpleLabel("");
+		toNext.setForeground(Color.WHITE);
+		toNext.setBounds(0, 25, 100, 30);
+		this.add(toNext);
+		
 		JLabel score = createSimpleLabel("Score");
 		score.setBounds(220, 0, 100, 30);
+		this.add(score);
+		
+		scoreLabel = createSimpleLabel("");
+		scoreLabel.setForeground(Color.WHITE);
+		scoreLabel.setBounds(220, 25, 100, 30);
+		this.add(scoreLabel);
+		
 		JLabel lbl = createSimpleLabel("High Score");
 		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
-		this.add(oneUp);
-		this.add(score);
 		this.add(lbl);
+		
+		highScoreLabel = createSimpleLabel("0");
+		highScoreLabel.setForeground(Color.WHITE);
+		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
+		this.add(highScoreLabel);
 	}
 	
 	public JLabel createSimpleLabel(String lbl){
@@ -101,6 +133,9 @@ public class GamePanel extends JPanel {
 	 */
 	public void tick(){
 		game.tick();
+		for(Star str: this.stars){
+			str.tick();
+		}
 	}
 
 	/**
@@ -111,35 +146,16 @@ public class GamePanel extends JPanel {
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 	}
-
-	/**
-	 * Adds all the sprites in the model to manager
-	 */
-	private void addModelToManager(ArrayList<Star> strs) {
-		manager = new SpriteManager();
-		manager.addSprite(game.getPlayerShip());
-		game.populate();
-		for (Alien al : game.getEnemies()) {
-			manager.addSprite(al);
-		}
-		this.addStars(strs);
-	}
-	
-	/**
-	 * @param strs, from the previous panel
-	 */
-	public void addStars(ArrayList<Star> strs) {
-		for(Star str: strs){
-			manager.addSprite(str);
-		}
-	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		manager.draw(this, g);
+		game.draw(this, g);
+		for(Star str: this.stars){
+			str.drawSelf(this, g);
+		}
 	}
 	
 	public Game getGame(){
