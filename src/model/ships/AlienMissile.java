@@ -35,31 +35,31 @@ public class AlienMissile extends Missile implements Projectile {
         if(count % Alien.DELAY == 0) {
             switch(slope) {
                 case 0:
-                    y++;
+                    y+=4;
                     toRightNext = x;
                     toEdgeNext = y+LENGTH;
                     break;
                 case -1:
-                    y++;
-                    x++;
+                    y+=2;
+                    x+=2;
                     toEdgeNext = (int)(y + LENGTH * Math.sqrt(2));
                     toRightNext = (int)(x + LENGTH * Math.sqrt(2));
                     break;
                 case 1:
-                    y++;
-                    x--;
+                    y+=2;
+                    x-=2;
                     toEdgeNext = (int)(y + LENGTH * Math.sqrt(2));
                     toRightNext = (int)(x - LENGTH * Math.sqrt(2));
                     break;
                 case -2:
-                    y+= 2;
-                    x++;
+                    y+=4;
+                    x+=2;
                     toEdgeNext = (int)(y + LENGTH * Math.sqrt(5));
                     toRightNext = (int)(x + LENGTH * Math.sqrt(5));
                     break;
                 case 2:
-                    y+=2;
-                    x--;
+                    y+=4;
+                    x-=2;
                     toEdgeNext = (int)(y + LENGTH * Math.sqrt(5));
                     toRightNext = (int)(x - LENGTH * Math.sqrt(5));
                     break;

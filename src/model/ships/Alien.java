@@ -39,31 +39,6 @@ public abstract class Alien extends GameSprite {
     public abstract void attack(); //A specific attack for each alien
 
     /**
-     * Checks if is hit.
-     *
-     * @param storage is not Null
-     *            the storage variable comes from the ship class.
-     *            The array scans all missiles to see if it would work
-     * @return true, if is hit
-     */
-    public boolean isHit(ArrayList<Missile> storage) {
-        if(storage.size() == 0)
-            return false;
-
-        int right = this.getX() / 100 * GameWindow.getBoardWidth();
-        int edge = this.getY() / 100 * GameWindow.getBoardHeight();
-
-        for(Missile a: storage) {
-            if(a.getX() >= right && a.getX() <= right + image.getIconWidth())
-                if(a.getY() >= edge &&  a.getY() <= edge + image.getIconHeight()) {
-                    storage.remove(a);
-                    return true;
-                }
-        }
-        return false;
-    }
-
-    /**
      * Moves the Alien back and forth
      */
     public void move() {

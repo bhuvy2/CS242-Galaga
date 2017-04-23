@@ -1,5 +1,6 @@
 package display.view.panels;
 
+import controller.GameController;
 import controller.ShipController;
 import display.view.GameWindow;
 import model.Game;
@@ -63,7 +64,7 @@ public class GamePanel extends JPanel {
 	
 	public void updateLabels(){
 		toNext.setText("" + game.getToNextLife());
-		scoreLabel.setText("0");
+		scoreLabel.setText("" + game.getPoints());
 	}
 	
 	/**
@@ -74,35 +75,47 @@ public class GamePanel extends JPanel {
 	public GamePanel(ArrayList<Star> strs, boolean start){
 		super();
 		game = new Game();
+
+		// Set Keybinds
+		GameController gameController = new GameController();
 		ShipController controller = new ShipController();
+		gameController.setGameControls(this);
 		controller.setShipControls(this);
+
+		// Set timer
 		this.setLayout(null);
 		timer = new Timer(1000/60, new TimerListener(this));
 		if(start){
 			timer.start();
 		}
+
+		// Create stars
 		stars = strs;
 
+		// Set Options
 		setPanelOptions();
-		
+
+		// Display 1up
 		JLabel oneUp = createSimpleLabel("1up");
 		oneUp.setBounds(0, 0, 100, 25);
 		this.add(oneUp);
-		
+
 		toNext = createSimpleLabel("");
 		toNext.setForeground(Color.WHITE);
 		toNext.setBounds(0, 25, 100, 30);
 		this.add(toNext);
-		
+
+		// Display Score
 		JLabel score = createSimpleLabel("Score");
 		score.setBounds(220, 0, 100, 30);
 		this.add(score);
-		
+
 		scoreLabel = createSimpleLabel("");
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setBounds(220, 25, 100, 30);
 		this.add(scoreLabel);
-		
+
+		// Display high score
 		JLabel lbl = createSimpleLabel("High Score");
 		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
 		this.add(lbl);
@@ -159,5 +172,12 @@ public class GamePanel extends JPanel {
 	
 	public Game getGame(){
 		return this.game;
+	}
+
+	public void toggleTimer() {
+		if (timer.isRunning())
+			timer.stop();
+		else
+			timer.start();
 	}
 }

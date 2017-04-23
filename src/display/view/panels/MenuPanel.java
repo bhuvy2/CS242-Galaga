@@ -134,6 +134,9 @@ public class MenuPanel extends JPanel {
 	  JButton button = new JButton(text);
 	  button.setForeground(Color.BLACK);
 	  button.setBackground(Color.WHITE);
+	  button.setBorderPainted(false);
+	  button.setContentAreaFilled(false);
+	  button.setOpaque(true);
 	  Border line = new LineBorder(Color.BLACK);
 	  Border margin = new EmptyBorder(5, 15, 5, 15);
 	  Border compound = new CompoundBorder(line, margin);

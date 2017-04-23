@@ -3,7 +3,6 @@ package controller;
 import display.audio.GameSoundboard;
 import display.view.GameWindow;
 import display.view.panels.GamePanel;
-import model.Game;
 import model.ships.Alien;
 import model.ships.Ship;
 
@@ -177,6 +176,7 @@ public class ShipController {
 
         throttledown = new AbstractAction(THROTTLEDOWN) {
             public void actionPerformed(ActionEvent e) {
+                if (player.canThrottle())
                     Alien.DELAY++;
             }
         };
@@ -194,12 +194,12 @@ public class ShipController {
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.SHIFT_DOWN_MASK), JLEFT, jleft);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.SHIFT_DOWN_MASK), JRIGHT, jright);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0) , FIRE, fire);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_M, 0) , MAX, max);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_I, 0) , INVINCIBLE, invincible);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_T, 0) , THROTTLE, throttle);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_N, 0) , SHOTS, shots);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0) , THROTTLEUP, throttleup);
-        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0) , THROTTLEDOWN, throttledown);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_M, 0), MAX, max);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_I, 0), INVINCIBLE, invincible);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_T, 0), THROTTLE, throttle);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), SHOTS, shots);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), THROTTLEUP, throttleup);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), THROTTLEDOWN, throttledown);
     }
 
     /**

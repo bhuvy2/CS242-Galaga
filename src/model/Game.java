@@ -1,9 +1,9 @@
 package model;
 
 import model.ships.*;
-import java.awt.Component;
-import java.awt.Graphics;
 import model.superclasses.GameSprite;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +16,7 @@ public class Game {
             shotsHit,
             points,
             enemiesKilled,
-            toNextLife;
+            toNextLife = 5000;
     private volatile int level = 1;
     private boolean gameOver;
 	public static final int[][] BasicPosition =
@@ -49,6 +49,7 @@ public class Game {
     }
     
     public void tick(){
+        checkLevelClear();
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
@@ -92,11 +93,21 @@ public class Game {
         for (int i = 0; i < playerShip.getStorage().size(); i++) {
             m = playerShip.getStorage().get(i);
             if (checkBounds(alien, m)) {
-                if (alien.getHealth() > 0) {
+                if (alien.getHealth() > 1) {
                     alien.setHealth(alien.getHealth() - 1);
-//                    alien.change();
+                    playerShip.getStorage().remove(i);
+                    i--;
+                    shotsHit++;
+//                  alien.change();
                 } else {
-                    points += alien.getPoints();
+                    if (!playerShip.isInvincible()) {
+                        points += alien.getPoints();
+                        toNextLife -= alien.getPoints();
+                        check1up();
+                    }
+                    playerShip.getStorage().remove(i);
+                    enemiesKilled++;
+                    shotsHit++;
                     return true;
                 }
             }
@@ -111,7 +122,7 @@ public class Game {
         for (int i = 0; i < getEnemies().size(); i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
-            if ((attacking < this.getLevel() + 1 && rand > .8 || attacking == 0) && !a.isAttacking()) {
+            if ((attacking < this.getLevel() + 1 && rand > .99 || attacking == 0) && !a.isAttacking()) {
                 if (a instanceof BasicAlien) {
                     attacking++;
                     ((BasicAlien) a).startAttack();
@@ -153,23 +164,45 @@ public class Game {
                     return true;
                 }
             }
-            if (checkBounds(playerShip, a))
+            if (checkShipBounds(playerShip, a))
                 return true;
         }
         return false;
     }
-    
-    public boolean checkBounds(GameSprite a, GameSprite g) {
-       return a.getXCenter() >= g.getX() &&
+
+    private boolean checkShipBounds(GameSprite a, GameSprite g) {
+        return a.getXCenter() >= g.getX() &&
                 a.getXCenter() <= g.getX() + g.getImage().getIconWidth() &&
                 a.getYCenter() >= g.getY() &&
                 a.getYCenter() <= g.getY() + g.getImage().getIconHeight();
     }
 
+    private boolean checkBounds(GameSprite a, GameSprite g) {
+        return a.getX() < g.getX() + g.getImage().getIconWidth() &&
+                a.getX() + a.getImage().getIconWidth() > g.getX() &&
+                a.getY() < g.getY() + g.getImage().getIconHeight() &&
+                a.getY() + a.getImage().getIconHeight() > g.getY();
+    }
+
+    private void checkLevelClear() {
+        if (getEnemies().size() == 0) {
+            setLevel(level++);
+            playerShip.getStorage().removeAll(playerShip.getStorage());
+            populate();
+        }
+    }
+
+    private void check1up() {
+        if (toNextLife <= 0) {
+            toNextLife = toNextLife+5000;
+            playerShip.setLives(playerShip.getLives() + 1);
+        }
+    }
+
     /**
      * Populates game window with aliens in their given positions.
      */
-    public void populate() {
+    private void populate() {
 		enemies = new ArrayList<>();
 		Alien in;
 		for (int[] a : Game.BasicPosition) {
@@ -326,5 +359,15 @@ public class Game {
     	for(Alien al: this.getEnemies()){
     		al.drawSelf(c, g);
     	}
+    }
+
+    public void resetGame() {
+        points = 0;
+        level = 1;
+        shotsFired = 0;
+        shotsHit = 0;
+        enemiesKilled = 0;
+        toNextLife = 5000;
+        resetAttack();
     }
 }
