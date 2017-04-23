@@ -5,17 +5,13 @@ import display.view.GameWindow;
 import display.view.SpriteManager;
 import model.Game;
 import model.Star;
-import model.ships.*;
+import model.ships.Alien;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 /**
  * @author Bhuvan Venkatesh
@@ -39,7 +35,7 @@ public class GamePanel extends JPanel {
 				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(pnl);
 				parent.switchToLeaderBoard();
 			}
-			pnl.manager.tick();
+			pnl.tick();
 			pnl.repaint();
 		}
 	}
@@ -104,7 +100,7 @@ public class GamePanel extends JPanel {
 	 * Forces the manager to update
 	 */
 	public void tick(){
-		manager.tick();
+		game.tick();
 	}
 
 	/**

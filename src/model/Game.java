@@ -41,13 +41,13 @@ public class Game {
     	BonusStage,
     };
     
-    public void tick(){
+    public void tick() {
     	playerShip.tick();
     	this.setAttackers();
     	for(Alien al: enemies){
     		al.tick();
     	}
-    	this.checkShipHit();
+//    	this.checkShipHit();
     }
     
     /**
@@ -107,24 +107,22 @@ public class Game {
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size(); i++) {
             a = getEnemies().get(i);
-            if ((attacking < this.getLevel() + 1 && Math.random() > .8 ||
-                    attacking == 0) && !a.isAttacking()) {
-                System.out.println("Sending atk with: " + attacking);
+            double rand = Math.random();
+            if ((attacking < this.getLevel() + 1 && rand > .8 || attacking == 0) && !a.isAttacking()) {
                 if (a instanceof BasicAlien) {
+                    attacking++;
                     ((BasicAlien) a).startAttack();
-                    System.out.println("BASIC : " + i);
                 } else if (a instanceof AdvancedAlien) {
+                    attacking++;
                     ((AdvancedAlien) a).startAttack();
-                    System.out.println("BLUE : " + i);
                 } else if (a instanceof RedAlien) {
+                    attacking++;
                     ((RedAlien) a).startAttack();
-                    System.out.println("RED : " + i);
                 }
             }
-            a.attack();
-            boolean removed = checkHit(a);
-            if (removed)
-                i--;
+//            boolean removed = checkHit(a);
+//            if (removed)
+//                i--;
         }
 
     }

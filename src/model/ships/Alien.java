@@ -1,7 +1,6 @@
 package model.ships;
 
 import display.view.GameWindow;
-import model.Game;
 import model.superclasses.GameSprite;
 
 import java.util.ArrayList;
@@ -82,12 +81,22 @@ public abstract class Alien extends GameSprite {
                 }
             }
         }
-        this.count++;
     }
 
     public void tick() {
+        AlienMissile m;
+        for (int i = 0; i < list.size(); i++) {
+            m = list.get(i);
+            m.move();
+            if (!m.isVisible()) {
+                list.remove(i);
+                i--;
+            }
+        }
+
         move();
         attack();
+        this.count++;
     }
 
 
@@ -176,7 +185,9 @@ public abstract class Alien extends GameSprite {
      * Fires an Alien Missile in the -2, 0, 2 slope
      */
     public void fire() {
-
+        list.add(new AlienMissile(this, -2));
+        list.add(new AlienMissile(this, 0));
+        list.add(new AlienMissile(this, 2));
     }
 
 }

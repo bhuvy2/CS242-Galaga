@@ -1,7 +1,6 @@
 package model.ships;
 
 import display.view.GameWindow;
-import model.Game;
 import model.superclasses.GameSprite;
 
 import java.awt.*;
@@ -77,19 +76,22 @@ public class Ship extends GameSprite {
         }
     }
 
-    /**
-     * Removes the invisible Missiles that have reached the end of the screen.
-     * @return All Missiles that have flew off the screen have been gotten rid of
-     */
-    public void removeInvisible() {
-        for(int i = 0; i < storage.size(); i++)  {
-            if(!storage.get(i).isVisible()) {
-                storage.remove(i);
-                i--;
-            }
-        }
-    }
+//    /**
+//     * Removes the invisible Missiles that have reached the end of the screen.
+//     * @return All Missiles that have flew off the screen have been gotten rid of
+//     */
+//    public void removeInvisible() {
+//        for(int i = 0; i < storage.size(); i++)  {
+//            if(!storage.get(i).isVisible()) {
+//                storage.remove(i);
+//                i--;
+//            }
+//        }
+//    }
 
+    /**
+     * Draws and moves ship's missiles each tick then removes them once they leave the screen
+     */
     public void tick() {
         for (int i = 0; i < storage.size(); i++) {
         	Missile m = storage.get(i);

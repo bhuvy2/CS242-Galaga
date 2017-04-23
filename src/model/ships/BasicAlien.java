@@ -37,6 +37,7 @@ public class BasicAlien extends Alien {
      * Handles attacks for aliens
      */
     public void attack() {
+//        System.out.println(isAttacking);
         if (isAttacking) {
             if (count % DELAY == 0) {
                 y+=4;
@@ -48,7 +49,6 @@ public class BasicAlien extends Alien {
                 y = 0;
             else if (y == row) {
                 isAttacking = false;
-                isMoving = true;
             }
         }
     }
@@ -60,6 +60,6 @@ public class BasicAlien extends Alien {
      */
     public void startAttack() {
             isAttacking = true;
-            isMoving = false;
+            y+=4;
     }
 }

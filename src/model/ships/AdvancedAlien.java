@@ -1,10 +1,9 @@
 package model.ships;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import io.GameConfig;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +70,6 @@ public class AdvancedAlien extends Alien {
                         y-=2;
                     if(y == row) {
                         toSpot++;
-                        isMoving = true;
                         isAttacking = false;
                     }
                     break;
@@ -88,7 +86,6 @@ public class AdvancedAlien extends Alien {
         if(toSpot == 0) {
             toSpot++;
             isAttacking = true;
-            isMoving = false;
         }
     }
 

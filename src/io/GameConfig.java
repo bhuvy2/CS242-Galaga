@@ -33,7 +33,8 @@ public class GameConfig {
 		greenKey = "greenAlienIcon",
 		lazerKey = "lazersIcon",
 		redKey = "redAlienIcon",
-		yellowKey = "yellowAlienIcon";
+		yellowKey = "yellowAlienIcon",
+		bossKey = "bossAlienKey";
 	
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
@@ -54,6 +55,8 @@ public class GameConfig {
 	public static String getRedPath(){
 		return prop.getProperty(redKey);
 	}
+
+	public static String getBossKey() { return  prop.getProperty(bossKey); }
 	
 	/**
 	 * @return The path of the image file fro the yellow alien

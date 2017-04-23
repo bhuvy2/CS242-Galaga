@@ -18,30 +18,13 @@ public class AlienMissile extends Missile implements Projectile {
 
 
     /**
-     * Instantiates a new alien missile.
-     * @param Owner is the owner of said missile
-     */
-    public AlienMissile(Alien Owner) {
-        super(Owner.getX(), Owner.getY());
-        int r;
-        if(Owner.getX() / GameWindow.getBoardWidth() * 100 < GameWindow.getBoardWidth() / 2)
-            r = (int) (Math.random() * slopes.length/2);
-        else
-            r = (int) (Math.random() * slopes.length/2 + slopes.length/2);
-        slope = slopes[r];
-        count = 0;
-    }
-
-    /**
      * Instantiates a new alien missile. This is the second constructor for a specific slope.
-     * @param a the Alien a is the Owner of the missile
+     * @param alien the Alien a is the Owner of the missile
      * @param slope the slope is a slope that is presumed to be in the array slopes or within {-3, -2, -1, 0, 0, 1, 2, 3}
      */
     public AlienMissile(Alien alien, int slope) {
-        super(alien.getX() + GameWindow.getBoardWidth()/(4*alien.getImage().getIconWidth())+1,
-                alien.getY()+ GameWindow.getBoardHeight()/(4*alien.getImage().getIconHeight()));
+        super(alien.getX(), alien.getY());
         this.slope = slope;
-        count = 0;
     }
 
     /**
