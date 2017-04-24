@@ -46,6 +46,9 @@ public class LeaderBoardPanel extends JPanel {
 		addReturnButton(below);
 	}
 
+	/**
+	 * @param below, How much down the button should be
+	 */
 	private void addReturnButton(int below) {
 		this.add(Box.createRigidArea(new Dimension(0, 40)));
 		JButton ret = MenuPanel.createSimpleButton("Menu");
@@ -89,7 +92,7 @@ public class LeaderBoardPanel extends JPanel {
 	}
 
 	/**
-	 * Puts the leaderboard at the top
+	 * Puts the leader board at the top
 	 */
 	private void addTopLeaderLabel() {
 		JLabel label = new JLabel("---- Leaderboard ----");

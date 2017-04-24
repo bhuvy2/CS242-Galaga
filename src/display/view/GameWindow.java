@@ -84,12 +84,4 @@ public class GameWindow extends JFrame {
 		this.add(this.panel);
 		this.revalidate();
 	}
-
-	public static int getBoardHeight() {
-		return BOARD_HEIGHT;
-	}
-
-	public static int getBoardWidth() {
-		return BOARD_WIDTH;
-	}
 }

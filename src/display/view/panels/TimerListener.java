@@ -14,12 +14,22 @@ import model.Game;
  *	Performs the main game loop in the panel
  */
 final class TimerListener implements ActionListener {
+	
+	/**
+	 * JPANELS
+	 */
 	GamePanel pnl;
 	
+	/**
+	 * @param pnl, sets the panel for the timer
+	 */
 	public TimerListener(GamePanel pnl){
 		this.pnl = pnl;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		Game gm = pnl.getGame();
 		if (gm.isGameOver()) {

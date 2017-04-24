@@ -12,16 +12,46 @@ import display.audio.GameSoundboard;
  * Stores basic information and data for current game.
  */
 public class Game {
+	
+    /**
+     *  Keeps track of the enemies
+     */
     private ArrayList<Alien> enemies;
-    private Ship playerShip = new BasicShip();
+    
+    /**
+     *  The ship that the player controls
+     */
+    private Ship playerShip;
+    
+    /**
+     * Keeps track of different statistics
+     */
     private int shotsFired,
             shotsHit,
             points,
             enemiesKilled,
             toNextLife = 5000;
+    
+    /**
+     * Keeps trak of the current level
+     */
     private volatile int level = 1;
+    
+    
+    /**
+     * Makes sure that the game is over
+     */
     private boolean gameOver;
+    
+    /**
+     * Keeps track of the ship death animation
+     */
     private int deathAni = 0, deathCount = 0;
+    
+    
+	/**
+	 * Puts the yellow aliens on the grid
+	 */
 	public static final int[][] BasicPosition =
 	{{70,88}, {110, 88}, {150,88},
 	        {190,88}, {230, 88}, {270, 88},
@@ -29,12 +59,19 @@ public class Game {
 	        {430, 88},
 	};
 	
+	/**
+	 * Keeps track of the red aliens on the grid
+	 */
 	public static final int[][] RedPosition =
         {{90,112}, {130, 112}, {170,112},
                 {210,112}, {250, 112}, {290, 112},
                 {330, 112}, {370, 112},{410, 112},
         };
 	
+	/**
+	 * Keeps track of the green boss aliens initial
+	 * Positions
+	 */
 	public static final int[][] BossPosition =
         {{84, 48}, {124, 48}, {164,48},
                 {204,48}, {244, 48}, {284, 48},
@@ -52,6 +89,7 @@ public class Game {
     // Creates initial game
     public Game(){
     	brd = new GameSoundboard();
+    	playerShip = new BasicShip();
     	brd.playMain();
     	this.populate();
     }
@@ -187,16 +225,8 @@ public class Game {
             // If chosen call attack
             if ((rand > .99 || attacking == 0) && !a.isAttacking()) {
             	brd.playFlying();
-                if (a instanceof BasicAlien) {
-                    attacking++;
-                    ((BasicAlien) a).startAttack();
-                } else if (a instanceof AdvancedAlien) {
-                    attacking++;
-                    ((AdvancedAlien) a).startAttack();
-                } else if (a instanceof RedAlien) {
-                    attacking++;
-                    ((RedAlien) a).startAttack();
-                }
+            	a.startAttack();
+            	attacking++;
             }
         }
     }
@@ -462,8 +492,8 @@ public class Game {
         shotsHit = 0;
         enemiesKilled = 0;
         toNextLife = 5000;
-        playerShip.getStorage().removeAll(playerShip.getStorage());
-        getEnemies().removeAll(getEnemies());
+        playerShip.getStorage().clear();
+        this.enemies.clear();
         populate();
         resetAttack();
     }

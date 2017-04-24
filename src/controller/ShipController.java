@@ -158,7 +158,7 @@ public class ShipController {
 		jright = new AbstractAction(JRIGHT) {
             public void actionPerformed(ActionEvent e) {
             	synchronized(player){
-                if (player.getX() <= GameWindow.getBoardWidth() - player.getImage().getIconWidth() - jump)
+                if (player.getX() <= GameWindow.BOARD_WIDTH - player.getImage().getIconWidth() - jump)
                     player.setX(player.getX()+jump);
             	}
             }

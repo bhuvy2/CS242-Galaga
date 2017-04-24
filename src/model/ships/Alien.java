@@ -37,6 +37,8 @@ public abstract class Alien extends GameSprite {
     }
 
     public abstract void attack(); //A specific attack for each alien
+    
+    public abstract void startAttack();
 
     /**
      * Moves the Alien back and forth
@@ -45,7 +47,7 @@ public abstract class Alien extends GameSprite {
         if(isMoving) {
             if(x <= 0) {
                 isMovingRight = true;
-            } else if (x >= GameWindow.getBoardWidth() - 16) {
+            } else if (x >= GameWindow.BOARD_WIDTH - 16) {
                 isMovingRight = false;
             }
             

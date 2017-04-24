@@ -89,20 +89,4 @@ public abstract class GameSprite {
     public int getYCenter() {
         return this.y + this.getImage().getIconHeight()/2;
     }
-
-    public int getFormattedY() {
-        return this.getFormattedY(this.y);
-    }
-
-    public int getFormattedX() {
-        return this.getFormattedX(this.x);
-    }
-
-    public int getFormattedY(int toEdge) {
-        return toEdge / GameWindow.getBoardHeight() * 100;
-    }
-
-    public int getFormattedX(int toRight) {
-        return toRight / GameWindow.getBoardWidth() * 100;
-    }
 }

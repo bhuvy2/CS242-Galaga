@@ -24,7 +24,7 @@ public class BasicShip extends Ship {
     public BasicShip() {
     	super(GameConfig.getShipPath());
         this.x = 0;
-        this.y = GameWindow.getBoardHeight() - this.image.getIconHeight()*3;
+        this.y = GameWindow.BOARD_HEIGHT - this.image.getIconHeight()*3;
         this.storage = new ArrayList<Missile>(NUM_MISSILES);
         this.lives = NUM_LIVES;
     }

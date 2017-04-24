@@ -41,7 +41,7 @@ public class BasicAlien extends Alien {
         	y += 2;
             if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
                 fire();
-            else if (this.getY() >= GameWindow.getBoardHeight())
+            else if (this.getY() >= GameWindow.BOARD_HEIGHT)
                 y = 0;
             else if (y == row) {
                 isAttacking = false;

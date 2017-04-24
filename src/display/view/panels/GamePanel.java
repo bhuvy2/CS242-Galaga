@@ -6,6 +6,7 @@ import display.view.GameWindow;
 import io.Leaderboard;
 import model.Game;
 import model.Star;
+import model.ships.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,16 +35,34 @@ public class GamePanel extends JPanel {
 	 */
 	private JLabel toNext;
 	
+	/**
+	 * Scores
+	 */
 	private JLabel scoreLabel;
 	
+	/**
+	 * Displays the high score
+	 */
 	private JLabel highScoreLabel;
 
+	/**
+	 * Displays any power ups
+	 */
 	private JLabel powers;
 	
+	/**
+	 * Keeps track of the stars
+	 */
 	private ArrayList<Star> stars;
 	
+	/**
+	 * An instance to the totals
+	 */
 	private Leaderboard leaderbrd;
 	
+	/**
+	 * Keeps track of the point totals and powerups
+	 */
 	public void updateLabels(){
 	    // Set point texts
 		toNext.setText("" + game.getToNextLife());
@@ -55,7 +74,7 @@ public class GamePanel extends JPanel {
 		    powerUps = powerUps.concat("INVINCIBLE ");
         if (game.getPlayerShip().isMultipleShots())
 		    powerUps = powerUps.concat("MULTI-SHOT ");
-        if (game.getPlayerShip().getMaxShots() > 2)
+		if (Ship.getMaxShots() > 2)
 		    powerUps = powerUps.concat("MAX-SHOTS");
         powers.setText(powerUps);
 	}
@@ -216,7 +235,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	/**
-	 * @return The leaderboard
+	 * @return The leader board
 	 */
 	public Leaderboard getBoard(){
 		return this.leaderbrd;

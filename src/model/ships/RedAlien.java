@@ -49,7 +49,7 @@ public class RedAlien extends Alien {
                         fire();
                     if (this.getYCenter() >= 200 && this.getYCenter() <= 203)
                         fire();
-                    if (this.getY() >= GameWindow.getBoardHeight())
+                    if (this.getY() >= GameWindow.BOARD_HEIGHT)
                         toSpot++;
                     break;
                 case 2: // delay
@@ -92,13 +92,7 @@ public class RedAlien extends Alien {
         }
     }
 
-    /**
-     * Checks if is left.
-     * @return true, if is left
-     */
-    private boolean isLeft() {
-        return x < GameWindow.getBoardWidth()/2;
-    }
+
 
     @Override
     public void change() {

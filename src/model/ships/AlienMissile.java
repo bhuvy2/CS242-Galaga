@@ -77,6 +77,7 @@ public class AlienMissile extends Missile implements Projectile {
      * @return true if missile is visible
      */
     public boolean isVisible() {
-        return (y < GameWindow.getBoardHeight() && y > 0) && (x < GameWindow.getBoardWidth() && x > 0);
+        return (y < GameWindow.BOARD_HEIGHT && y > 0) 
+        		&& (x < GameWindow.BOARD_WIDTH && x > 0);
     }
 }

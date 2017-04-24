@@ -55,6 +55,9 @@ public class MenuPanel extends JPanel {
 		addStars();
 	}
 	
+	/**
+	 * Add stars randomly
+	 */
 	private void addStars() {
 		for (int i = 0; i < GameWindow.BOARD_HEIGHT * 1.5; i += Star.length) {
 			for (int j = 0; j < GameWindow.BOARD_WIDTH * 1.5; j += Star.length) {
@@ -66,6 +69,9 @@ public class MenuPanel extends JPanel {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for(Star str: stars){
@@ -144,6 +150,9 @@ public class MenuPanel extends JPanel {
 	  return button;
 	}
 	
+	/**
+	 * @return the stars
+	 */
 	public ArrayList<Star> getStars(){
 		return this.stars;
 	}
