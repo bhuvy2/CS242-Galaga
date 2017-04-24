@@ -70,4 +70,11 @@ public class Leaderboard {
 		Collections.sort((List<Player>)scores);
 		return scores;
 	}
+	
+	public int getMaxScore(){
+		if(scores.size() == 0){
+			return 0;
+		}
+		return scores.get(0).score;
+	}
 }

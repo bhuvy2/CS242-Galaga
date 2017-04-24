@@ -31,47 +31,61 @@ public class LeaderBoardPanel extends JPanel {
 	 */
 	private Leaderboard leader;
 	
+	private static final int leaderHeight = 50;
+	private static final int labelHeight = 30, labelPadding = 10;
+	
 	/**
 	 * Constructs the leaderboard from the file
 	 */
 	public LeaderBoardPanel(){
 		super();
-		JPanel self = this;
 		this.setBackground(Color.BLACK);
-		addScores();
+		this.setLayout(null);
+		addTopLeaderLabel();
+		int below = addScores();
+		addReturnButton(below);
+	}
+
+	private void addReturnButton(int below) {
 		this.add(Box.createRigidArea(new Dimension(0, 40)));
 		JButton ret = MenuPanel.createSimpleButton("Menu");
+		JPanel self = this;
 		ret.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(self);
 				parent.switchToMenu();
 			}
 		});
+		ret.setBounds(80, below, 100, 30);
 		this.add(ret);
 	}
 
 	/**
 	 * Adds the jlabel to the view
 	 */
-	private void addScores() {
+	private int addScores() {
 		leader = null;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		int pos = 0;
-		addTopLeaderLabel();
+		int pos = 1;
 		try {
 			leader = new Leaderboard();
 			for(Player plr: leader.scores){
-				String txt = ""+ (pos+1) + ". " + plr.name + ": " + plr.score;
+				if(pos == 11){
+					break;
+				}
+				String txt = ""+ (pos) + ". " + plr.name + ": " + plr.score;
 				JLabel lbl = new JLabel(txt);
 				lbl.setFont(GameWindow.gameFont);
 				lbl.setForeground(Color.YELLOW);
 				lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+				lbl.setBounds(80, leaderHeight+(labelHeight+labelPadding)*(pos), 
+						600, labelHeight);
 				pos += 1;
 				this.add(lbl);
 			}
 		} catch (IOException e) {
 			this.add(new JLabel("Unable to load"));
 		}
+		return leaderHeight+(labelHeight+labelPadding)*(pos);
 	}
 
 	/**
@@ -81,8 +95,8 @@ public class LeaderBoardPanel extends JPanel {
 		JLabel label = new JLabel("---- Leaderboard ----");
 		label.setForeground(Color.RED);
 		label.setFont(new Font("impact", 0, 32));
+		label.setBounds(80, 0, 500, leaderHeight);
 		this.add(label);
-		this.add(Box.createRigidArea(new Dimension(0, 40)));
 	}
 
 }

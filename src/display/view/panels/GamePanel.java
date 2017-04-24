@@ -3,6 +3,7 @@ package display.view.panels;
 import controller.GameController;
 import controller.ShipController;
 import display.view.GameWindow;
+import io.Leaderboard;
 import model.Game;
 import model.Star;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -94,18 +96,32 @@ public class GamePanel extends JPanel {
 
 		// Set Options
 		setPanelOptions();
+		setUpInfoLabels();
+	}
 
-		// Display 1up
-		JLabel oneUp = createSimpleLabel("1up");
-		oneUp.setBounds(0, 0, 100, 25);
-		this.add(oneUp);
+	private void setUpInfoLabels() {
+		addOneUpLabel();
+		addScoreLabel();
+		addHighScoreLabel();
+	}
 
-		toNext = createSimpleLabel("");
-		toNext.setForeground(Color.WHITE);
-		toNext.setBounds(0, 25, 100, 30);
-		this.add(toNext);
+	private void addHighScoreLabel() {
+		JLabel lbl = createSimpleLabel("High Score");
+		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
+		this.add(lbl);
+		String score = "";
+		try {
+			score = "" + (new Leaderboard()).getMaxScore();
+		} catch (IOException e) {
+			
+		}
+		highScoreLabel = createSimpleLabel(score);
+		highScoreLabel.setForeground(Color.WHITE);
+		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
+		this.add(highScoreLabel);
+	}
 
-		// Display Score
+	private void addScoreLabel() {
 		JLabel score = createSimpleLabel("Score");
 		score.setBounds(220, 0, 100, 30);
 		this.add(score);
@@ -114,16 +130,17 @@ public class GamePanel extends JPanel {
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setBounds(220, 25, 100, 30);
 		this.add(scoreLabel);
+	}
 
-		// Display high score
-		JLabel lbl = createSimpleLabel("High Score");
-		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
-		this.add(lbl);
-		
-		highScoreLabel = createSimpleLabel("0");
-		highScoreLabel.setForeground(Color.WHITE);
-		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
-		this.add(highScoreLabel);
+	private void addOneUpLabel() {
+		JLabel oneUp = createSimpleLabel("1up");
+		oneUp.setBounds(0, 0, 100, 25);
+		this.add(oneUp);
+
+		toNext = createSimpleLabel("");
+		toNext.setForeground(Color.WHITE);
+		toNext.setBounds(0, 25, 100, 30);
+		this.add(toNext);
 	}
 	
 	public JLabel createSimpleLabel(String lbl){
