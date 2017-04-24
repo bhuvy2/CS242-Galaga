@@ -19,6 +19,7 @@ public class Game {
             toNextLife = 5000;
     private volatile int level = 1;
     private boolean gameOver;
+    private int deathAni = 0, deathCount = 0;
 	public static final int[][] BasicPosition =
 	{{70,88}, {110, 88}, {150,88},
 	        {190,88}, {230, 88}, {270, 88},
@@ -50,6 +51,7 @@ public class Game {
     
     public void tick(){
         checkLevelClear();
+        checkDead();
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
@@ -80,12 +82,36 @@ public class Game {
     	if (!playerShip.isInvincible() && isHit()) {
             if (playerShip.getLives() > 0) {
             	playerShip.setLives(playerShip.getLives() - 1);
-                this.resetAttack();
+            	deathAni = 1;
             } else {
                 this.gameOver = true;
             }
         }
     	return true;
+    }
+
+    private void checkDead() {
+        if (deathAni == 1) {
+            deathCount++;
+            if (deathCount == 1) {
+                playerShip.setCanMove(false);
+                playerShip.setInvincible(true);
+                playerShip.change();
+            } else if (deathCount == 6) {
+                playerShip.change();
+            } else if (deathCount == 11) {
+                playerShip.change();
+            } else if (deathCount == 16) {
+                playerShip.change();
+            } else if (deathCount == 21) {
+                playerShip.change();
+                deathCount = 0;
+                deathAni = 0;
+                playerShip.setCanMove(true);
+                playerShip.setInvincible(false);
+                this.resetAttack();
+            }
+        }
     }
     
     private boolean checkKilled(Alien alien) {
@@ -98,7 +124,7 @@ public class Game {
                     playerShip.getStorage().remove(i);
                     i--;
                     shotsHit++;
-//                  alien.change();
+                    alien.change();
                 } else {
                     if (!playerShip.isInvincible()) {
                         points += alien.getPoints();

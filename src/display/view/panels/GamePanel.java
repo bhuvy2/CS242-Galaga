@@ -61,12 +61,28 @@ public class GamePanel extends JPanel {
 	private JLabel scoreLabel;
 	
 	private JLabel highScoreLabel;
+
+	private JLabel powers;
 	
 	private ArrayList<Star> stars;
 	
 	public void updateLabels(){
 		toNext.setText("" + game.getToNextLife());
 		scoreLabel.setText("" + game.getPoints());
+
+		String powerUps = "";
+		if (game.getPlayerShip().isInvincible()) {
+		    powerUps = powerUps.concat("INVINCIBLE ");
+        }
+
+        if (game.getPlayerShip().isMultipleShots()) {
+		    powerUps = powerUps.concat("MULTI-SHOT ");
+        }
+
+        if (game.getPlayerShip().getMaxShots() > 2) {
+		    powerUps = powerUps.concat("MAX-SHOTS");
+        }
+        powers.setText(powerUps);
 	}
 	
 	/**
@@ -133,14 +149,21 @@ public class GamePanel extends JPanel {
 	}
 
 	private void addOneUpLabel() {
-		JLabel oneUp = createSimpleLabel("1up");
-		oneUp.setBounds(0, 0, 100, 25);
-		this.add(oneUp);
+		// Display high score
+		JLabel lbl = createSimpleLabel("High Score");
+		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
+		this.add(lbl);
+		
+		highScoreLabel = createSimpleLabel("0");
+		highScoreLabel.setForeground(Color.WHITE);
+		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
+		this.add(highScoreLabel);
 
-		toNext = createSimpleLabel("");
-		toNext.setForeground(Color.WHITE);
-		toNext.setBounds(0, 25, 100, 30);
-		this.add(toNext);
+		powers = createSimpleLabel("");
+		powers.setForeground(Color.WHITE);
+		powers.setHorizontalAlignment(SwingConstants.RIGHT);
+		powers.setBounds(170, 680, 300,30);
+		this.add(powers);
 	}
 	
 	public JLabel createSimpleLabel(String lbl){

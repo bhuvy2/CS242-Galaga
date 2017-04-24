@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by mscislowski on 4/9/17.
  */
-public class GameSprite {
+public abstract class GameSprite {
 
     protected int x, y;
     protected ImageIcon image;
@@ -25,6 +25,8 @@ public class GameSprite {
     protected GameSprite(String image){
     	this.image = SpriteCache.get(image);
     }
+
+    public abstract void change();
 
     /**
      * Retrieves toEdge coordinate of sprite

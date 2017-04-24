@@ -1,12 +1,9 @@
 package model;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-
-import model.superclasses.*;
-import model.ships.Alien;
 import display.view.GameWindow;
 import io.GameConfig;
+import model.superclasses.GameSprite;
+
+import java.awt.*;
 
 /**
  * The Class Star s a star to be painted.
@@ -81,10 +78,15 @@ public class Star extends GameSprite
 		if (Math.random() > .5)
 			this.fade();
 	}
-	
+
+	@Override
+	public void change() {
+
+	}
+
 	/* (non-Javadoc)
-	 * @see model.superclasses.GameSprite#drawSelf(java.awt.Component, java.awt.Graphics)
-	 */
+         * @see model.superclasses.GameSprite#drawSelf(java.awt.Component, java.awt.Graphics)
+         */
 	public void drawSelf(Component c, Graphics g){
 		g.setColor(starColor);
 		g.drawRect(x, y, Star.length, Star.length);

@@ -9,18 +9,20 @@ import java.util.ArrayList;
 /**
  * Created by mscislowski on 4/9/17.
  */
-public class Ship extends GameSprite {
+public abstract class Ship extends GameSprite {
     // Missile storage
     ArrayList<Missile> storage;
 
     // Number of lives ship has
-    protected int lives;
+    int lives;
+    private int MAX_LIVES = 5;
 
     // Maximum number of shots allowed
-    protected static int MAX_SHOTS = 2;
+    private static int MAX_SHOTS = 2;
+
 
     // Valid options for ship
-    protected boolean canMove, canFire,
+    private boolean canMove, canFire,
 	    isInvincible,
 	    canThrottle,
 	    multipleShots;
@@ -85,6 +87,8 @@ public class Ship extends GameSprite {
         }
     }
 
+    public abstract void change();
+
     /**
      * Draws and moves ship's missiles each tick then removes 
      * them once they leave the screen
@@ -147,7 +151,8 @@ public class Ship extends GameSprite {
     }
 
     public void setLives(int lives) {
-        this.lives = lives;
+        if (lives <= MAX_LIVES)
+            this.lives = lives;
     }
 
     public boolean isInvincible() {

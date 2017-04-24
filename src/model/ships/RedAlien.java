@@ -43,8 +43,11 @@ public class RedAlien extends Alien {
                 case 0:
                     break;
                 case 1:
-                    y += 2;
-                    if (this.getY() >= 400 && this.getY() <= 401)
+                    if (count % (DELAY) == 0)
+                        y += 4;
+                    if (this.getYCenter() >= 400 && this.getYCenter() <= 403)
+                        fire();
+                    if (this.getYCenter() >= 200 && this.getYCenter() <= 203)
                         fire();
                     if (this.getY() >= GameWindow.getBoardHeight())
                         toSpot++;
@@ -52,12 +55,12 @@ public class RedAlien extends Alien {
                 case 2:
                     if (count % DELAY == 0)
                         angle += 4;
-                    if (isLeft())
-                        radTemp = Math.toRadians(angle);
-                    else
-                        radTemp = Math.toRadians(180 - angle);
-                    x = column + circleDiameter / 2 + (int) (Math.cos(radTemp) * circleDiameter);
-                    y = 644 - (int)(Math.sin(radTemp)*circleDiameter/2);
+//                    if (isLeft())
+//                        radTemp = Math.toRadians(angle);
+//                    else
+//                        radTemp = Math.toRadians(180 - angle);
+//                    x = column + circleDiameter / 2 + (int) (Math.cos(radTemp) * circleDiameter);
+//                    y = 644 - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if (angle >= 180) {
                         angle = 0;
                         y = 0;
@@ -71,7 +74,6 @@ public class RedAlien extends Alien {
                         isAttacking = false;
                         isMoving = true;
                         toSpot = 0;
-                        x = column;
                     }
                     break;
                 default:
@@ -96,5 +98,10 @@ public class RedAlien extends Alien {
      */
     private boolean isLeft() {
         return x < GameWindow.getBoardWidth()/2;
+    }
+
+    @Override
+    public void change() {
+
     }
 }

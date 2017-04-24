@@ -44,7 +44,7 @@ public class BasicAlien extends Alien {
                 //y+=4;
             //}
 
-            if (this.getY() >= 403 && this.getY() <= 404)
+            if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
                 fire();
             else if (this.getY() >= GameWindow.getBoardHeight())
                 y = 0;
@@ -62,5 +62,10 @@ public class BasicAlien extends Alien {
     public void startAttack() {
             isAttacking = true;
             y+=4;
+    }
+
+    @Override
+    public void change() {
+
     }
 }

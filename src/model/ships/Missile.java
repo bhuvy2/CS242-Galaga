@@ -38,4 +38,8 @@ public class Missile extends GameSprite implements Projectile {
         return y > 0;
     }
 
+    @Override
+    public void change() {
+
+    }
 }
