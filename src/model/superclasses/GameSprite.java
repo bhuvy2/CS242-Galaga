@@ -1,6 +1,5 @@
 package model.superclasses;
 
-import display.view.GameWindow;
 import io.SpriteCache;
 
 import javax.swing.*;
@@ -64,10 +63,17 @@ public abstract class GameSprite {
         return image;
     }
     
+    /**
+     * @param c, the component to draw
+     * @param g, the graphics g
+     */
     public void drawSelf(Component c, Graphics g){
     	this.image.paintIcon(c, g, this.x, this.y);
     }
 
+    /**
+     * Ticks the sprite along
+     */
     public void tick() {
 
     }

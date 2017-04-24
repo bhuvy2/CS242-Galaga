@@ -3,8 +3,7 @@ package model.superclasses;
 /**
  * Created by mscislowski on 4/9/17.
  */
-public interface Projectile
-{
+public interface Projectile{
 
     /**
      * Moves the Missile in specified direction
