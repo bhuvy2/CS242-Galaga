@@ -1,8 +1,8 @@
 package tests
 
+import model.ships.AdvancedAlien
 import model.ships.BasicAlien
 import model.ships.BasicShip
-import model.ships.BlueAlien
 import model.ships.RedAlien
 
 class ShipTests extends GroovyTestCase {
@@ -36,7 +36,7 @@ class ShipTests extends GroovyTestCase {
     }
 
     void testBlueAlien() {
-        BlueAlien alien = new BlueAlien(50, 50)
+        AdvancedAlien alien = new AdvancedAlien(50, 50)
         assert alien.health == 2
         assert alien.points == 300
         assert alien.x == 50
