@@ -22,7 +22,7 @@ public class Leaderboard {
 	/**
 	 * Where the data is loaded
 	 */
-	private static final String leaderboardFilename = "data/leaderboard.txt";
+	private static String leaderboardFilename = "data/leaderboard.txt";
 	
 	/**
 	 * Keeps the scores of the players sorted

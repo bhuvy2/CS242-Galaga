@@ -1,4 +1,4 @@
-package display.view;
+package io;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -13,33 +13,40 @@ import model.superclasses.GameSprite;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 /**
  * @author Bhuvan Venkatesh
- *	Manages the interface between the view and the
- *	model
+ *	Caches images so they are not read multiple times
  */
-public class SpriteCache{
+public class SpriteCache {
 	
 	private static HashMap<String, ImageIcon> icon = new HashMap<>();
 	
+	/**
+	 * @param res, the path to the resource
+	 * @return The ImageIcon or null
+	 */
 	public static ImageIcon get(String res){
 		ImageIcon cur = icon.get(res);
 		if(cur != null){
 			return cur;
 		}
-		
-		BufferedImage temp = null;
-		try{
-			temp = ImageIO.read(new File(res));
-		}catch(IOException | NullPointerException e){
-			System.out.println("Error");
-		}
-		
+		BufferedImage temp = tryReadImage(res);
 		
 		if(temp != null) {
 			cur = new ImageIcon((Image)temp);
 		}
 		icon.put(res, cur);
 		return cur;
+	}
+
+	private static BufferedImage tryReadImage(String res) {
+		BufferedImage temp = null;
+		try{
+			temp = ImageIO.read(new File(res));
+		}catch(IOException | NullPointerException e){
+			System.out.println("Error");
+		}
+		return temp;
 	}
 }
