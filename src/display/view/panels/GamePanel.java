@@ -112,12 +112,15 @@ public class GamePanel extends JPanel {
 		setUpInfoLabels();
 	}
 
+	// Sets up labels for game panel
 	private void setUpInfoLabels() {
 		addOneUpLabel();
 		addScoreLabel();
 		addHighScoreLabel();
+		addPowerUpNotifications();
 	}
 
+    // Adds high score label to panel
 	private void addHighScoreLabel() {
 		JLabel lbl = createSimpleLabel("High Score");
 		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
@@ -134,6 +137,7 @@ public class GamePanel extends JPanel {
 		this.add(highScoreLabel);
 	}
 
+    // Adds game score label to panel
 	private void addScoreLabel() {
 		JLabel score = createSimpleLabel("Score");
 		score.setBounds(220, 0, 100, 30);
@@ -145,24 +149,27 @@ public class GamePanel extends JPanel {
 		this.add(scoreLabel);
 	}
 
+    // Adds points to oneup label to panel
 	private void addOneUpLabel() {
-		// Display high score
-		JLabel lbl = createSimpleLabel("High Score");
-		lbl.setBounds(GameWindow.BOARD_WIDTH-100, 0, 100, 30);
-		this.add(lbl);
-		
-		highScoreLabel = createSimpleLabel("0");
-		highScoreLabel.setForeground(Color.WHITE);
-		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
-		this.add(highScoreLabel);
+        JLabel oneUp = createSimpleLabel("1up");
+        oneUp.setBounds(0, 0, 100, 25);
+        this.add(oneUp);
 
-		// Display power up notifications
-		powers = createSimpleLabel("");
-		powers.setForeground(Color.WHITE);
-		powers.setHorizontalAlignment(SwingConstants.RIGHT);
-		powers.setBounds(170, 680, 300,30);
-		this.add(powers);
-	}
+        toNext = createSimpleLabel("");
+        toNext.setForeground(Color.WHITE);
+        toNext.setBounds(0, 25, 100, 30);
+        this.add(toNext);
+    }
+
+    // Adds power up label to panel
+	private void addPowerUpNotifications() {
+        // Display power up notifications
+        powers = createSimpleLabel("");
+        powers.setForeground(Color.WHITE);
+        powers.setHorizontalAlignment(SwingConstants.RIGHT);
+        powers.setBounds(170, 680, 300,30);
+        this.add(powers);
+    }
 
 	// Creates simple JLabel
 	public JLabel createSimpleLabel(String lbl){

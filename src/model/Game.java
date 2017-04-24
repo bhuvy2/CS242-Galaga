@@ -452,6 +452,9 @@ public class Game {
         shotsHit = 0;
         enemiesKilled = 0;
         toNextLife = 5000;
+        playerShip.getStorage().removeAll(playerShip.getStorage());
+        getEnemies().removeAll(getEnemies());
+        populate();
         resetAttack();
     }
 }

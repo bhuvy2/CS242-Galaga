@@ -71,6 +71,7 @@ public class AdvancedAlien extends Alien {
                     if(y == row) {
                         toSpot++;
                         isAttacking = false;
+                        toSpot = 0;
                     }
                     break;
             }
