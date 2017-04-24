@@ -101,11 +101,11 @@ public class Ship extends GameSprite {
         switch(current){
 		case LEFT:
 			if(this.x > 0)
-				this.x -= 2;
+				this.x -= 3;
 			break;
 		case RIGHT:
 			if(this.x < GameWindow.BOARD_WIDTH-this.image.getIconWidth())
-				this.x += 2;
+				this.x += 3;
 			break;
 		case STOP:
 			break;

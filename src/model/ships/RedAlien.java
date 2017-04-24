@@ -43,8 +43,7 @@ public class RedAlien extends Alien {
                 case 0:
                     break;
                 case 1:
-                    if (count % (DELAY) == 0)
-                        y += 4;
+                    y += 2;
                     if (this.getY() >= 400 && this.getY() <= 401)
                         fire();
                     if (this.getY() >= GameWindow.getBoardHeight())
