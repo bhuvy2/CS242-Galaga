@@ -1,6 +1,7 @@
 package model.superclasses;
 
 import display.view.GameWindow;
+import display.view.SpriteCache;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,18 +23,7 @@ public abstract class GameSprite {
      * @param image string to image file
      */
     protected GameSprite(String image){
-    	BufferedImage temp = null;
-		try{
-			temp = ImageIO.read(new File(image));
-		}catch(IOException | NullPointerException e){
-			System.out.println("Error");
-		}
-		
-		if(temp != null) {
-			this.image = new ImageIcon((Image)temp);
-		} else {
-			this.image = null;
-		}
+    	this.image = SpriteCache.get(image);
     }
 
     public abstract void change();

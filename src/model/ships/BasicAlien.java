@@ -39,9 +39,10 @@ public class BasicAlien extends Alien {
     public void attack() {
 //        System.out.println(isAttacking);
         if (isAttacking) {
-            if (count % DELAY == 0) {
-                y+=4;
-            }
+        	y += 2;
+            //if (count % DELAY == 0) {
+                //y+=4;
+            //}
 
             if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
                 fire();

@@ -8,7 +8,7 @@ import model.superclasses.Projectile;
  */
 public class AlienMissile extends Missile implements Projectile {
     //Selects a random slope to fire if none is provided
-    private static final int[] slopes = {-3, -2, -1, 0, 0, 1, 2, 3};
+    private static final int[] slopes = {-2, -1, 0, 1, 2};
 
     protected int toRightNext,            //This is the next x coordinate of the missile
             toEdgeNext,                   //The next y coordinate of the missile
@@ -32,7 +32,7 @@ public class AlienMissile extends Missile implements Projectile {
      */
     public void move() {
         // Cases denoted by slope angle type
-        if(count % Alien.DELAY == 0) {
+        if(true) {
             switch(slope) {
                 case 0:
                     y+=4;
@@ -65,6 +65,7 @@ public class AlienMissile extends Missile implements Projectile {
                     break;
                 default:
                     break;
+
             }
         }
         count++;

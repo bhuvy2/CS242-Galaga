@@ -55,11 +55,11 @@ public class Game {
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
-    	for (int i = 0; i< getEnemies().size(); i++) {
+    	for (int i = 0; i< this.enemies.size(); i++) {
     	    al = getEnemies().get(i);
     		al.tick();
     		if(checkKilled(al)) {
-                getEnemies().remove(i);
+    			this.enemies.remove(i);
                 i--;
             }
     	}
@@ -145,10 +145,10 @@ public class Game {
     public void setAttackers() {
         Alien a;
         int attacking = getAmountAttacking();
-        for (int i = 0; i < getEnemies().size(); i++) {
+        for (int i = 0; i < getEnemies().size() && attacking < this.getLevel() + 1; i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
-            if ((attacking < this.getLevel() + 1 && rand > .99 || attacking == 0) && !a.isAttacking()) {
+            if ((rand > .99 || attacking == 0) && !a.isAttacking()) {
                 if (a instanceof BasicAlien) {
                     attacking++;
                     ((BasicAlien) a).startAttack();
@@ -224,7 +224,6 @@ public class Game {
             playerShip.setLives(playerShip.getLives() + 1);
         }
     }
-
     /**
      * Populates game window with aliens in their given positions.
      */
