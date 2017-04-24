@@ -29,6 +29,9 @@ public class BasicShip extends Ship {
         this.lives = NUM_LIVES;
     }
 
+    /**
+     * Change order for dying ship
+     */
     public void change() {
         imageIndex++;
         switch (imageIndex) {
@@ -53,6 +56,10 @@ public class BasicShip extends Ship {
         }
     }
 
+    /**
+     * Updates image of ship
+     * @param path path to imageIcon
+     */
     public void setImage(String path) {
         BufferedImage temp = null;
         try{

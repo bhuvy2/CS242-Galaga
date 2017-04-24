@@ -44,11 +44,15 @@ public class Game {
     	NormalStage,
     	BonusStage,
     };
-    
+
+    // Creates initial game
     public Game(){
     	this.populate();
     }
-    
+
+    /**
+     * Handles each action that should take place per tick of the game
+     */
     public void tick(){
         checkLevelClear();
         checkDead();
@@ -77,7 +81,12 @@ public class Game {
             a.returnToPosition();
         }
     }
-    
+
+    /**
+     * Checks if ship was hit. Decrements lives and starts death animation.
+     * Sets gameover to true if last life.
+     * @return true if ship was hit
+     */
     private boolean checkShipHit(){
     	if (!playerShip.isInvincible() && isHit()) {
             if (playerShip.getLives() > 0) {
@@ -90,9 +99,14 @@ public class Game {
     	return true;
     }
 
+    /**
+     * Checks if ship is performing death animation and updates ship icon.
+     * Ship is set to invincible and cannot move during this time.
+     */
     private void checkDead() {
         if (deathAni == 1) {
             deathCount++;
+            // Set animation states
             if (deathCount == 1) {
                 playerShip.setCanMove(false);
                 playerShip.setInvincible(true);
@@ -113,12 +127,21 @@ public class Game {
             }
         }
     }
-    
+
+    /**
+     * Checks if alien is killed, removes alien and missiles if it was killed.
+     * Updates sprite if damaged.
+     * Accumulates points and checks if ship gets additional life for new points.
+     * @param alien alien being checked
+     * @return true if dead
+     */
     private boolean checkKilled(Alien alien) {
         Missile m;
+        // Checks missilses
         for (int i = 0; i < playerShip.getStorage().size(); i++) {
             m = playerShip.getStorage().get(i);
             if (checkBounds(alien, m)) {
+                // Change alien if health is more than 1
                 if (alien.getHealth() > 1) {
                     alien.setHealth(alien.getHealth() - 1);
                     playerShip.getStorage().remove(i);
@@ -126,11 +149,13 @@ public class Game {
                     shotsHit++;
                     alien.change();
                 } else {
+                    // Accumulate points if ship is not invincible
                     if (!playerShip.isInvincible()) {
                         points += alien.getPoints();
                         toNextLife -= alien.getPoints();
                         check1up();
                     }
+                    // Remove missile and increment stats
                     playerShip.getStorage().remove(i);
                     enemiesKilled++;
                     shotsHit++;
@@ -141,13 +166,17 @@ public class Game {
 
         return false;
     }
-    
+
+    /**
+     * Randomly determines which aliens should be attacking
+     */
     public void setAttackers() {
         Alien a;
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size() && attacking < this.getLevel() + 1; i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
+            // If chosen call attack
             if ((rand > .99 || attacking == 0) && !a.isAttacking()) {
                 if (a instanceof BasicAlien) {
                     attacking++;
@@ -160,13 +189,13 @@ public class Game {
                     ((RedAlien) a).startAttack();
                 }
             }
-//            boolean removed = checkHit(a);
-//            if (removed)
-//                i--;
         }
-
     }
-    
+
+    /**
+     * Checks amount of aliens attacking
+     * @return number of attackers
+     */
     private int getAmountAttacking() {
 		int i = 0;
 		for(Alien al: this.getEnemies()){
@@ -177,6 +206,10 @@ public class Game {
 		return i;
 	}
 
+    /**
+     * Checks if ship is hit. Compared to center of ship rather than entire sprite
+     * @return
+     */
 	public boolean isHit() {
         Alien a;
         for (int i = 0; i < getEnemies().size(); i++) {
@@ -184,7 +217,7 @@ public class Game {
             AlienMissile m;
             for (int j = 0; j < a.getList().size(); j++) {
                 m = a.getList().get(j);
-                if (checkBounds(playerShip, m)) {
+                if (checkShipBounds(playerShip, m)) {
                     a.getList().remove(j);
                     j--;
                     return true;
@@ -196,6 +229,12 @@ public class Game {
         return false;
     }
 
+    /**
+     * Checks if sprite overlaps center of ship sprite
+     * @param a ship
+     * @param g enemy sprite or missile
+     * @return true if overlap
+     */
     private boolean checkShipBounds(GameSprite a, GameSprite g) {
         return a.getXCenter() >= g.getX() &&
                 a.getXCenter() <= g.getX() + g.getImage().getIconWidth() &&
@@ -203,6 +242,12 @@ public class Game {
                 a.getYCenter() <= g.getY() + g.getImage().getIconHeight();
     }
 
+    /**
+     * Checks if any part of the sprites overlap
+     * @param a enemy alien
+     * @param g ship missiles
+     * @return true if overlap
+     */
     private boolean checkBounds(GameSprite a, GameSprite g) {
         return a.getX() < g.getX() + g.getImage().getIconWidth() &&
                 a.getX() + a.getImage().getIconWidth() > g.getX() &&
@@ -210,6 +255,9 @@ public class Game {
                 a.getY() + a.getImage().getIconHeight() > g.getY();
     }
 
+    /**
+     * Populates level if level cleared and increments level
+     */
     private void checkLevelClear() {
         if (getEnemies().size() == 0) {
             setLevel(level++);
@@ -218,6 +266,9 @@ public class Game {
         }
     }
 
+    /**
+     * Adds ship life if 5000 points are earned then resets counter
+     */
     private void check1up() {
         if (toNextLife <= 0) {
             toNextLife = toNextLife+5000;
@@ -378,7 +429,12 @@ public class Game {
     public boolean isGameOver(){
     	return this.gameOver;
     }
-    
+
+    /**
+     * Draws all aliens
+     * @param c
+     * @param g
+     */
     public void draw(Component c, Graphics g){
     	this.playerShip.drawSelf(c, g);
     	for(Alien al: this.getEnemies()){
@@ -386,6 +442,9 @@ public class Game {
     	}
     }
 
+    /**
+     * Resets game to level 1 and clears all stats
+     */
     public void resetGame() {
         points = 0;
         level = 1;

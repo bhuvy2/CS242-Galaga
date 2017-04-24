@@ -37,13 +37,8 @@ public class BasicAlien extends Alien {
      * Handles attacks for aliens
      */
     public void attack() {
-//        System.out.println(isAttacking);
         if (isAttacking) {
         	y += 2;
-            //if (count % DELAY == 0) {
-                //y+=4;
-            //}
-
             if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
                 fire();
             else if (this.getY() >= GameWindow.getBoardHeight())

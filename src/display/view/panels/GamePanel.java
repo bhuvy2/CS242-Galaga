@@ -67,21 +67,18 @@ public class GamePanel extends JPanel {
 	private ArrayList<Star> stars;
 	
 	public void updateLabels(){
+	    // Set point texts
 		toNext.setText("" + game.getToNextLife());
 		scoreLabel.setText("" + game.getPoints());
 
+		// Set string to display active power ups
 		String powerUps = "";
-		if (game.getPlayerShip().isInvincible()) {
+		if (game.getPlayerShip().isInvincible())
 		    powerUps = powerUps.concat("INVINCIBLE ");
-        }
-
-        if (game.getPlayerShip().isMultipleShots()) {
+        if (game.getPlayerShip().isMultipleShots())
 		    powerUps = powerUps.concat("MULTI-SHOT ");
-        }
-
-        if (game.getPlayerShip().getMaxShots() > 2) {
+        if (game.getPlayerShip().getMaxShots() > 2)
 		    powerUps = powerUps.concat("MAX-SHOTS");
-        }
         powers.setText(powerUps);
 	}
 	
@@ -159,13 +156,15 @@ public class GamePanel extends JPanel {
 		highScoreLabel.setBounds(GameWindow.BOARD_WIDTH-100, 25, 100, 30);
 		this.add(highScoreLabel);
 
+		// Display power up notifications
 		powers = createSimpleLabel("");
 		powers.setForeground(Color.WHITE);
 		powers.setHorizontalAlignment(SwingConstants.RIGHT);
 		powers.setBounds(170, 680, 300,30);
 		this.add(powers);
 	}
-	
+
+	// Creates simple JLabel
 	public JLabel createSimpleLabel(String lbl){
 		JLabel jlbl = new JLabel(lbl);
 		jlbl.setFont(new Font("impact", 0, 16));
@@ -214,6 +213,7 @@ public class GamePanel extends JPanel {
 		return this.game;
 	}
 
+	// Toggles timer run time effectively pausing the game
 	public void toggleTimer() {
 		if (timer.isRunning())
 			timer.stop();

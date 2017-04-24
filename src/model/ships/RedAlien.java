@@ -42,7 +42,7 @@ public class RedAlien extends Alien {
             switch (toSpot) {
                 case 0:
                     break;
-                case 1:
+                case 1: // Moving to attack and firing along path
                     if (count % (DELAY) == 0)
                         y += 4;
                     if (this.getYCenter() >= 400 && this.getYCenter() <= 403)
@@ -52,7 +52,7 @@ public class RedAlien extends Alien {
                     if (this.getY() >= GameWindow.getBoardHeight())
                         toSpot++;
                     break;
-                case 2:
+                case 2: // delay
                     if (count % DELAY == 0)
                         angle += 4;
 //                    if (isLeft())
@@ -67,7 +67,7 @@ public class RedAlien extends Alien {
                         toSpot++;
                     }
                     break;
-                case 3:
+                case 3: // Returns
                     if (count % DELAY == 0)
                         y += 4;
                     if (y == row) {

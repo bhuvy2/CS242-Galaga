@@ -59,6 +59,11 @@ public abstract class Alien extends GameSprite {
         }
     }
 
+    /**
+     * Draws icon
+     * @param c component to be drawn on
+     * @param g graphics to be used
+     */
     public void drawSelf(Component c, Graphics g) {
         this.image.paintIcon(c, g, this.x, this.y);
         for (AlienMissile m : list) {
@@ -66,6 +71,9 @@ public abstract class Alien extends GameSprite {
         }
     }
 
+    /**
+     * Alien actions to take place each tick
+     */
     public void tick() {
         // Missile movement
         AlienMissile m;

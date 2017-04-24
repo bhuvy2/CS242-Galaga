@@ -3,12 +3,8 @@ package model.superclasses;
 import display.view.GameWindow;
 import display.view.SpriteCache;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -84,10 +80,12 @@ public abstract class GameSprite {
         this.image = image;
     }
 
+    // X center of icon
     public int getXCenter() {
         return this.x + this.getImage().getIconWidth()/2;
     }
 
+    // Y center of icon
     public int getYCenter() {
         return this.y + this.getImage().getIconHeight()/2;
     }
