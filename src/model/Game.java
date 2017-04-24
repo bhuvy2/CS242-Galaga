@@ -6,6 +6,8 @@ import model.superclasses.GameSprite;
 import java.awt.*;
 import java.util.ArrayList;
 
+import display.audio.GameSoundboard;
+
 /**
  * Stores basic information and data for current game.
  */
@@ -44,9 +46,13 @@ public class Game {
     	NormalStage,
     	BonusStage,
     };
+    
+    private GameSoundboard brd;
 
     // Creates initial game
     public Game(){
+    	brd = new GameSoundboard();
+    	brd.playMain();
     	this.populate();
     }
 
@@ -106,6 +112,7 @@ public class Game {
     private void checkDead() {
         if (deathAni == 1) {
             deathCount++;
+            brd.playKill();
             // Set animation states
             if (deathCount == 1) {
                 playerShip.setCanMove(false);
@@ -137,7 +144,7 @@ public class Game {
      */
     private boolean checkKilled(Alien alien) {
         Missile m;
-        // Checks missilses
+        // Checks missiles
         for (int i = 0; i < playerShip.getStorage().size(); i++) {
             m = playerShip.getStorage().get(i);
             if (checkBounds(alien, m)) {
@@ -173,11 +180,13 @@ public class Game {
     public void setAttackers() {
         Alien a;
         int attacking = getAmountAttacking();
-        for (int i = 0; i < getEnemies().size() && attacking < this.getLevel() + 1; i++) {
+        for (int i = 0; i < getEnemies().size() 
+        		&& attacking < (int)(this.getLevel()*1.5 + 2); i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
             // If chosen call attack
             if ((rand > .99 || attacking == 0) && !a.isAttacking()) {
+            	brd.playFlying();
                 if (a instanceof BasicAlien) {
                     attacking++;
                     ((BasicAlien) a).startAttack();
@@ -263,6 +272,7 @@ public class Game {
             setLevel(level++);
             playerShip.getStorage().removeAll(playerShip.getStorage());
             populate();
+            brd.playLevelUp();
         }
     }
 

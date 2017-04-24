@@ -1,7 +1,7 @@
 package model.superclasses;
 
 import display.view.GameWindow;
-import display.view.SpriteCache;
+import io.SpriteCache;
 
 import javax.swing.*;
 import java.awt.*;
