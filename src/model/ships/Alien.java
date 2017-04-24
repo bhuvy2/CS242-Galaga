@@ -22,7 +22,7 @@ public abstract class Alien extends GameSprite {
     public boolean isAttacking;
     public boolean isMoving = true;
 
-    public static int DELAY = 10;
+    public static int DELAY = 2;
     protected static int baseHealth = 0;
     protected static int basePoints = 100; //Delay is increased to slow the game down
     public static final int MAX_DELAY = 14;

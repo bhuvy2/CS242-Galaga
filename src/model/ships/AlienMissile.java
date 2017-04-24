@@ -23,7 +23,7 @@ public class AlienMissile extends Missile implements Projectile {
      * @param slope the slope is a slope that is presumed to be in the array slopes or within {-3, -2, -1, 0, 0, 1, 2, 3}
      */
     public AlienMissile(Alien alien, int slope) {
-        super(alien.getX(), alien.getY());
+        super(alien.getXCenter(), alien.getYCenter());
         this.slope = slope;
     }
 

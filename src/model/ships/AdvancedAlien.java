@@ -5,6 +5,7 @@ import io.GameConfig;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -51,8 +52,7 @@ public class AdvancedAlien extends Alien {
                 case 1:
                     if(count % DELAY == 0)
                         y+=4;
-                    if(y == rowAttack) {
-                        isMoving = false;
+                    if(getYCenter() == rowAttack) {
                         toSpot++;
                     }
                     break;
@@ -95,9 +95,17 @@ public class AdvancedAlien extends Alien {
      * injured Blue Alien
      */
     public void change() {
-        BufferedImage img = null;
-        try{img = ImageIO.read(getClass().getResource("BlueAlien2.png"));}
-        catch(IOException e){e.printStackTrace();}
-        image = new ImageIcon(img);
+        BufferedImage temp = null;
+        try{
+            temp = ImageIO.read(new File(GameConfig.getBluePath()));
+        }catch(IOException | NullPointerException e){
+            System.out.println("Error");
+        }
+
+        if(temp != null) {
+            this.image = new ImageIcon(temp);
+        } else {
+            this.image = null;
+        }
     }
 }
