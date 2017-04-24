@@ -11,8 +11,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+/**
+ * @author Bhuvan Venkatesh
+ *	Sets the controls on the JPanel to manage the ship
+ */
 public class ShipController {
+	
+    /**
+     * A reference to the ship the player moves
+     */
     private Ship player;
+    /**
+     * All keys to put on the action map
+     */
     private final String LEFT = "left",
             RIGHT = "right",
             KULEFT = "kuleft",
@@ -26,6 +37,9 @@ public class ShipController {
             THROTTLEUP = "throttleup",
             THROTTLEDOWN = "throttledown",
             SHOTS = "shots";
+    /**
+     * The Actions to map to each of the pieces
+     */
     private Action right,
             jright,
             left,
@@ -40,32 +54,61 @@ public class ShipController {
             kuright,
             shots;
     
+    /**
+     * Soundboard for the l33t sound effects
+     */
     GameSoundboard brd = new GameSoundboard();
     
+    
+    /**
+     * Keeps a FSM of whether right or left is pressed
+     */
     private Boolean rightPressed = false, leftPressed = false;
     
-    int jump = 64;
-
-    public void setShipControls(GamePanel pnl) {
-        setControls();
-        setMappings(pnl);
-        player = pnl.getGame().getPlayerShip();
-    }
-
-    private void setControls() {
-        setBasicMovement();
+    /**
+     * The jump constant for teleportation.
+     */
+    private static final int jump = 64;
+    
+    public ShipController(){
+    	setBasicMovement();
         setShipMods();
         setThrottling();
     }
 
     /**
-     * Sets basic movement keybinds including left/right, jumping left/right, and firing
+     * @param pnl, the panel to register the mappings
+     */
+    public void setShipControls(GamePanel pnl) {
+        setMappings(pnl);
+        player = pnl.getGame().getPlayerShip();
+    }
+
+    /**
+     * Sets basic movement keybinds including left/right, 
+     *  jumping left/right, and firing
      */
     private void setBasicMovement() {
     	GameSoundboard brd = new GameSoundboard();
-    	
-    	ShipController self = this;
-        right = new AbstractAction(RIGHT) {
+        setMovement();
+
+        setJumps();
+
+        fire = new AbstractAction(FIRE) {
+            public void actionPerformed(ActionEvent e) {
+                if(player.fire()){
+                	brd.playMissile();
+                }
+            }
+        };
+    }
+
+	/**
+	 * Sets the movement mappings
+	 */
+	private void setMovement() {
+		ShipController self = this;
+		right = new AbstractAction(RIGHT) {
             public void actionPerformed(ActionEvent e) {
             	synchronized(player){
 	            	self.rightPressed = true;
@@ -106,8 +149,13 @@ public class ShipController {
             	}
             }
         };
+	}
 
-        jright = new AbstractAction(JRIGHT) {
+	/**
+	 * Set the jump Actions
+	 */
+	private void setJumps() {
+		jright = new AbstractAction(JRIGHT) {
             public void actionPerformed(ActionEvent e) {
             	synchronized(player){
                 if (player.getX() <= GameWindow.getBoardWidth() - player.getImage().getIconWidth() - jump)
@@ -124,14 +172,7 @@ public class ShipController {
             	}
             }
         };
-
-        fire = new AbstractAction(FIRE) {
-            public void actionPerformed(ActionEvent e) {
-                if(player.fire())
-                	brd.playMissile();
-            }
-        };
-    }
+	}
 
     /**
      * Sets Power modification key binds for ship

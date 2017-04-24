@@ -14,7 +14,7 @@ public class TestSpriteManager {
 	@Test
 	public void testTickCalled(){
 		BasicShip mockedShip = mock(BasicShip.class);
-		SpriteManager mng = new SpriteManager();
+		SpriteCache mng = new SpriteCache();
 		mng.addSprite(mockedShip);
 		mng.tick();
 		verify(mockedShip).tick();
@@ -24,7 +24,7 @@ public class TestSpriteManager {
 	public void testTickMultiple() {
 		BasicShip mockedShip1 = mock(BasicShip.class);
 		BasicShip mockedShip2 = mock(BasicShip.class);
-		SpriteManager mng = new SpriteManager();
+		SpriteCache mng = new SpriteCache();
 		mng.addSprite(mockedShip1);
 		mng.addSprite(mockedShip2);
 		mng.tick();
@@ -38,7 +38,7 @@ public class TestSpriteManager {
 		Graphics gr = mock(Graphics.class);
 		BasicShip mockedShip1 = mock(BasicShip.class);
 		BasicShip mockedShip2 = mock(BasicShip.class);
-		SpriteManager mng = new SpriteManager();
+		SpriteCache mng = new SpriteCache();
 		mng.addSprite(mockedShip1);
 		mng.addSprite(mockedShip2);
 		mng.draw(cmp, gr);

@@ -2,10 +2,12 @@
 package io;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,5 +78,35 @@ public class Leaderboard {
 			return 0;
 		}
 		return scores.get(0).score;
+	}
+	
+	public void addScore(String plr, int score){
+		int i;
+		for(i = 0; i < scores.size() && scores.get(i).score > score; i++){
+			// ...
+		}
+		this.scores.add(i, new Player(plr, score));
+		this.write();
+	}
+	
+	public void write(){
+		CSVWriter reader = null;
+		try{
+			reader = new CSVWriter(new FileWriter(leaderboardFilename));
+			for(Player plr: this.scores){
+				String[] vals = {plr.name, ""+plr.score};
+				reader.writeNext(vals);
+			}
+		} catch (IOException e) {
+
+		}
+		finally{
+			if(reader != null){
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
 	}
 }

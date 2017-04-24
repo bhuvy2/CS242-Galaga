@@ -9,8 +9,6 @@ import model.Star;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,28 +19,6 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-	/**
-	 * @author Bhuvan Venkatesh
-	 *	Performs the main game loop in the panel
-	 */
-	private final class TimerListener implements ActionListener {
-		GamePanel pnl;
-		public TimerListener(GamePanel pnl){
-			this.pnl = pnl;
-		}
-		
-		public void actionPerformed(ActionEvent arg0) {
-			if (pnl.getGame().isGameOver()) {
-				GameWindow parent = (GameWindow) SwingUtilities.getWindowAncestor(pnl);
-				if (parent != null)
-					parent.switchToLeaderBoard();
-			}
-			pnl.tick();
-			pnl.updateLabels();
-			pnl.repaint();
-		}
-	}
-	
 	/**
 	 * The timer that fires off the event to update and redraw
 	 */
@@ -65,6 +41,8 @@ public class GamePanel extends JPanel {
 	private JLabel powers;
 	
 	private ArrayList<Star> stars;
+	
+	private Leaderboard leaderbrd;
 	
 	public void updateLabels(){
 	    // Set point texts
@@ -99,10 +77,6 @@ public class GamePanel extends JPanel {
 
 		// Set timer
 		this.setLayout(null);
-		timer = new Timer(1000/60, new TimerListener(this));
-		if(start){
-			timer.start();
-		}
 
 		// Create stars
 		stars = strs;
@@ -110,6 +84,11 @@ public class GamePanel extends JPanel {
 		// Set Options
 		setPanelOptions();
 		setUpInfoLabels();
+		
+		timer = new Timer(1000/60, new TimerListener(this));
+		if(start){
+			timer.start();
+		}
 	}
 
 	// Sets up labels for game panel
@@ -127,7 +106,8 @@ public class GamePanel extends JPanel {
 		this.add(lbl);
 		String score = "";
 		try {
-			score = "" + (new Leaderboard()).getMaxScore();
+			leaderbrd = new Leaderboard();
+			score = "" + leaderbrd.getMaxScore();
 		} catch (IOException e) {
 			
 		}
@@ -171,7 +151,11 @@ public class GamePanel extends JPanel {
         this.add(powers);
     }
 
-	// Creates simple JLabel
+	
+	/**
+	 * @param lbl, the string to put inside the label
+	 * @return The default 
+	 */
 	public JLabel createSimpleLabel(String lbl){
 		JLabel jlbl = new JLabel(lbl);
 		jlbl.setFont(new Font("impact", 0, 16));
@@ -216,6 +200,9 @@ public class GamePanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * @return The model in the MVC
+	 */
 	public Game getGame(){
 		return this.game;
 	}
@@ -226,5 +213,12 @@ public class GamePanel extends JPanel {
 			timer.stop();
 		else
 			timer.start();
+	}
+	
+	/**
+	 * @return The leaderboard
+	 */
+	public Leaderboard getBoard(){
+		return this.leaderbrd;
 	}
 }
