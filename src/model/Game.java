@@ -156,13 +156,13 @@ public class Game {
                 playerShip.setCanMove(false);
                 playerShip.setInvincible(true);
                 playerShip.change();
-            } else if (deathCount == 6) {
+            } else if (deathCount == 12) {
                 playerShip.change();
-            } else if (deathCount == 11) {
+            } else if (deathCount == 22) {
                 playerShip.change();
-            } else if (deathCount == 16) {
+            } else if (deathCount == 32) {
                 playerShip.change();
-            } else if (deathCount == 21) {
+            } else if (deathCount == 42) {
                 playerShip.change();
                 deathCount = 0;
                 deathAni = 0;

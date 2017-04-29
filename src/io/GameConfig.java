@@ -22,7 +22,7 @@ public class GameConfig {
 	/**
 	 * All the keys in the config file to the path
 	 */
-	public static final String shipIconKey = "shipIcon",
+	private static final String shipIconKey = "shipIcon",
 		missileKey="shipMissile",
 		explode1Key="explodePart1",
 		explode2Key="explodePart2",
@@ -31,13 +31,34 @@ public class GameConfig {
 		alienMissileKey = "alienMissile",
 		blueKey = "blueAlienIcon",
 		greenKey = "greenAlienIcon",
-		lazerKey = "lazersIcon",
 		redKey = "redAlienIcon",
 		yellowKey = "yellowAlienIcon",
-		bossKey = "bossAlienKey";
+		bossKey = "bossAlienKey",
+		level1Key = "level1",
+		level5Key = "level5",
+		level10Key = "level10",
+		level20Key = "level20",
+		level30Key = "level40",
+		level40Key = "level40";
 	
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
+	}
+	
+	public static String getShipExplode1(){
+		return prop.getProperty(explode1Key);
+	}
+	
+	public static String getShipExplode2(){
+		return prop.getProperty(explode2Key);
+	}
+	
+	public static String getShipExplode3(){
+		return prop.getProperty(explode3Key);
+	}
+	
+	public static String getShipExplode4(){
+		return prop.getProperty(explode4Key);
 	}
 	
 	public static String getMissilePath(){

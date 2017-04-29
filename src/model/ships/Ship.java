@@ -75,17 +75,6 @@ public abstract class Ship extends GameSprite {
         storage.add(missile);
     }
 
-    public void drawSelf(Component c, Graphics g) {
-        this.image.paintIcon(c, g, this.x, this.y);
-        for (Missile m : storage) {
-            m.getImage().paintIcon(c, g, m.getX(), m.getY());
-        }
-        for(int i = 0; i < this.lives; i++){
-        	this.image.paintIcon(c, g, 
-        			i*this.image.getIconWidth(), 
-        			GameWindow.BOARD_HEIGHT-this.image.getIconHeight()-30);
-        }
-    }
 
     public abstract void change();
 

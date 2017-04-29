@@ -114,19 +114,30 @@ public class GameSoundboard {
 	 * @param Plays the sound at one of the keys in sound
 	 */
 	private void playKey(String key){
-		Player p = null;
-		try {
-			File f = soundMaps.get(key);
-			if(f == null){
-				System.out.println("File not open "+key);
-				return;
+		Thread th = new Thread(new Runnable() {
+			public void run(){
+				Player p = null;
+				try {
+					File f = soundMaps.get(key);
+					if(f == null){
+						System.out.println("File not open "+key);
+						return;
+					}
+					p = Manager.createRealizedPlayer(f.toURI().toURL());
+					p.realize();
+					p.start();
+					Thread.sleep(8000);
+					p.stop();
+					p.deallocate();
+				} catch (NoPlayerException | CannotRealizeException | IOException e) {
+					System.out.println("Could not play " + key);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			p = Manager.createRealizedPlayer(f.toURI().toURL());
-			p.realize();
-			p.start();
-		} catch (NoPlayerException | CannotRealizeException | IOException e) {
-			System.out.println("Could not play " + key);
-		}
+		});
+		th.start();
 	}
 
 }

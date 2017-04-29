@@ -85,6 +85,10 @@ public abstract class GameSprite {
     public void setImage(ImageIcon image) {
         this.image = image;
     }
+    
+    public void setImage(String path) {
+    	this.image = SpriteCache.get(path);
+    }
 
     // X center of icon
     public int getXCenter() {
