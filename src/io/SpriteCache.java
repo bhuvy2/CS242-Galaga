@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,10 +43,13 @@ public class SpriteCache {
 
 	private static BufferedImage tryReadImage(String res) {
 		BufferedImage temp = null;
+		Integer in2 = 2;
 		try{
-			temp = ImageIO.read(new File(res));
+			InputStream in = in2.getClass().getResourceAsStream(res);
+			temp = ImageIO.read(in);
 		}catch(IOException | NullPointerException e){
-			System.out.println("Error");
+			System.out.println("Error loading " + res);
+			e.printStackTrace();
 		}
 		return temp;
 	}

@@ -17,7 +17,7 @@ public class GameConfig {
 	/**
 	 * Path from the root of the sprite
 	 */
-	private static final String imageFileName = "config/sprites.config";
+	private static final String imageFileName = "/config/sprites.config";
 	
 	/**
 	 * All the keys in the config file to the path
@@ -95,7 +95,7 @@ public class GameConfig {
 		InputStream input = null;
 
 		try {
-			input = new FileInputStream(imageFileName);
+			input = prop.getClass().getResourceAsStream(imageFileName);
 			prop.load(input);
 		} catch (IOException e1) {
 			e1.printStackTrace();

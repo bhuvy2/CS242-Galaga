@@ -96,17 +96,6 @@ public class AdvancedAlien extends Alien {
      * injured Blue Alien
      */
     public void change() {
-        BufferedImage temp = null;
-        try{
-            temp = ImageIO.read(new File(GameConfig.getBluePath()));
-        }catch(IOException | NullPointerException e){
-            System.out.println("Error");
-        }
-
-        if(temp != null) {
-            this.image = new ImageIcon(temp);
-        } else {
-            this.image = null;
-        }
+    	this.setImage(GameConfig.getBluePath());
     }
 }

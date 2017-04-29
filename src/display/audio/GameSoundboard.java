@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -36,12 +37,12 @@ public class GameSoundboard {
 	/**
 	 * Opens all of the files for the duration of the game
 	 */
-	private HashMap<String, File> soundMaps;
+	private HashMap<String, URL> soundMaps;
 	
 	/**
 	 * Config file name
 	 */
-	public static final String audioConfigName = "./config/audio.config";
+	public static final String audioConfigName = "/config/audio.config";
 	
 	/**
 	 * Reads the properties files and opens all the files for playing
@@ -53,7 +54,7 @@ public class GameSoundboard {
 		InputStream input = null;
 
 		try {
-			input = new FileInputStream(audioConfigName);
+			input = this.getClass().getResourceAsStream(audioConfigName);
 			prop.load(input);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -61,8 +62,8 @@ public class GameSoundboard {
 		}
 		
 		for(String key: sounds){
-			File f = new File(prop.getProperty(key));
-			soundMaps.put(key, f);
+			URL inp = getClass().getResource(prop.getProperty(key));
+			soundMaps.put(key, inp);
 		}
 		
 	}
@@ -118,12 +119,12 @@ public class GameSoundboard {
 			public void run(){
 				Player p = null;
 				try {
-					File f = soundMaps.get(key);
+					URL f = soundMaps.get(key);
 					if(f == null){
 						System.out.println("File not open "+key);
 						return;
 					}
-					p = Manager.createRealizedPlayer(f.toURI().toURL());
+					p = Manager.createRealizedPlayer(f);
 					p.realize();
 					p.start();
 					Thread.sleep(8000);

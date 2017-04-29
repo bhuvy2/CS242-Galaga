@@ -15,6 +15,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -85,11 +89,12 @@ public class MenuPanel extends JPanel {
 	private void setUpLogo() {
 		BufferedImage temp = null;
 		try{
-			temp = ImageIO.read(new File("res/galaga.png"));
+			InputStream in = getClass().getResourceAsStream("/galaga.png");
+			temp = ImageIO.read(in);
 		}catch(IOException | NullPointerException e){
 			System.out.println("res/galaga.png");
-			e.printStackTrace();
 		}
+		
 		ImageIcon img = null;
 		if(temp != null){
 			img = new ImageIcon((Image)temp);
