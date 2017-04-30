@@ -7,15 +7,33 @@ import model.superclasses.Projectile;
  * Created by mscislowski on 4/9/17.
  */
 public class AlienMissile extends Missile implements Projectile {
-    //Selects a random slope to fire if none is provided
-    private static final int[] slopes = {-2, -1, 0, 1, 2};
 
-    protected int slope,                        //What slope the missile is at
-            count;                        //Mediate how fast the missile gets fired
-    private static final int LENGTH = 2;  //Length of how long the missile is
-    private boolean isBounce = false, slopeSet = false;
+    protected int count; //Mediate how fast the missile gets fired
+    private boolean isBounce = false;
     private int yMove = 0, xMove = 0;
     private int bounceCount = 0;
+    
+    public enum Slope {
+    	LeftDiagonal,
+    	Left,
+    	ShallowLeft,
+    	Down,
+    	ShallowRight,
+    	Right,
+    	RightDiagonal;
+    	
+    	public int xMove, yMove;
+    	
+    	static{
+    		LeftDiagonal.xMove = -4; LeftDiagonal.yMove = 8;
+    		ShallowLeft.xMove = -4; ShallowLeft.yMove = 4;
+    		Left.xMove = -2; Left.yMove = 4;
+    		Down.xMove = 0; Down.yMove = 4;
+    		Right.xMove = 2; Right.yMove = 4;
+    		ShallowRight.xMove = 4; ShallowRight.yMove = 4;
+    		RightDiagonal.xMove = 4; RightDiagonal.yMove = 8;
+    	}
+    }
 
 
     /**
@@ -23,51 +41,16 @@ public class AlienMissile extends Missile implements Projectile {
      * @param alien the Alien a is the Owner of the missile
      * @param slope the slope is a slope that is presumed to be in the array slopes or within {-3, -2, -1, 0, 0, 1, 2, 3}
      */
-    public AlienMissile(Alien alien, int slope) {
+    public AlienMissile(Alien alien, Slope slope) {
         super(alien.getXCenter(), alien.getYCenter());
-        this.slope = slope;
+    	xMove = slope.xMove;
+    	yMove = slope.yMove;
     }
 
     /**
      * Handles movement for alien missiles
      */
     public void move() {
-        // Cases denoted by slope angle type
-        if(!slopeSet) {
-            slopeSet = true;
-            switch(slope) {
-            case 0:
-                yMove = 4;
-                break;
-            case -1:
-                xMove = 2;
-                yMove = 2;
-                break;
-            case 1:
-                xMove = -2;
-                yMove = 2;
-                break;
-            case -2:
-                xMove = 2;
-                yMove = 4;
-                break;
-            case 2:
-                xMove = -2;
-                yMove = 4;
-                break;
-            case -3:
-                xMove = 4;
-                yMove = 8;
-                break;
-            case 3:
-                xMove = -4;
-                yMove = 8;
-                break;
-            default:
-                break;
-
-            }
-        }
         y += yMove;
         x += xMove;
         count++;

@@ -2,11 +2,6 @@ package model.ships;
 
 import io.GameConfig;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +9,44 @@ import java.util.ArrayList;
  */
 public class AdvancedAlien extends Alien {
     private static final int rowAttack = 400; //The Row in 0-100 where they attack fully
-    private int otherCount = 0; //Another count if needed
-    private int toSpot = 0; //if 0, it is at spot, if 1 it is moving toward spot, if 2 if attacking, 3 if moving back
+    private int fireCount = 0; //Another count if needed
+    
+    private static final int attackMovingSpeed = 1;
+	private static final int fireLimit = 100;
+	private static final int bossAlienExtraPoints = 200;
+	private static final int bossAlienExtraHealth = 2;
+    
+    /**
+     * Keeps a finite state machine of attacking states
+     *
+     */
+    private enum AttackingState {
+    	AtSpot,
+    	MovingToward,
+    	Attacking,
+    	MovingBack;
+    	
+    	public AttackingState next;
+    	
+    	static {
+    		AtSpot.next = MovingToward;
+    		MovingToward.next = Attacking;
+    		Attacking.next = MovingBack;
+    		MovingBack.next = AtSpot;
+    	}
+    }
+    
+    /**
+     * The current state of the alien
+     */
+    private AttackingState toSpot;
 
     /**
      * Instantiates a new blue alien, saves the column and row as a backup in case need to be reset
      * as well as loads the image, initializes points, creates a new list of Alien Missiles and set health
      * @param toEdge the to edge is a percentage from left to right, of 100, how up or down the alien is the y coordinate.
      * @param toRight the to right is the same as toEdge but it is the x coordinate.
+     * @param bossAlienExtra 
      */
     public AdvancedAlien(int toEdge, int toRight) {
         super(GameConfig.getGreenPath());
@@ -30,53 +55,55 @@ public class AdvancedAlien extends Alien {
         column = toRight;
         row = toEdge;
         isMovingRight = true;
-
-        points = basePoints + 200;
+        toSpot = AttackingState.AtSpot;
+        points = basePoints + bossAlienExtraPoints;
         list = new ArrayList<AlienMissile>();
-        health = baseHealth+2;
+        health = baseHealth+bossAlienExtraHealth;
     }
 
     /**
      * Handles attack pattern for blue alien
-     * 1 - Moving into position
-     * 2 - Attack
-     * 3 - Return
      */
     public void attack() {
-        if(isAttacking) {
-            if(toSpot == 4)
-                toSpot = 0;
-            switch(toSpot) {
-                case 0:
-                    break;
-                case 1:
-                    if(count % DELAY == 0)
-                        y+=4;
-                    if(getYCenter() == rowAttack) {
-                        toSpot++;
-                    }
-                    break;
-                case 2:
-                    otherCount++;
-                    if(count % DELAY == 0)
-                        fire();
-                    if(otherCount == 100) {
-                        otherCount = 0;
-                        toSpot++;
-                    }
-                    break;
-                case 3:
-                    if(count % DELAY == 0)
-                        y-=4;
-                    if(y == row) {
-                        toSpot++;
-                        isAttacking = false;
-                        toSpot = 0;
-                    }
-                    break;
-            }
+        switch(toSpot) {
+        case AtSpot:
+            break;
+        case MovingToward:
+            moveToward();
+            break;
+        case Attacking:
+            doAttack();
+            break;
+        case MovingBack:
+            moveBack();
+            break;
         }
     }
+
+	private void moveBack() {
+		y -= attackMovingSpeed;
+		if(y == row) {
+		    toSpot = toSpot.next;
+		    isAttacking = false;
+		}
+	}
+
+	private void doAttack() {
+		fireCount++;
+		if(count % DELAY == 0)
+		    fire();
+		if(fireCount == fireLimit) {
+		    fireCount = 0;
+		    toSpot = toSpot.next;
+		}
+	}
+
+	private void moveToward() {
+		y += attackMovingSpeed;
+		if(getYCenter() == rowAttack) {
+		    toSpot = toSpot.next;
+		}
+	}
 
     /**
      * This method should be used instead of just increasing
@@ -84,14 +111,13 @@ public class AdvancedAlien extends Alien {
      * to accurate reflect the state of the alien
      */
     public void startAttack() {
-        if(toSpot == 0) {
-            toSpot++;
-            isAttacking = true;
+        if(toSpot == AttackingState.AtSpot) {
+        	toSpot = AttackingState.MovingToward;
         }
     }
 
     public void reset() {
-        toSpot = 0;
+        toSpot = AttackingState.AtSpot;
     }
 
 

@@ -21,7 +21,9 @@ public abstract class GameSprite {
     	this.image = SpriteCache.get(image);
     }
 
-    public abstract void change();
+    public void change() {
+    	
+    }
 
     /**
      * Retrieves toEdge coordinate of sprite
@@ -92,11 +94,11 @@ public abstract class GameSprite {
 
     // X center of icon
     public int getXCenter() {
-        return this.x + this.getImage().getIconWidth()/2;
+        return x + image.getIconWidth()/2;
     }
 
     // Y center of icon
     public int getYCenter() {
-        return this.y + this.getImage().getIconHeight()/2;
+        return y + image.getIconHeight()/2;
     }
 }

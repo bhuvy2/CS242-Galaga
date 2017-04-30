@@ -9,7 +9,9 @@ import java.util.ArrayList;
  * Created by mscislowski on 4/9/17.
  */
 public class BasicAlien extends Alien {
-    /**
+    private static final int attackingSpeed = 2;
+
+	/**
      * Instantiates a new basic alien, saves the column
      * and row as a backup in case need to be reset
      * as well as loads the image, initializes points,
@@ -37,25 +39,31 @@ public class BasicAlien extends Alien {
      * Handles attacks for aliens
      */
     public void attack() {
-        if (isAttacking) {
-        	y += 2;
-            if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
-                this.fire();
-            else if (this.getY() >= GameWindow.BOARD_HEIGHT)
-                y = 0;
-            else if (y == row) {
-                isAttacking = false;
-            }
+        if (!isAttacking) {
+        	return;
+        }
+        
+    	y += attackingSpeed;
+        if (inFiringRange())
+            this.fire();
+        else if (this.getY() >= GameWindow.BOARD_HEIGHT)
+            y = 0;
+        else if (y == row) {
+            isAttacking = false;
         }
     }
+
+	private boolean inFiringRange() {
+		return this.getYCenter() >= 403 && this.getYCenter() <= 406;
+	}
 
     /**
      * Fires an Alien Missile in the -2, 0, 2 slope
      */
     public void fire() {
-        list.add(new AlienMissile(this, -2));
-        list.add(new AlienMissile(this, 0));
-        list.add(new AlienMissile(this, 2));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Left));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Down));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Right));
     }
 
     /**
@@ -64,15 +72,10 @@ public class BasicAlien extends Alien {
      * to accurate reflect the state of the alien
      */
     public void startAttack() {
-            isAttacking = true;
-            y+=4;
+        isAttacking = true;
+        y += attackingSpeed;
     }
 
     @Override
     public void reset() {}
-
-    @Override
-    public void change() {
-
-    }
 }

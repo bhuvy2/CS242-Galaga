@@ -37,9 +37,4 @@ public class Missile extends GameSprite implements Projectile {
     public boolean isVisible() {
         return y > 0;
     }
-
-    @Override
-    public void change() {
-
-    }
 }

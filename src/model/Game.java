@@ -34,7 +34,7 @@ public class Game {
     /**
      * Keeps trak of the current level
      */
-    private volatile int level = 5;
+    private volatile int level = 1;
     
     
     /**

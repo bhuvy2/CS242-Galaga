@@ -39,7 +39,8 @@ public class GameConfig {
 		level10Key = "level10",
 		level20Key = "level20",
 		level30Key = "level40",
-		level40Key = "level40";
+		level40Key = "level40",
+		superKey = "bossAlienIcon";
 	
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
@@ -84,6 +85,10 @@ public class GameConfig {
 	 */
 	public static String getYellowPath(){
 		return prop.getProperty(yellowKey);
+	}
+	
+	public static String getBossPath(){
+		return prop.getProperty(superKey);
 	}
 	
 	/**

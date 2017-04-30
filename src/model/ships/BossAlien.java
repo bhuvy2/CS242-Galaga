@@ -9,14 +9,35 @@ import java.util.ArrayList;
  * Created by mscislowski on 4/29/17.
  */
 public class BossAlien extends Alien {
-    private int attack = 0;
+	
+	private enum BossStates {
+		NotAttacking,
+		FireMissiles,
+		MovePosition,
+		AttemptCapture,
+		ReturnPosition;
+		
+		public BossStates next;
+		
+		static {
+			NotAttacking.next = FireMissiles;
+			FireMissiles.next = MovePosition;
+			MovePosition.next = AttemptCapture;
+			AttemptCapture.next = ReturnPosition;
+			ReturnPosition.next = NotAttacking;
+		}
+		
+	};
+	
+    private BossStates attack;
     private int numAttacks = 0;
     private Game game;
 
     public BossAlien(int toEdge, int toRight, Game game1) {
-        super(GameConfig.getShipPath());
+        super(GameConfig.getBossPath());
         this.y = toEdge;
         this.x = toRight;
+        attack = BossStates.NotAttacking;
         game = game1;
         column = toRight;
         row = toEdge;
@@ -33,83 +54,78 @@ public class BossAlien extends Alien {
     @Override
     public void attack() {
         System.out.println("numAttacks:" + numAttacks + " Count:" + count + " Health:" + health + " Attack:" + attack + " Base:" + baseHealth + " isAttacking:" + isAttacking);
-        if (isAttacking) {
-            switch (attack) {
-                case 0:
-                    break;
-                case 1:
-                    // Fire Missiles
-                    if (count % 5 == 0) {
-                        numAttacks++;
-                        fire(10);
-                    }
-                    if (numAttacks == 5) {
-                        numAttacks = 0;
-                        attack++;
-                    }
-                    break;
-                case 2:
-                    // Move into position
-                    if (count % DELAY == 0)
-                        y+=4;
-                    if (getYCenter() == 312 || getYCenter() == 380)
-                        fire(3);
-                    if (getYCenter() == 400)
-                        attack++;
-                    break;
-                case 3:
-                    // Attempt capture
-                    attack++;
-                    break;
-                case 4:
-                    // Return to position
-                    if(count % DELAY == 0) {
-                        y -= 4;
-                    }
-                    if(y == row) {
-                        Alien a = new AdvancedAlien(y, x);
-                        a.startAttack();
-                        a.setMoving(false);
-                        a.setHealth(3);
-                        a.setPoints(0);
-                        game.addAlien(a);
-                        isAttacking = false;
-                        attack = 0;
-                    }
-                    break;
-                default:
-                    break;
-            }
+        switch (attack) {
+        case NotAttacking:
+            break;
+        case FireMissiles:
+            // Fire Missiles
+            fireMissiles();
+            break;
+        case MovePosition:
+            // Move into position
+            movePosition();
+            break;
+        case AttemptCapture:
+            // Attempt capture
+            attack = attack.next;
+            break;
+        case ReturnPosition:
+            // Return to position
+            returnPosition();
+            break;
         }
 
     }
 
-    public void fire(int type) {
-        if (type == 10) {
-            // Create 6 missiles that bounce 10 times
-            for (int i = -3; i < 4; i++) {
-                AlienMissile m = new AlienMissile(this, i);
-                m.setBounce(true, 10);
-                list.add(m);
-            }
-        }
+	private void returnPosition() {
+		if(count % DELAY == 0) {
+		    y -= 4;
+		}
+		if(y == row) {
+		    Alien a = new AdvancedAlien(y, x);
+		    a.startAttack();
+		    a.setMoving(false);
+		    a.setHealth(3);
+		    a.setPoints(0);
+		    game.addAlien(a);
+		    isAttacking = false;
+		    attack = attack.next;
+		}
+	}
 
-        if (type == 3) {
-            for (int i = -3; i < 4; i++) {
-                AlienMissile m = new AlienMissile(this, i);
-                m.setBounce(true, 3);
-                list.add(m);
-            }
+	private void movePosition() {
+		if (count % DELAY == 0)
+		    y+=4;
+		if (getYCenter() == 312 || getYCenter() == 380)
+		    fire(1);
+		if (getYCenter() == 400)
+		    attack = attack.next;
+	}
+
+	private void fireMissiles() {
+		if (count % 5 == 0) {
+		    numAttacks++;
+		    fire(3);
+		}
+		if (numAttacks == 5) {
+		    numAttacks = 0;
+		    attack = attack.next;
+		}
+	}
+
+    private void fire(int type) {
+        for (AlienMissile.Slope sl : AlienMissile.Slope.class.getEnumConstants()) {
+            AlienMissile m = new AlienMissile(this, sl);
+            m.setBounce(true, type);
+            list.add(m);
         }
     }
 
     public void reset() {
-        attack = 0;
+        attack = BossStates.NotAttacking;
     }
 
-    @Override
     public void startAttack() {
-        isAttacking = true;
-        attack++;
+        attack = BossStates.FireMissiles;
     }
 }

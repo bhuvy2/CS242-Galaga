@@ -128,9 +128,6 @@ public abstract class Alien extends GameSprite {
         Alien.baseHealth = baseHealth;
     }
 
-    public static int getBasePoints() {
-        return basePoints;
-    }
 
     public void setAttacking(boolean attacking) {
         isAttacking = attacking;
@@ -184,20 +181,20 @@ public abstract class Alien extends GameSprite {
         y = row;
     }
 
-    public abstract void reset();
-
     //subtracts one from health
     public void hit() {
         health--;
     }
+    
+    public abstract void reset();
 
     /**
      * Fires an Alien Missile in the -2, 0, 2 slope
      */
     public void fire() {
-        list.add(new AlienMissile(this, -2));
-        list.add(new AlienMissile(this, 0));
-        list.add(new AlienMissile(this, 2));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Left));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Down));
+        list.add(new AlienMissile(this, AlienMissile.Slope.Right));
     }
 
 }

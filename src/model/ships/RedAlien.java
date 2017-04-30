@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class RedAlien extends Alien {
     private double angle;
     private int toSpot;
-    private static final int circleDiameter = 100;
 
     /**
      * Constructor for red alien
@@ -38,7 +37,6 @@ public class RedAlien extends Alien {
      */
     public void attack() {
         if (isAttacking) {
-            double radTemp;
             switch (toSpot) {
                 case 0:
                     break;
@@ -55,12 +53,6 @@ public class RedAlien extends Alien {
                 case 2: // delay
                     if (count % DELAY == 0)
                         angle += 4;
-//                    if (isLeft())
-//                        radTemp = Math.toRadians(angle);
-//                    else
-//                        radTemp = Math.toRadians(180 - angle);
-//                    x = column + circleDiameter / 2 + (int) (Math.cos(radTemp) * circleDiameter);
-//                    y = 644 - (int)(Math.sin(radTemp)*circleDiameter/2);
                     if (angle >= 180) {
                         angle = 0;
                         y = 0;
@@ -96,7 +88,10 @@ public class RedAlien extends Alien {
      * Fires an Alien Missile in the -1, 0, 1 slope
      */
     public void fire() {
-        for (int i = -1; i < 2; i++) {
+    	AlienMissile.Slope slps[] = {AlienMissile.Slope.ShallowLeft, 
+                AlienMissile.Slope.Down,
+                AlienMissile.Slope.ShallowRight};
+        for (AlienMissile.Slope i : slps) {
             AlienMissile m = new AlienMissile(this, i);
             m.setBounce(true, health/5);
             list.add(m);
@@ -107,8 +102,4 @@ public class RedAlien extends Alien {
         toSpot = 0;
     }
 
-    @Override
-    public void change() {
-
-    }
 }

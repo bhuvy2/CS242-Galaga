@@ -87,7 +87,8 @@ public class GameSoundboard {
 	 * Plays the alien flying down sound effect
 	 */
 	public void playFlying(){
-		this.playKey(GameSoundboard.flyingKey);
+		if(Math.random() < .3)
+			this.playKey(GameSoundboard.flyingKey);
 	}
 	
 	/**
