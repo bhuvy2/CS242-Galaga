@@ -3,7 +3,7 @@ package display.view;
 import org.junit.Test;
 
 import io.SpriteCache;
-import model.ships.BasicShip;
+import model.objects.ship.BasicShip;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

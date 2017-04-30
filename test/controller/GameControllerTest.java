@@ -3,7 +3,8 @@ package controller;
 import display.view.panels.GamePanel;
 import model.Game;
 import model.Star;
-import model.ships.BasicShip;
+import model.objects.ship.BasicShip;
+
 import org.junit.Test;
 
 import javax.swing.*;

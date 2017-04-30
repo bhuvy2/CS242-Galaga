@@ -3,6 +3,11 @@ package model.ships;
 import display.view.panels.GamePanel;
 import model.Game;
 import model.Star;
+import model.objects.aliens.Alien;
+import model.objects.aliens.BasicAlien;
+import model.objects.projectile.AlienMissile;
+import model.objects.ship.BasicShip;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

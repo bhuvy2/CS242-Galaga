@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 import display.view.panels.GamePanel;
 import model.Game;
 import model.Star;
-import model.ships.Ship;
+import model.objects.ship.Ship;
 
 public class TestGamePanel {
 	
