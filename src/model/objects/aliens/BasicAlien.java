@@ -1,7 +1,9 @@
-package model.ships;
+package model.objects.aliens;
 
 import display.view.GameWindow;
 import io.GameConfig;
+import model.objects.projectile.AlienMissile;
+import model.objects.projectile.AlienMissile.Slope;
 
 import java.util.ArrayList;
 

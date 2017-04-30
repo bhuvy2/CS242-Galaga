@@ -1,6 +1,7 @@
-package model.ships;
+package model.objects.ship;
 
 import display.view.GameWindow;
+import model.objects.projectile.Missile;
 import model.superclasses.GameSprite;
 
 import java.awt.*;

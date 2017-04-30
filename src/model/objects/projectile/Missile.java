@@ -1,4 +1,4 @@
-package model.ships;
+package model.objects.projectile;
 
 import model.superclasses.GameSprite;
 import model.superclasses.Projectile;

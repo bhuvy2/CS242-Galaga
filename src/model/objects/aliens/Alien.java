@@ -1,6 +1,8 @@
-package model.ships;
+package model.objects.aliens;
 
 import display.view.GameWindow;
+import model.objects.projectile.AlienMissile;
+import model.objects.projectile.AlienMissile.Slope;
 import model.superclasses.GameSprite;
 
 import java.awt.*;

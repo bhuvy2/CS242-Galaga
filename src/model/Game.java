@@ -1,7 +1,16 @@
 package model;
 
 import display.audio.GameSoundboard;
-import model.ships.*;
+import model.objects.*;
+import model.objects.aliens.AdvancedAlien;
+import model.objects.aliens.Alien;
+import model.objects.aliens.BasicAlien;
+import model.objects.aliens.BossAlien;
+import model.objects.aliens.RedAlien;
+import model.objects.projectile.AlienMissile;
+import model.objects.projectile.Missile;
+import model.objects.ship.BasicShip;
+import model.objects.ship.Ship;
 import model.superclasses.GameSprite;
 
 import java.awt.*;
@@ -187,30 +196,37 @@ public class Game {
             m = playerShip.getStorage().get(i);
             if (checkBounds(alien, m)) {
                 // Change alien if health is more than 1
-                if (alien.getHealth() > 1) {
-                    alien.setHealth(alien.getHealth() - 1);
-                    playerShip.getStorage().remove(i);
-                    i--;
-                    shotsHit++;
-                    alien.change();
-                } else {
-                    // Accumulate points if ship is not invincible
-                    if (!playerShip.isInvincible()) {
-                        points += alien.getPoints();
-                        toNextLife -= alien.getPoints();
-                        check1up();
-                    }
-                    // Remove missile and increment stats
-                    playerShip.getStorage().remove(i);
-                    enemiesKilled++;
-                    shotsHit++;
-                    return true;
+                if(performHit(alien, i)){
+                	return true;
                 }
             }
         }
 
         return false;
     }
+
+	private boolean performHit(Alien alien, int i) {
+		if (alien.getHealth() > 1) {
+		    alien.setHealth(alien.getHealth() - 1);
+		    playerShip.getStorage().remove(i);
+		    i--;
+		    shotsHit++;
+		    alien.change();
+		} else {
+		    // Accumulate points if ship is not invincible
+		    if (!playerShip.isInvincible()) {
+		        points += alien.getPoints();
+		        toNextLife -= alien.getPoints();
+		        check1up();
+		    }
+		    // Remove missile and increment stats
+		    playerShip.getStorage().remove(i);
+		    enemiesKilled++;
+		    shotsHit++;
+		    return true;
+		}
+		return false;
+	}
 
     /**
      * Randomly determines which aliens should be attacking

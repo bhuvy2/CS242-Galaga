@@ -1,6 +1,7 @@
-package model.ships;
+package model.objects.aliens;
 
 import io.GameConfig;
+import model.objects.projectile.AlienMissile;
 
 import java.util.ArrayList;
 

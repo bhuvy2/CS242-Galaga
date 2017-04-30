@@ -3,8 +3,8 @@ package controller;
 import display.audio.GameSoundboard;
 import display.view.GameWindow;
 import display.view.panels.GamePanel;
-import model.ships.Alien;
-import model.ships.Ship;
+import model.objects.aliens.Alien;
+import model.objects.ship.Ship;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

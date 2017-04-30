@@ -1,9 +1,12 @@
-package model.ships;
+package model.objects.aliens;
 
-import display.view.GameWindow;
 import io.GameConfig;
+import model.objects.Delta;
+import model.objects.projectile.AlienMissile;
+import model.objects.projectile.AlienMissile.Slope;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * Created by mscislowski on 4/9/17.
@@ -11,6 +14,9 @@ import java.util.ArrayList;
 public class RedAlien extends Alien {
     private double angle;
     private int toSpot;
+
+    
+    RedAlienState st;
 
     /**
      * Constructor for red alien
@@ -24,8 +30,8 @@ public class RedAlien extends Alien {
         row = toEdge;
         column = toRight;
         angle = 0;
+        st = new RedAlienState.Normal();
         isMovingRight = true;
-
         points = basePoints + 100;
         list = new ArrayList<AlienMissile>();
         health = baseHealth+ 1;
@@ -36,50 +42,38 @@ public class RedAlien extends Alien {
      * Handles attack patterns for Red alien
      */
     public void attack() {
-        if (isAttacking) {
-            switch (toSpot) {
-                case 0:
-                    break;
-                case 1: // Moving to attack and firing along path
-                    if (count % (DELAY) == 0)
-                        y += 4;
-                    if (this.getYCenter() >= 400 && this.getYCenter() <= 403)
-                        this.fire();
-                    if (this.getYCenter() >= 200 && this.getYCenter() <= 203)
-                        this.fire();
-                    if (this.getY() >= GameWindow.BOARD_HEIGHT)
-                        toSpot++;
-                    break;
-                case 2: // delay
-                    if (count % DELAY == 0)
-                        angle += 4;
-                    if (angle >= 180) {
-                        angle = 0;
-                        y = 0;
-                        toSpot++;
-                    }
-                    break;
-                case 3: // Returns
-                    if (count % DELAY == 0)
-                        y += 4;
-                    if (y == row) {
-                        isAttacking = false;
-                        isMoving = true;
-                        toSpot = 0;
-                    }
-                    break;
-                default:
-                    break;
-            }
+        if (st instanceof RedAlienState.Attacking) {
+        	RedAlienState.Attacking att = (RedAlienState.Attacking)st;
+        	try{
+        		Delta d = att.path.remove();
+        		this.x += d.xd;
+        		this.y += d.yd;
+        		if(Math.random() > .99){
+        			this.fire();
+        		}
+        	}catch(NoSuchElementException e){
+        		this.x = this.column;
+        		this.y = this.row;
+        		st = new RedAlienState.Normal();
+        		this.isAttacking = false;
+        	}
         }
     }
+
+	private boolean inRange() {
+		return this.getYCenter() >= 400 && this.getYCenter() <= 403 
+				|| this.getYCenter() >= 200 && this.getYCenter() <= 203;
+	}
 
     /**
      * Starts attack for alien
      */
     public void startAttack() {
         if(toSpot == 0) {
+        	st = new RedAlienState.Attacking(this.x, this.y);
             toSpot++;
+            this.column = this.x;
+            this.row = this.y;
             isAttacking = true;
         }
     }

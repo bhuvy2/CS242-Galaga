@@ -1,6 +1,7 @@
-package model.ships;
+package model.objects.projectile;
 
 import display.view.GameWindow;
+import model.objects.aliens.Alien;
 import model.superclasses.Projectile;
 
 /**
@@ -57,35 +58,35 @@ public class AlienMissile extends Missile implements Projectile {
 
     }
 
-    int getxMove() {
+    public int getxMove() {
         return xMove;
     }
 
-    int getyMove() {
+    public int getyMove() {
         return yMove;
     }
 
-    boolean doneBounce() {
+    public boolean doneBounce() {
         return bounceCount == 0;
     }
 
-    void decrementBounceCount() {
+    public void decrementBounceCount() {
         bounceCount--;
     }
 
-    void setxMove(int xMove) {
+    public void setxMove(int xMove) {
         this.xMove = xMove;
     }
 
-    void setyMove(int yMove) {
+    public void setyMove(int yMove) {
         this.yMove = yMove;
     }
 
-    boolean isBounce() {
+    public boolean isBounce() {
         return isBounce;
     }
 
-    void setBounce(boolean bounce, int nBounce) {
+    public void setBounce(boolean bounce, int nBounce) {
         isBounce = bounce;
         bounceCount = nBounce;
     }

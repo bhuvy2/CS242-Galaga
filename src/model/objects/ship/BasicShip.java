@@ -1,8 +1,9 @@
-package model.ships;
+package model.objects.ship;
 
 import display.view.GameWindow;
 import io.GameConfig;
 import io.SpriteCache;
+import model.objects.projectile.Missile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

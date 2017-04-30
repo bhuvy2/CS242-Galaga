@@ -6,7 +6,7 @@ import display.view.GameWindow;
 import io.Leaderboard;
 import model.Game;
 import model.Star;
-import model.ships.Ship;
+import model.objects.ship.Ship;
 
 import javax.swing.*;
 import java.awt.*;
