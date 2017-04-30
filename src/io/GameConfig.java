@@ -40,6 +40,11 @@ public class GameConfig {
 		level20Key = "level20",
 		level30Key = "level40",
 		level40Key = "level40",
+		alienExplode1Key = "alienExplode1",
+		alienExplode2Key = "alienExplode2",
+		alienExplode3Key = "alienExplode3",
+		alienExplode4Key = "alienExplode4",
+		alienExplode5Key = "alienExplode5",
 		superKey = "bossAlienIcon";
 	
 	public static String getShipPath(){
@@ -60,6 +65,26 @@ public class GameConfig {
 	
 	public static String getShipExplode4(){
 		return prop.getProperty(explode4Key);
+	}
+	
+	public static String getAlienExplode1(){
+		return prop.getProperty(alienExplode1Key);
+	}
+	
+	public static String getAlienExplode2(){
+		return prop.getProperty(alienExplode2Key);
+	}
+	
+	public static String getAlienExplode3(){
+		return prop.getProperty(alienExplode3Key);
+	}
+	
+	public static String getAlienExplode4(){
+		return prop.getProperty(alienExplode4Key);
+	}
+	
+	public static String getAlienExplode5(){
+		return prop.getProperty(alienExplode5Key);
 	}
 	
 	public static String getMissilePath(){

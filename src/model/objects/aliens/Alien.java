@@ -1,6 +1,7 @@
 package model.objects.aliens;
 
 import display.view.GameWindow;
+import io.GameConfig;
 import model.objects.projectile.AlienMissile;
 import model.objects.projectile.AlienMissile.Slope;
 import model.superclasses.GameSprite;
@@ -28,6 +29,15 @@ public abstract class Alien extends GameSprite {
     protected static int baseHealth = 0;
     protected static int basePoints = 100; //Delay is increased to slow the game down
     public static final int MAX_DELAY = 14;
+    
+    private enum HealthState {
+    	Alive,
+    	Dying,
+    	Dead
+    }
+    
+    private HealthState dying = HealthState.Alive;
+    private int dyingFrame = 0;
 
     /**
      * Gamesprite contructor
@@ -55,9 +65,9 @@ public abstract class Alien extends GameSprite {
             
             if(count % (DELAY) == 0) {
                 if(isMovingRight) {
-                    x+=2;
+                    x += 2;
                 } else {
-                    x-=2;
+                    x -= 2;
                 }
             }
         }
@@ -100,9 +110,36 @@ public abstract class Alien extends GameSprite {
         }
 
         // Alien move and attack
-        move();
-        attack();
+        if(this.dying == HealthState.Alive){
+	        move();
+	        attack();
+        }else if(this.dying == HealthState.Dying){
+        	this.performDying();
+        }
         this.count++;
+    }
+    
+    private void performDying(){
+    	int diff = this.count - this.dyingFrame;
+    	if(diff < 1){
+    		this.setImage(GameConfig.getAlienExplode1());
+    	}
+    	else if(diff < 10){
+    		this.setImage(GameConfig.getAlienExplode2());
+    	}
+    	else if(diff < 15){
+    		this.setImage(GameConfig.getAlienExplode3());
+    	}
+		else if(diff < 20){
+			this.setImage(GameConfig.getAlienExplode4());
+		}
+		else if(diff < 25){
+			this.setImage(GameConfig.getAlienExplode5());
+		}
+		else if(diff < 30){
+			this.dying = HealthState.Dead;
+		}
+    	
     }
 
 
@@ -186,6 +223,19 @@ public abstract class Alien extends GameSprite {
     //subtracts one from health
     public void hit() {
         health--;
+    }
+    
+    public void die(){
+    	dying = HealthState.Dying;
+    	dyingFrame = this.count;
+    }
+    
+    public boolean isDead(){
+    	return dying == HealthState.Dead;
+    }
+    
+    public boolean isDying(){
+    	return dying == HealthState.Dying;
     }
     
     public abstract void reset();

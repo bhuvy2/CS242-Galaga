@@ -109,7 +109,7 @@ public class BossAlien extends Alien {
 		    numAttacks++;
 		    fire(3);
 		}
-		if (numAttacks == 5) {
+		if (numAttacks == 3) {
 		    numAttacks = 0;
 		    attack = attack.next;
 		}

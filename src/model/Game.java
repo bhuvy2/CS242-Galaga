@@ -113,9 +113,12 @@ public class Game {
     	for (int i = 0; i< this.enemies.size(); i++) {
     	    al = getEnemies().get(i);
     		al.tick();
-    		if(checkKilled(al)) {
+    		if(al.isDead()){
     			this.enemies.remove(i);
-                i--;
+    			i--;
+    		}
+    		if(!al.isDying() && checkKilled(al)) {
+    			al.die();
             }
     	}
     	this.checkShipHit();
