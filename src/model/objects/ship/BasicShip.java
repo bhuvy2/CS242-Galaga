@@ -26,6 +26,7 @@ public class BasicShip extends Ship {
     
     private ImageIcon stable;
 
+
     /**
      * Creates a generic ship for the player
      */
@@ -54,7 +55,7 @@ public class BasicShip extends Ship {
      * Change order for dying ship
      */
     public void change() {
-        imageIndex++;
+    	imageIndex++;
         switch (imageIndex) {
         case 0:
             this.setImage(GameConfig.getShipPath());

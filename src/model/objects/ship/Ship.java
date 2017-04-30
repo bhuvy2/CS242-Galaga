@@ -1,6 +1,7 @@
 package model.objects.ship;
 
 import display.view.GameWindow;
+import model.Game;
 import model.objects.projectile.Missile;
 import model.superclasses.GameSprite;
 
@@ -36,6 +37,13 @@ public abstract class Ship extends GameSprite {
     
     ShipState current;
 
+	/**
+	 * Keeps track of the ship death animation
+	 */
+	private boolean isDying;
+
+	private int deathCount;
+
     /**
      * Ship constructor
      * @param str String to image file passed to Gamesprite
@@ -48,6 +56,7 @@ public abstract class Ship extends GameSprite {
     	this.isInvincible = false;
     	this.canThrottle = false;
     	this.multipleShots = false;
+    	this.isDying = false;
     	current = ShipState.STOP;
     }
 
@@ -72,7 +81,8 @@ public abstract class Ship extends GameSprite {
 
     private void addMissile(int offset1, int offset2) {
         Missile missile = new Missile(this.x +
-                image.getIconWidth()/2+offset1+3, GameWindow.BOARD_HEIGHT-this.image.getIconHeight()+offset2 - Missile.HEIGHT);
+                image.getIconWidth()/2+offset1+3, 
+                GameWindow.BOARD_HEIGHT-this.image.getIconHeight()+offset2 - Missile.HEIGHT);
         storage.add(missile);
     }
 
@@ -92,19 +102,24 @@ public abstract class Ship extends GameSprite {
                 i--;
             }
         }
-        switch(current){
-		case LEFT:
-			if(this.x > 0)
-				this.x -= 3;
-			break;
-		case RIGHT:
-			if(this.x < GameWindow.BOARD_WIDTH-this.image.getIconWidth())
-				this.x += 3;
-			break;
-		case STOP:
-			break;
-		default:
-			break;
+        if(this.canMove){
+	        switch(current){
+			case LEFT:
+				if(this.x > 0)
+					this.x -= 3;
+				break;
+			case RIGHT:
+				if(this.x < GameWindow.BOARD_WIDTH-this.image.getIconWidth())
+					this.x += 3;
+				break;
+			case STOP:
+				break;
+			default:
+				break;
+	        }
+        }
+        else{
+        	current = ShipState.STOP;
         }
     }
     
@@ -176,8 +191,43 @@ public abstract class Ship extends GameSprite {
     public void setMultipleShots(boolean multipleShots) {
         this.multipleShots = multipleShots;
     }
+    
+    public void die(){
+    	isDying = true;
+    	deathCount = 1;
+    	isInvincible = true;
+    	canMove = false;
+    }
 
-    public static int getMaxShots() {
+    /**
+	 * Checks if ship is performing death animation and updates ship icon.
+	 * Ship is set to invincible and cannot move during this time.
+	 * @param game TODO
+	 */
+	public void checkDead(Game game) {
+	    if (isDying) {
+	        deathCount++;
+	        game.brd.playKill();
+	        // Set animation states
+	        if (deathCount == 1) {
+	            setCanMove(false);
+	            change();
+	        }
+	        else if(deathCount == 52){
+	            deathCount = 0;
+	            isDying = false;
+	            setCanMove(true);
+	            setInvincible(false);
+	            game.resetAttack();
+	        }
+	        else if(deathCount % 10 == 2){
+	        	change();
+	        }
+	    }
+	}
+
+
+	public static int getMaxShots() {
         return MAX_SHOTS;
     }
 

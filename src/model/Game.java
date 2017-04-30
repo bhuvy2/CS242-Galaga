@@ -52,20 +52,19 @@ public class Game {
     private boolean gameOver;
     
     /**
-     * Keeps track of the ship death animation
-     */
-    private int deathAni = 0, deathCount = 0;
-    
-    
-	/**
 	 * Puts the yellow aliens on the grid
 	 */
 	public static final int[][] BasicPosition =
-	{{70,88}, {110, 88}, {150,88},
-	        {190,88}, {230, 88}, {270, 88},
-	        {310, 88}, {350, 88}, {390, 88},
-	        {430, 88},
-	};
+			{{70,88}, 
+				{110, 88}, 
+				{150,88},
+				{190,88}, 
+				{230, 88}, 
+				{270, 88},
+				{310, 88}, 
+				{350, 88}, 
+				{390, 88},
+				{430, 88}};
 	
 	/**
 	 * Keeps track of the red aliens on the grid
@@ -92,7 +91,7 @@ public class Game {
     	BonusStage,
     };
     
-    private GameSoundboard brd;
+    public GameSoundboard brd;
 
     // Creates initial game
     public Game(){
@@ -107,7 +106,7 @@ public class Game {
      */
     public void tick(){
         checkLevelClear();
-        checkDead();
+        playerShip.checkDead(this);
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
@@ -144,42 +143,12 @@ public class Game {
     	if (!playerShip.isInvincible() && isHit()) {
             if (playerShip.getLives() > 0) {
             	playerShip.setLives(playerShip.getLives() - 1);
-            	deathAni = 1;
+            	playerShip.die();
             } else {
                 this.gameOver = true;
             }
         }
     	return true;
-    }
-
-    /**
-     * Checks if ship is performing death animation and updates ship icon.
-     * Ship is set to invincible and cannot move during this time.
-     */
-    private void checkDead() {
-        if (deathAni == 1) {
-            deathCount++;
-            brd.playKill();
-            // Set animation states
-            if (deathCount == 1) {
-                playerShip.setCanMove(false);
-                playerShip.setInvincible(true);
-                playerShip.change();
-            } else if (deathCount == 12) {
-                playerShip.change();
-            } else if (deathCount == 22) {
-                playerShip.change();
-            } else if (deathCount == 32) {
-                playerShip.change();
-            } else if (deathCount == 42) {
-                playerShip.change();
-                deathCount = 0;
-                deathAni = 0;
-                playerShip.setCanMove(true);
-                playerShip.setInvincible(false);
-                this.resetAttack();
-            }
-        }
     }
 
     /**
