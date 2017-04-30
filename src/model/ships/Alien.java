@@ -82,9 +82,18 @@ public abstract class Alien extends GameSprite {
         for (int i = 0; i < list.size(); i++) {
             m = list.get(i);
             m.move();
-            if (!m.isVisible()) {
+            if (!m.isVisible() && (!m.isBounce() || m.doneBounce())) {
                 list.remove(i);
                 i--;
+            } else if (!m.isVisible()) {
+                if (m.getY() > GameWindow.BOARD_HEIGHT || m.getY() < 0) {
+                    m.setyMove(-1 * m.getyMove());
+                    m.decrementBounceCount();
+                }
+                if (m.getX() > GameWindow.BOARD_WIDTH || m.getX() < 0) {
+                    m.setxMove(-1 * m.getxMove());
+                    m.decrementBounceCount();
+                }
             }
         }
 
@@ -113,6 +122,10 @@ public abstract class Alien extends GameSprite {
 
     public static int getBaseHealth() {
         return baseHealth;
+    }
+
+    public static void setBaseHealth(int baseHealth) {
+        Alien.baseHealth = baseHealth;
     }
 
     public static int getBasePoints() {
@@ -170,6 +183,8 @@ public abstract class Alien extends GameSprite {
         x = column;
         y = row;
     }
+
+    public abstract void reset();
 
     //subtracts one from health
     public void hit() {

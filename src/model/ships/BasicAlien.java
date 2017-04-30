@@ -40,13 +40,22 @@ public class BasicAlien extends Alien {
         if (isAttacking) {
         	y += 2;
             if (this.getYCenter() >= 403 && this.getYCenter() <= 406)
-                fire();
+                this.fire();
             else if (this.getY() >= GameWindow.BOARD_HEIGHT)
                 y = 0;
             else if (y == row) {
                 isAttacking = false;
             }
         }
+    }
+
+    /**
+     * Fires an Alien Missile in the -2, 0, 2 slope
+     */
+    public void fire() {
+        list.add(new AlienMissile(this, -2));
+        list.add(new AlienMissile(this, 0));
+        list.add(new AlienMissile(this, 2));
     }
 
     /**
@@ -58,6 +67,9 @@ public class BasicAlien extends Alien {
             isAttacking = true;
             y+=4;
     }
+
+    @Override
+    public void reset() {}
 
     @Override
     public void change() {

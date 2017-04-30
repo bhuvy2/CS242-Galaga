@@ -17,17 +17,27 @@ public class GameController {
     private boolean isPaused = false;
     GamePanel pnl;
 
+    /**
+     * Sets up keybinds for game
+     * @param pnl to hold keybinds
+     */
     public void setGameControls(GamePanel pnl) {
         this.pnl = pnl;
         setControls();
         setMappings(pnl);
     }
 
+    /**
+     * Distributed caller
+     */
     private void setControls() {
         setPause();
         setReset();
     }
 
+    /**
+     * Function to pause game
+     */
     private void setPause() {
         pause = new AbstractAction(PAUSE) {
             @Override
@@ -38,6 +48,9 @@ public class GameController {
         };
     }
 
+    /**
+     * Function to reset game
+     */
     private void setReset() {
         reset = new AbstractAction(RESET) {
             @Override

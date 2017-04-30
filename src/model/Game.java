@@ -1,12 +1,11 @@
 package model;
 
+import display.audio.GameSoundboard;
 import model.ships.*;
 import model.superclasses.GameSprite;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import display.audio.GameSoundboard;
 
 /**
  * Stores basic information and data for current game.
@@ -35,7 +34,7 @@ public class Game {
     /**
      * Keeps trak of the current level
      */
-    private volatile int level = 1;
+    private volatile int level = 5;
     
     
     /**
@@ -122,6 +121,7 @@ public class Game {
             a.getList().removeAll(a.getList());
             a.setAttacking(false);
             a.setMoving(true);
+            a.reset();
             a.returnToPosition();
         }
     }
@@ -219,7 +219,7 @@ public class Game {
         Alien a;
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size() 
-        		&& attacking < (int)(this.getLevel()*1.5 + 2); i++) {
+        		&& attacking < level + 1; i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
             // If chosen call attack
@@ -299,7 +299,8 @@ public class Game {
      */
     private void checkLevelClear() {
         if (getEnemies().size() == 0) {
-            setLevel(level++);
+            System.out.println(level);
+            level++;
             playerShip.getStorage().removeAll(playerShip.getStorage());
             populate();
             brd.playLevelUp();
@@ -320,22 +321,27 @@ public class Game {
      */
     private void populate() {
 		enemies = new ArrayList<>();
-		Alien in;
-		for (int[] a : Game.BasicPosition) {
-			in = new BasicAlien(a[1], a[0]);
-			in.isMoving = true;
-			enemies.add(in);
-		}
-		for (int[] a : Game.RedPosition) {
-			in = new RedAlien(a[1], a[0]);
-			in.isMoving = true;
-			enemies.add(new RedAlien(a[1], a[0]));
-		}
-		for (int[] a : Game.BossPosition) {
-			in = new AdvancedAlien(a[1], a[0]);
-			in.isMoving = true;
-			enemies.add(new AdvancedAlien(a[1], a[0]));
-		}
+        Alien.setBaseHealth(Alien.getBaseHealth() + level - 1);
+        if (level % 5 == 0) {
+            enemies.add(new BossAlien(48, 244, this));
+        } else {
+            Alien in;
+            for (int[] a : Game.BasicPosition) {
+                in = new BasicAlien(a[1], a[0]);
+                in.isMoving = true;
+                enemies.add(in);
+            }
+            for (int[] a : Game.RedPosition) {
+                in = new RedAlien(a[1], a[0]);
+                in.isMoving = true;
+                enemies.add(new RedAlien(a[1], a[0]));
+            }
+            for (int[] a : Game.BossPosition) {
+                in = new AdvancedAlien(a[1], a[0]);
+                in.isMoving = true;
+                enemies.add(new AdvancedAlien(a[1], a[0]));
+            }
+        }
 	}
 
     /**
@@ -440,6 +446,10 @@ public class Game {
      */
     public int getToNextLife() {
         return this.toNextLife;
+    }
+
+    public void addAlien(Alien alien) {
+        enemies.add(alien);
     }
 
     /**

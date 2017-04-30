@@ -90,6 +90,10 @@ public class AdvancedAlien extends Alien {
         }
     }
 
+    public void reset() {
+        toSpot = 0;
+    }
+
 
     /**
      * Changes the Image from a fully healthy blue alien to an

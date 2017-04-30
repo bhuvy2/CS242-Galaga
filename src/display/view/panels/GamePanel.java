@@ -240,4 +240,6 @@ public class GamePanel extends JPanel {
 	public Leaderboard getBoard(){
 		return this.leaderbrd;
 	}
+
+
 }

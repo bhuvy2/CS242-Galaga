@@ -10,11 +10,12 @@ public class AlienMissile extends Missile implements Projectile {
     //Selects a random slope to fire if none is provided
     private static final int[] slopes = {-2, -1, 0, 1, 2};
 
-    protected int toRightNext,            //This is the next x coordinate of the missile
-            toEdgeNext,                   //The next y coordinate of the missile
-            slope,                        //What slope the missile is at
+    protected int slope,                        //What slope the missile is at
             count;                        //Mediate how fast the missile gets fired
     private static final int LENGTH = 2;  //Length of how long the missile is
+    private boolean isBounce = false, slopeSet = false;
+    private int yMove = 0, xMove = 0;
+    private int bounceCount = 0;
 
 
     /**
@@ -32,44 +33,78 @@ public class AlienMissile extends Missile implements Projectile {
      */
     public void move() {
         // Cases denoted by slope angle type
-        if(true) {
+        if(!slopeSet) {
+            slopeSet = true;
             switch(slope) {
-                case 0:
-                    y+=4;
-                    toRightNext = x;
-                    toEdgeNext = y+LENGTH;
-                    break;
-                case -1:
-                    y+=2;
-                    x+=2;
-                    toEdgeNext = (int)(y + LENGTH * Math.sqrt(2));
-                    toRightNext = (int)(x + LENGTH * Math.sqrt(2));
-                    break;
-                case 1:
-                    y+=2;
-                    x-=2;
-                    toEdgeNext = (int)(y + LENGTH * Math.sqrt(2));
-                    toRightNext = (int)(x - LENGTH * Math.sqrt(2));
-                    break;
-                case -2:
-                    y+=4;
-                    x+=2;
-                    toEdgeNext = (int)(y + LENGTH * Math.sqrt(5));
-                    toRightNext = (int)(x + LENGTH * Math.sqrt(5));
-                    break;
-                case 2:
-                    y+=4;
-                    x-=2;
-                    toEdgeNext = (int)(y + LENGTH * Math.sqrt(5));
-                    toRightNext = (int)(x - LENGTH * Math.sqrt(5));
-                    break;
-                default:
-                    break;
+            case 0:
+                yMove = 4;
+                break;
+            case -1:
+                xMove = 2;
+                yMove = 2;
+                break;
+            case 1:
+                xMove = -2;
+                yMove = 2;
+                break;
+            case -2:
+                xMove = 2;
+                yMove = 4;
+                break;
+            case 2:
+                xMove = -2;
+                yMove = 4;
+                break;
+            case -3:
+                xMove = 4;
+                yMove = 8;
+                break;
+            case 3:
+                xMove = -4;
+                yMove = 8;
+                break;
+            default:
+                break;
 
             }
         }
+        y += yMove;
+        x += xMove;
         count++;
 
+    }
+
+    int getxMove() {
+        return xMove;
+    }
+
+    int getyMove() {
+        return yMove;
+    }
+
+    boolean doneBounce() {
+        return bounceCount == 0;
+    }
+
+    void decrementBounceCount() {
+        bounceCount--;
+    }
+
+    void setxMove(int xMove) {
+        this.xMove = xMove;
+    }
+
+    void setyMove(int yMove) {
+        this.yMove = yMove;
+    }
+
+    boolean isBounce() {
+        return isBounce;
+    }
+
+    void setBounce(boolean bounce, int nBounce) {
+        isBounce = bounce;
+        bounceCount = nBounce;
     }
 
     /**

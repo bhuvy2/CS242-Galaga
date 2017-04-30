@@ -46,9 +46,9 @@ public class RedAlien extends Alien {
                     if (count % (DELAY) == 0)
                         y += 4;
                     if (this.getYCenter() >= 400 && this.getYCenter() <= 403)
-                        fire();
+                        this.fire();
                     if (this.getYCenter() >= 200 && this.getYCenter() <= 203)
-                        fire();
+                        this.fire();
                     if (this.getY() >= GameWindow.BOARD_HEIGHT)
                         toSpot++;
                     break;
@@ -92,7 +92,20 @@ public class RedAlien extends Alien {
         }
     }
 
+    /**
+     * Fires an Alien Missile in the -1, 0, 1 slope
+     */
+    public void fire() {
+        for (int i = -1; i < 2; i++) {
+            AlienMissile m = new AlienMissile(this, i);
+            m.setBounce(true, health/5);
+            list.add(m);
+        }
+    }
 
+    public void reset() {
+        toSpot = 0;
+    }
 
     @Override
     public void change() {
