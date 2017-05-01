@@ -3,7 +3,6 @@ package model.objects.aliens;
 import io.GameConfig;
 import model.Game;
 import model.objects.projectile.AlienMissile;
-import model.objects.projectile.AlienMissile.Slope;
 
 import java.util.ArrayList;
 
@@ -11,16 +10,16 @@ import java.util.ArrayList;
  * Created by mscislowski on 4/29/17.
  */
 public class BossAlien extends Alien {
-	
+
 	private enum BossStates {
 		NotAttacking,
 		FireMissiles,
 		MovePosition,
 		AttemptCapture,
 		ReturnPosition;
-		
+
 		public BossStates next;
-		
+
 		static {
 			NotAttacking.next = FireMissiles;
 			FireMissiles.next = MovePosition;
@@ -28,9 +27,9 @@ public class BossAlien extends Alien {
 			AttemptCapture.next = ReturnPosition;
 			ReturnPosition.next = NotAttacking;
 		}
-		
+
 	};
-	
+
     private BossStates attack;
     private int numAttacks = 0;
     private Game game;
@@ -44,9 +43,9 @@ public class BossAlien extends Alien {
         column = toRight;
         row = toEdge;
         isMoving = true;
-        points = 3000;
+        points = 3000 * baseHealth;
         list = new ArrayList<>();
-        health = (int)(1.5 * baseHealth);
+        health = 5 * baseHealth;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class BossAlien extends Alien {
 
     @Override
     public void attack() {
-        System.out.println("numAttacks:" + numAttacks + " Count:" + count + " Health:" + health + " Attack:" + attack + " Base:" + baseHealth + " isAttacking:" + isAttacking);
+//        System.out.println("numAttacks:" + numAttacks + " Count:" + count + " Health:" + health + " Attack:" + attack + " Base:" + baseHealth + " isAttacking:" + isAttacking);
         switch (attack) {
         case NotAttacking:
             break;
@@ -109,7 +108,7 @@ public class BossAlien extends Alien {
 		    numAttacks++;
 		    fire(3);
 		}
-		if (numAttacks == 3) {
+		if (numAttacks == 5) {
 		    numAttacks = 0;
 		    attack = attack.next;
 		}
@@ -128,6 +127,9 @@ public class BossAlien extends Alien {
     }
 
     public void startAttack() {
-        attack = BossStates.FireMissiles;
+        if (!isAttacking()) {
+            isAttacking = true;
+            attack = BossStates.FireMissiles;
+        }
     }
 }

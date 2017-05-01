@@ -2,17 +2,11 @@ package model.objects.ship;
 
 import display.view.GameWindow;
 import io.GameConfig;
-import io.SpriteCache;
+import model.Game;
 import model.objects.projectile.Missile;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -30,8 +24,8 @@ public class BasicShip extends Ship {
     /**
      * Creates a generic ship for the player
      */
-    public BasicShip() {
-    	super(GameConfig.getShipPath());
+    public BasicShip(Game game) {
+    	super(GameConfig.getShipPath(), game);
     	stable = this.image;
         this.x = 0;
         this.y = GameWindow.BOARD_HEIGHT - this.image.getIconHeight()*3;
@@ -59,18 +53,23 @@ public class BasicShip extends Ship {
         switch (imageIndex) {
         case 0:
             this.setImage(GameConfig.getShipPath());
+            this.getImage().setDescription("Basic Ship");
             break;
         case 1:
             this.setImage(GameConfig.getShipExplode1());
+            this.getImage().setDescription("Explode 1");
             break;
         case 2:
             this.setImage(GameConfig.getShipExplode2());
+            this.getImage().setDescription("Explode 2");
             break;
         case 3:
             this.setImage(GameConfig.getShipExplode3());
+            this.getImage().setDescription("Explode 3");
             break;
         case 4:
             this.setImage(GameConfig.getShipExplode4());
+            this.getImage().setDescription("Explode 4");
             imageIndex = -1;
             break;
         default:

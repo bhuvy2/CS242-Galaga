@@ -1,12 +1,7 @@
 package model;
 
 import display.audio.GameSoundboard;
-import model.objects.*;
-import model.objects.aliens.AdvancedAlien;
-import model.objects.aliens.Alien;
-import model.objects.aliens.BasicAlien;
-import model.objects.aliens.BossAlien;
-import model.objects.aliens.RedAlien;
+import model.objects.aliens.*;
 import model.objects.projectile.AlienMissile;
 import model.objects.projectile.Missile;
 import model.objects.ship.BasicShip;
@@ -44,7 +39,6 @@ public class Game {
      * Keeps trak of the current level
      */
     private volatile int level = 1;
-    
     
     /**
      * Makes sure that the game is over
@@ -96,7 +90,7 @@ public class Game {
     // Creates initial game
     public Game(){
     	brd = new GameSoundboard();
-    	playerShip = new BasicShip();
+    	playerShip = new BasicShip(this);
     	brd.playMain();
     	this.populate();
     }
@@ -107,6 +101,7 @@ public class Game {
     public void tick(){
         checkLevelClear();
         playerShip.checkDead(this);
+        playerShip.iframeAni();
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
@@ -144,9 +139,13 @@ public class Game {
      */
     private boolean checkShipHit(){
     	if (!playerShip.isInvincible() && isHit()) {
-            if (playerShip.getLives() > 0) {
+    	    if (playerShip.isShielded()) {
+    	        playerShip.decrementShield();
+    	        playerShip.startIframes();
+            } else if (playerShip.getLives() > 0) {
             	playerShip.setLives(playerShip.getLives() - 1);
             	playerShip.die();
+            	toNextLife = 5000;
             } else {
                 this.gameOver = true;
             }
@@ -191,6 +190,7 @@ public class Game {
 		        toNextLife -= alien.getPoints();
 		        check1up();
 		    }
+
 		    // Remove missile and increment stats
 		    playerShip.getStorage().remove(i);
 		    enemiesKilled++;
@@ -207,7 +207,7 @@ public class Game {
         Alien a;
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size() 
-        		&& attacking < level + 1; i++) {
+        		&& attacking < (int)(level*.25) + 1; i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
             // If chosen call attack
@@ -287,7 +287,8 @@ public class Game {
      */
     private void checkLevelClear() {
         if (getEnemies().size() == 0) {
-            System.out.println(level);
+            if (level % 5 == 0)
+                playerShip.incrementBossKills();
             level++;
             playerShip.getStorage().removeAll(playerShip.getStorage());
             populate();
@@ -300,8 +301,13 @@ public class Game {
      */
     private void check1up() {
         if (toNextLife <= 0) {
-            toNextLife = toNextLife+5000;
-            playerShip.setLives(playerShip.getLives() + 1);
+            if (playerShip.getLives() == playerShip.getMAX_LIVES()) {
+                toNextLife += 10000*(playerShip.getNumShields() + 1);
+                playerShip.incrementShield();
+            } else {
+                toNextLife += 5000;
+                playerShip.setLives(playerShip.getLives() + 1);
+            }
         }
     }
     /**
@@ -309,7 +315,7 @@ public class Game {
      */
     private void populate() {
 		enemies = new ArrayList<>();
-        Alien.setBaseHealth(Alien.getBaseHealth() + level - 1);
+        Alien.setBaseHealth((int)(level*.2));
         if (level % 5 == 0) {
             enemies.add(new BossAlien(48, 244, this));
         } else {
@@ -440,6 +446,10 @@ public class Game {
         enemies.add(alien);
     }
 
+    public void incrementShotsFired(int fired) {
+        shotsFired += fired;
+    }
+
     /**
      * Set points needed for next life
      * @param toNextLife points needed
@@ -468,6 +478,10 @@ public class Game {
     	return this.gameOver;
     }
 
+    public int getBossesKilled() {
+        return playerShip.getBossesKilled();
+    }
+
     /**
      * Draws all aliens
      * @param c
@@ -489,8 +503,15 @@ public class Game {
         shotsFired = 0;
         shotsHit = 0;
         enemiesKilled = 0;
+        playerShip.setIframeCharge(0);
         toNextLife = 5000;
         playerShip.getStorage().clear();
+        playerShip.setBossesKilled(0);
+        Ship.setBonusShots(0);
+        Ship.setMaxShots(0);
+        playerShip.setMultipleShots(false);
+        while (playerShip.isShielded())
+            playerShip.decrementShield();
         this.enemies.clear();
         populate();
         resetAttack();

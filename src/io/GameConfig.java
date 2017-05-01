@@ -1,6 +1,5 @@
 package io;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -23,6 +22,7 @@ public class GameConfig {
 	 * All the keys in the config file to the path
 	 */
 	private static final String shipIconKey = "shipIcon",
+		shieldShipKey = "shieldShipIcon",
 		missileKey="shipMissile",
 		explode1Key="explodePart1",
 		explode2Key="explodePart2",
@@ -50,6 +50,8 @@ public class GameConfig {
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
 	}
+
+	public static String getShieldShipPath() { return prop.getProperty(shieldShipKey); }
 	
 	public static String getShipExplode1(){
 		return prop.getProperty(explode1Key);
