@@ -46,10 +46,12 @@ public class SpriteCache {
 		Integer in2 = 2;
 		try{
 			InputStream in = in2.getClass().getResourceAsStream(res);
+			if(in == null){
+				return null;
+			}
 			temp = ImageIO.read(in);
 		}catch(IOException | NullPointerException e){
 			System.out.println("Error loading " + res);
-			e.printStackTrace();
 		}
 		return temp;
 	}

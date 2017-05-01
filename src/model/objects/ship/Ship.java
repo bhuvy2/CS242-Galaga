@@ -130,7 +130,8 @@ public abstract class Ship extends GameSprite {
     private void addMissile(int offset1, int offset2) {
         Missile missile = new Missile(this.x +
                 image.getIconWidth()/2+offset1+3, 
-                GameWindow.BOARD_HEIGHT-this.image.getIconHeight()+offset2 - Missile.HEIGHT);
+                GameWindow.BOARD_HEIGHT-this.image.getIconHeight()+offset2);
+        missile.setY(missile.getY() - missile.getImage().getIconHeight());
         storage.add(missile);
     }
 

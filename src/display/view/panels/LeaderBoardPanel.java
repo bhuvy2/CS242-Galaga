@@ -21,7 +21,7 @@ import io.Player;
 
 /**
  * @author Bhuvan Venkatesh
- *	Shows the leaderboard from the file
+ *	Shows the leader board from the file
  */
 @SuppressWarnings("serial")
 public class LeaderBoardPanel extends JPanel {
@@ -75,20 +75,25 @@ public class LeaderBoardPanel extends JPanel {
 				if(pos == 11){
 					break;
 				}
-				String txt = ""+ (pos) + ". " + plr.name + ": " + plr.score;
-				JLabel lbl = new JLabel(txt);
-				lbl.setFont(GameWindow.gameFont);
-				lbl.setForeground(Color.YELLOW);
-				lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-				lbl.setBounds(80, leaderHeight+(labelHeight+labelPadding)*(pos), 
-						600, labelHeight);
-				pos += 1;
+				String txt = "" + (pos) + ". " + plr.name + ": " + plr.score;
+				JLabel lbl = generateLabel(pos, txt);
 				this.add(lbl);
+				pos += 1;
 			}
 		} catch (IOException e) {
 			this.add(new JLabel("Unable to load"));
 		}
 		return leaderHeight+(labelHeight+labelPadding)*(pos);
+	}
+
+	private JLabel generateLabel(int pos, String txt) {
+		JLabel lbl = new JLabel(txt);
+		lbl.setFont(GameWindow.gameFont);
+		lbl.setForeground(Color.YELLOW);
+		lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lbl.setBounds(80, leaderHeight+(labelHeight+labelPadding)*(pos), 
+				600, labelHeight);
+		return lbl;
 	}
 
 	/**

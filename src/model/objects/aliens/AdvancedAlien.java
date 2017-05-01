@@ -57,9 +57,9 @@ public class AdvancedAlien extends Alien {
         row = toEdge;
         isMovingRight = true;
         toSpot = AttackingState.AtSpot;
-        points = basePoints + 200*baseHealth;
+        points = basePoints + bossAlienExtraPoints*baseHealth;
         list = new ArrayList<AlienMissile>();
-        health = baseHealth*2 + 2;
+        health = baseHealth*bossAlienExtraHealth + bossAlienExtraHealth;
     }
 
     /**

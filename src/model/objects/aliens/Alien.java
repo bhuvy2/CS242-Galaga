@@ -19,9 +19,9 @@ public abstract class Alien extends GameSprite {
             column,         //To keep a running column so that the alien can revert back to this
             count = 0;      //As a mediator count to not go so fast
 
-    public volatile ArrayList<AlienMissile> list; //Like Storage for ship
+    protected volatile ArrayList<AlienMissile> list; //Like Storage for ship
 
-    protected static boolean isMovingRight;
+	protected static boolean isMovingRight;
     public boolean isAttacking;
     public boolean isMoving = true;
 
@@ -97,18 +97,8 @@ public abstract class Alien extends GameSprite {
             if (!m.isVisible() && (!m.isBounce() || m.doneBounce())) {
                 list.remove(i);
                 i--;
-            } else if (!m.isVisible()) {
-                if (m.getY() > GameWindow.BOARD_HEIGHT || m.getY() < 0) {
-                    m.setyMove(-1 * m.getyMove());
-                    m.decrementBounceCount();
-                }
-                if (m.getX() > GameWindow.BOARD_WIDTH || m.getX() < 0) {
-                    m.setxMove(-1 * m.getxMove());
-                    m.decrementBounceCount();
-                }
             }
         }
-
         // Alien move and attack
         if(this.dying == HealthState.Alive){
 	        move();
@@ -179,6 +169,10 @@ public abstract class Alien extends GameSprite {
     public void setMoving(boolean moving) {
         isMoving = moving;
     }
+    
+    public void setList(ArrayList<AlienMissile> list) {
+		this.list = list;
+	}
     
     /**
      * Retrieves health of alien

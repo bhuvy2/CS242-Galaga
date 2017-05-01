@@ -54,6 +54,16 @@ public class AlienMissile extends Missile implements Projectile {
     public void move() {
         y += yMove;
         x += xMove;
+        if (!this.isVisible()) {
+            if (this.getY() > GameWindow.BOARD_HEIGHT || this.getY() < 0) {
+            	this.setyMove(-1 * this.getyMove());
+            	this.decrementBounceCount();
+            }
+            if (this.getX() > GameWindow.BOARD_WIDTH || this.getX() < 0) {
+            	this.setxMove(-1 * this.getxMove());
+            	this.decrementBounceCount();
+            }
+        }
         count++;
 
     }

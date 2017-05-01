@@ -105,7 +105,7 @@ public class Game {
     	playerShip.tick();
     	this.setAttackers();
     	Alien al;
-    	for (int i = 0; i< this.enemies.size(); i++) {
+    	for (int i = 0; i < this.enemies.size(); i++) {
     	    al = getEnemies().get(i);
     		al.tick();
     		if(al.isDead()){
