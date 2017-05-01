@@ -79,7 +79,24 @@ public class TestGame {
 			verify(a).returnToPosition();
         }
 	}
-	
-	// TODO: Put in a tick test
+
+	@Test
+	public void testTick(){
+		Game gm = new Game();
+		BasicShip ship = mock(BasicShip.class);
+		ArrayList<Alien> mies = new ArrayList<>();
+		for(int i = 0; i < 100; ++i){
+			BasicAlien al = spy(new BasicAlien(0, 0));
+			when(al.isDying()).thenReturn(false);
+			mies.add(al);
+		}
+		gm.setPlayerShip(ship);
+		gm.setEnemies(mies);
+		gm.tick();
+		
+		verify(ship).checkDead(gm);
+		verify(ship).iframeAni();
+		verify(ship).tick();
+	}
 
 }

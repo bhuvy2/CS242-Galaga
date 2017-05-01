@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 public class TestSpriteCache {
 	
-	private static final String resourceString = "res/galaga.png";
+	private static final String resourceString = "/img/galaga.png";
 	
 	@Test
 	public void testResourceExists(){

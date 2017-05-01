@@ -2,6 +2,7 @@ package display.view;
 
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import display.view.panels.GamePanel;
@@ -11,6 +12,7 @@ import model.Star;
 public class TestGameTicks {
 
 	@Test
+	@Ignore ("Brings up GUI")
 	public void testPaint() {
 		GameWindow window = new GameWindow();
 		GamePanel panel = new GamePanel(new ArrayList<Star>(), false);

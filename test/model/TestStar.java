@@ -22,7 +22,7 @@ public class TestStar {
 	public void testStarMoveOver(){
 		Star star = new Star(0, GameWindow.BOARD_HEIGHT-1);
 		star.move();
-		assertTrue(star.getY() >= 0 && star.getY() < 10);
+		assertTrue(star.getY() >= 0 && star.getY() < GameWindow.BOARD_HEIGHT-20);
 		assertTrue(star.getX() == 0);
 	}
 	
