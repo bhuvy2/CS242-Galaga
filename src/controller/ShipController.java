@@ -36,7 +36,8 @@ public class ShipController {
             THROTTLE = "throttle",
             THROTTLEUP = "throttleup",
             THROTTLEDOWN = "throttledown",
-            SHOTS = "shots";
+            SHOTS = "shots",
+            IFRAMES = "iframes";
     /**
      * The Actions to map to each of the pieces
      */
@@ -52,7 +53,10 @@ public class ShipController {
             throttledown,
             kuleft,
             kuright,
-            shots;
+            shots,
+            iframes;
+
+    private int prev_max;
     
     /**
      * Soundboard for the l33t sound effects
@@ -201,6 +205,15 @@ public class ShipController {
                 toggleMax();
             }
         };
+
+        iframes = new AbstractAction(IFRAMES) {
+            public void actionPerformed(ActionEvent e) {
+                if (player.getIframeCharge() == 500) {
+                    player.startIframes();
+                    player.setIframeCharge(0);
+                }
+            }
+        };
     }
 
     /**
@@ -241,6 +254,7 @@ public class ShipController {
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), SHOTS, shots);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), THROTTLEUP, throttleup);
         this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), THROTTLEDOWN, throttledown);
+        this.addKey(jpl, KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), IFRAMES, iframes);
     }
 
     /**
@@ -280,9 +294,10 @@ public class ShipController {
      * Toggle max shots.
      */
     private void toggleMax() {
-        if(Ship.getMaxShots() == 2)
+        if(Ship.getMaxShots() != 500) {
             Ship.setMaxShots(500);
-        else
+        } else {
             Ship.setMaxShots(2);
+        }
     }
 }

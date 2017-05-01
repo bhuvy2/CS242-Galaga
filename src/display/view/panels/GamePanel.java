@@ -49,6 +49,11 @@ public class GamePanel extends JPanel {
 	 * Displays any power ups
 	 */
 	private JLabel powers;
+
+    /**
+     * Displays when iframes available
+     */
+    private JLabel iframes;
 	
 	/**
 	 * Keeps track of the stars
@@ -74,8 +79,10 @@ public class GamePanel extends JPanel {
 		    powerUps = powerUps.concat("INVINCIBLE ");
         if (game.getPlayerShip().isMultipleShots())
 		    powerUps = powerUps.concat("MULTI-SHOT ");
-		if (Ship.getMaxShots() > 2)
+		if (Ship.getMaxShots() == 500)
 		    powerUps = powerUps.concat("MAX-SHOTS");
+		if (game.getPlayerShip().getIframeCharge() == 500)
+		    powerUps = powerUps.concat("IFRAMES READY");
         powers.setText(powerUps);
 	}
 	
@@ -161,7 +168,7 @@ public class GamePanel extends JPanel {
     }
 
     // Adds power up label to panel
-	private void addPowerUpNotifications() {
+    private void addPowerUpNotifications() {
         // Display power up notifications
         powers = createSimpleLabel("");
         powers.setForeground(Color.WHITE);
@@ -169,7 +176,6 @@ public class GamePanel extends JPanel {
         powers.setBounds(170, 680, 300,30);
         this.add(powers);
     }
-
 	
 	/**
 	 * @param lbl, the string to put inside the label
@@ -213,9 +219,23 @@ public class GamePanel extends JPanel {
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		game.draw(this, g);
-		for(Star str: this.stars){
-			str.drawSelf(this, g);
+		if (timer.isRunning()) {
+			game.draw(this, g);
+			for (Star str : this.stars) {
+				str.drawSelf(this, g);
+			}
+		} else {
+			g.setColor(Color.white);
+			g.drawString("Paused", 200, 200);
+			g.drawString("Enemies Killed: " + game.getEnemiesKilled(), 200, 230);
+			g.drawString("Shots Fired: " + game.getShotsFired(), 200, 260);
+			g.drawString("Shots Hit: " + game.getShotsHit(), 200, 290);
+			if (game.getShotsFired() > 0)
+				g.drawString("Accuracy: " + ((double)game.getShotsHit()/(double)game.getShotsFired()) + "%", 200, 320);
+			else
+				g.drawString("Accuracy: 0%", 200, 320);
+			g.drawString("Bosses Killed: " + game.getBossesKilled(), 200, 350);
+			g.drawString("Press ctrl-r to reset the game.", 180, 400);
 		}
 	}
 	
@@ -228,10 +248,12 @@ public class GamePanel extends JPanel {
 
 	// Toggles timer run time effectively pausing the game
 	public void toggleTimer() {
-		if (timer.isRunning())
+		if (timer.isRunning()) {
 			timer.stop();
-		else
+			this.repaint();
+		} else {
 			timer.start();
+		}
 	}
 	
 	/**
