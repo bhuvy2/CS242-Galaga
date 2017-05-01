@@ -121,7 +121,9 @@ public class Game {
         for (Alien a : this.getEnemies()) {
             a.getList().clear();
             a.setAttacking(false);
-            a.setMoving(true);
+            // Set moving to true only if its not a boss stage and an advanced alien
+            if (!(level % 5 == 0 && a instanceof AdvancedAlien))
+                a.setMoving(true);
             a.reset();
             a.returnToPosition();
         }
