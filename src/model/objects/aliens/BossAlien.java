@@ -43,7 +43,7 @@ public class BossAlien extends Alien {
         column = toRight;
         row = toEdge;
         isMoving = true;
-        points = 3000;
+        points = 3000 * baseHealth;
         list = new ArrayList<>();
         health = 5 * baseHealth;
     }

@@ -139,7 +139,7 @@ public class GameSoundboard {
 				}
 			}
 		});
-		th.start();
+//		th.start();
 	}
 
 }

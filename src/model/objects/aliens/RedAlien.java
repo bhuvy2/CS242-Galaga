@@ -3,7 +3,6 @@ package model.objects.aliens;
 import io.GameConfig;
 import model.objects.Delta;
 import model.objects.projectile.AlienMissile;
-import model.objects.projectile.AlienMissile.Slope;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -32,9 +31,9 @@ public class RedAlien extends Alien {
         angle = 0;
         st = new RedAlienState.Normal();
         isMovingRight = true;
-        points = basePoints + 100;
+        points = basePoints + 100*health;
         list = new ArrayList<AlienMissile>();
-        health = baseHealth+ 1;
+        health = baseHealth + 1;
         toSpot = 0;
     }
 

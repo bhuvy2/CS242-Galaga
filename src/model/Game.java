@@ -38,7 +38,7 @@ public class Game {
     /**
      * Keeps trak of the current level
      */
-    private volatile int level = 5;
+    private volatile int level = 1;
     
     /**
      * Makes sure that the game is over
@@ -207,7 +207,7 @@ public class Game {
         Alien a;
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size() 
-        		&& attacking < level + 1; i++) {
+        		&& attacking < (int)(level*.25) + 1; i++) {
             a = getEnemies().get(i);
             double rand = Math.random();
             // If chosen call attack

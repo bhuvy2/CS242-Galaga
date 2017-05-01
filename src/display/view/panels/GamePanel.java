@@ -80,9 +80,9 @@ public class GamePanel extends JPanel {
         if (game.getPlayerShip().isMultipleShots())
 		    powerUps = powerUps.concat("MULTI-SHOT ");
 		if (Ship.getMaxShots() == 500)
-		    powerUps = powerUps.concat("MAX-SHOTS");
+		    powerUps = powerUps.concat("MAX-SHOTS ");
 		if (game.getPlayerShip().getIframeCharge() == 500)
-		    powerUps = powerUps.concat("IFRAMES READY");
+		    powerUps = powerUps.concat("IFRAMES ");
         powers.setText(powerUps);
 	}
 	
@@ -226,16 +226,19 @@ public class GamePanel extends JPanel {
 			}
 		} else {
 			g.setColor(Color.white);
-			g.drawString("Paused", 200, 200);
-			g.drawString("Enemies Killed: " + game.getEnemiesKilled(), 200, 230);
-			g.drawString("Shots Fired: " + game.getShotsFired(), 200, 260);
-			g.drawString("Shots Hit: " + game.getShotsHit(), 200, 290);
-			if (game.getShotsFired() > 0)
-				g.drawString("Accuracy: " + ((double)game.getShotsHit()/(double)game.getShotsFired()) + "%", 200, 320);
-			else
-				g.drawString("Accuracy: 0%", 200, 320);
-			g.drawString("Bosses Killed: " + game.getBossesKilled(), 200, 350);
-			g.drawString("Press ctrl-r to reset the game.", 180, 400);
+			g.drawString("Paused", 180, 200);
+			g.drawString("Enemies Killed: " + game.getEnemiesKilled(), 180, 230);
+			g.drawString("Shots Fired: " + game.getShotsFired(), 180, 260);
+			g.drawString("Shots Hit: " + game.getShotsHit(), 180, 290);
+			if (game.getShotsFired() > 0) {
+                g.drawString("Accuracy: " +
+                        ((double) game.getShotsHit() / (double) game.getShotsFired())
+                        + "%", 180, 320);
+            } else {
+                g.drawString("Accuracy: 0%", 180, 320);
+            }
+			g.drawString("Bosses Killed: " + game.getBossesKilled(), 180, 350);
+			g.drawString("Press ctrl-r to reset the game.", 160, 400);
 		}
 	}
 	
