@@ -3,7 +3,9 @@ package display.view.panels;
 import controller.GameController;
 import controller.ShipController;
 import display.view.GameWindow;
+import io.GameConfig;
 import io.Leaderboard;
+import io.SpriteCache;
 import model.Game;
 import model.Star;
 import model.objects.ship.Ship;
@@ -11,6 +13,7 @@ import model.objects.ship.Ship;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -225,22 +228,56 @@ public class GamePanel extends JPanel {
 				str.drawSelf(this, g);
 			}
 		} else {
-			g.setColor(Color.white);
-			g.drawString("Paused", 180, 200);
-			g.drawString("Enemies Killed: " + game.getEnemiesKilled(), 180, 230);
-			g.drawString("Shots Fired: " + game.getShotsFired(), 180, 260);
-			g.drawString("Shots Hit: " + game.getShotsHit(), 180, 290);
-			if (game.getShotsFired() > 0) {
-                g.drawString("Accuracy: " +
-                        ((double) game.getShotsHit() / (double) game.getShotsFired())
-                        + "%", 180, 320);
-            } else {
-                g.drawString("Accuracy: 0%", 180, 320);
-            }
-			g.drawString("Bosses Killed: " + game.getBossesKilled(), 180, 350);
-			g.drawString("Press ctrl-r to reset the game.", 160, 400);
+		    displayPauseMenu(g);
 		}
 	}
+
+	private void displayPauseMenu(Graphics g) {
+	    // Set Draw color
+        g.setColor(Color.white);
+
+        // Stats here
+        g.drawString("Paused", 180, 200);
+        g.drawString("Enemies Killed: " + game.getEnemiesKilled(), 180, 230);
+        g.drawString("Shots Fired: " + game.getShotsFired(), 180, 260);
+        g.drawString("Shots Hit: " + game.getShotsHit(), 180, 290);
+        double acc = ((double) game.getShotsHit() / (double) game.getShotsFired());
+        DecimalFormat df = new DecimalFormat("#.##");
+        if (game.getShotsFired() > 0) {
+            g.drawString("Accuracy: " + df.format(acc) + "%", 180, 320);
+        } else {
+            g.drawString("Accuracy: 0%", 180, 320);
+        }
+        g.drawString("Bosses Killed: " + game.getBossesKilled(), 180, 350);
+        g.drawString("Press ctrl-r to reset the game.", 160, 400);
+
+        // Alien info and icons here
+        g.drawString("Current health pools: ", 160, 450);
+
+        // Yellow
+        ImageIcon yellow = SpriteCache.get(GameConfig.getYellowPath());
+        int yHealth = (int)(game.getLevel()*.2) + 1;
+        yellow.paintIcon(this, g, 100, 480);
+        g.drawString("" + yHealth, 105, 470);
+
+        // Red
+        ImageIcon red = SpriteCache.get(GameConfig.getRedPath());
+        int rHealth = (int)(game.getLevel()*.2) + 1;
+        red.paintIcon(this, g, 180, 480);
+        g.drawString("" + rHealth, 185, 470);
+
+        // Green
+        ImageIcon green = SpriteCache.get(GameConfig.getGreenPath());
+        int gHealth = (int)(game.getLevel()*.2)*2 + 2;
+        green.paintIcon(this, g, 260, 480);
+        g.drawString("" + gHealth, 270, 470);
+
+        // Boss
+        ImageIcon boss = SpriteCache.get(GameConfig.getBossPath());
+        int bHealth = (int)(game.getLevel()*.2)*5;
+        boss.paintIcon(this, g, 340, 480);
+        g.drawString("" + bHealth, 360, 470);
+    }
 	
 	/**
 	 * @return The model in the MVC

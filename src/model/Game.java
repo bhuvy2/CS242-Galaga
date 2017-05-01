@@ -315,7 +315,7 @@ public class Game {
      */
     private void populate() {
 		enemies = new ArrayList<>();
-        Alien.setBaseHealth(Alien.getBaseHealth() + (int)(level*.2));
+        Alien.setBaseHealth((int)(level*.2));
         if (level % 5 == 0) {
             enemies.add(new BossAlien(48, 244, this));
         } else {
