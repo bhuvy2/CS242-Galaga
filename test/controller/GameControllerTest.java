@@ -24,7 +24,7 @@ public class GameControllerTest {
 
     @Test
     public void testController() {
-        BasicShip ship = new BasicShip();
+        BasicShip ship = new BasicShip(game);
         game.setPlayerShip(ship);
         controller.setGameControls(pnl);
         Action a = (Action) pnl.getActionForKeyStroke(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE,0));

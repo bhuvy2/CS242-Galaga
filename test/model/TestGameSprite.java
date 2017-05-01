@@ -20,7 +20,8 @@ public class TestGameSprite {
 
 	@Test
 	public void testDraw() {
-		GameSprite sp = new BasicShip();
+		Game gm = spy(new Game());
+		GameSprite sp = new BasicShip(gm);
 		ImageIcon icon = mock(ImageIcon.class);
 		Graphics g = mock(Graphics.class);
 		Component c = mock(Component.class);
@@ -31,7 +32,8 @@ public class TestGameSprite {
 	
 	@Test
 	public void testCenterY() {
-		GameSprite sp = new BasicShip();
+		Game gm = spy(new Game());
+		GameSprite sp = new BasicShip(gm);
 		sp.setX(0);
 		sp.setY(0);
 		ImageIcon icon = mock(ImageIcon.class);

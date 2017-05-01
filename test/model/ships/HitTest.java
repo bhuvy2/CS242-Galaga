@@ -10,6 +10,8 @@ import model.objects.ship.BasicShip;
 
 import org.junit.Test;
 
+import static org.mockito.Mockito.spy;
+
 import java.util.ArrayList;
 import java.util.Timer;
 
@@ -26,7 +28,8 @@ public class HitTest {
 
     @Test
     public void testShipHit() {
-        BasicShip ship = new BasicShip();
+    	Game gm = spy(new Game());
+        BasicShip ship = new BasicShip(gm);
         ship.setX(10);
         ship.setY(10);
         BasicAlien alien = new BasicAlien(10,10);
@@ -41,7 +44,8 @@ public class HitTest {
 
     @Test
     public void testShipMissileHit() {
-        BasicShip ship = new BasicShip();
+    	Game gm = spy(new Game());
+        BasicShip ship = new BasicShip(gm);
         ship.setX(10);
         ship.setY(20);
         BasicAlien alien = new BasicAlien(10,10);

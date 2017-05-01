@@ -1,8 +1,8 @@
 package model;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.spy;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import display.view.GameWindow;
@@ -13,7 +13,8 @@ public class TestShip {
 
 	@Test
 	public void testMovementStop() {
-		Ship sp = new BasicShip();
+		Game gm = spy(new Game());
+		Ship sp = new BasicShip(gm);
 		sp.setStop();
 		for(int i = 0; i < 100; ++i){
 			int x = sp.getX();
@@ -26,7 +27,8 @@ public class TestShip {
 	
 	@Test
 	public void testMovementRight() {
-		Ship sp = new BasicShip();
+		Game gm = spy(new Game());
+		Ship sp = new BasicShip(gm);
 		sp.setRight();
 		for(int i = 0; i < 500; ++i){
 			int x = sp.getX();
@@ -42,7 +44,8 @@ public class TestShip {
 	
 	@Test
 	public void testMovementLeft() {
-		Ship sp = new BasicShip();
+		Game gm = spy(new Game());
+		Ship sp = new BasicShip(gm);
 		sp.setLeft();
 		for(int i = 0; i < 100; ++i){
 			int x = sp.getX();
