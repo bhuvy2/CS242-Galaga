@@ -45,7 +45,7 @@ public class HitTest {
         ship.setX(10);
         ship.setY(20);
         BasicAlien alien = new BasicAlien(10,10);
-        AlienMissile m = new AlienMissile(alien, 0);
+        AlienMissile m = new AlienMissile(alien, AlienMissile.Slope.Down);
         ArrayList<Alien> list = new ArrayList<Alien>();
         list.add(alien);
         alien.fire();

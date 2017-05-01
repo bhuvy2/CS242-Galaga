@@ -124,7 +124,7 @@ public class Game {
      */
     public void resetAttack() {
         for (Alien a : this.getEnemies()) {
-            a.getList().removeAll(a.getList());
+            a.getList().clear();
             a.setAttacking(false);
             a.setMoving(true);
             a.reset();
@@ -203,7 +203,7 @@ public class Game {
     /**
      * Randomly determines which aliens should be attacking
      */
-    public void setAttackers() {
+    private void setAttackers() {
         Alien a;
         int attacking = getAmountAttacking();
         for (int i = 0; i < getEnemies().size() 
@@ -339,7 +339,7 @@ public class Game {
 	}
 
     /**
-     * Retrievves list of aliens present
+     * Retrieves list of aliens present
      * @return list of aliens
      */
     public ArrayList<Alien> getEnemies() {

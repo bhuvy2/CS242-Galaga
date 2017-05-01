@@ -12,7 +12,7 @@ public class GameConfig {
 	/**
 	 * The properties file
 	 */
-	private static final Properties prop = getMappings();
+	private static Properties prop = getMappings();
 	/**
 	 * Path from the root of the sprite
 	 */
@@ -46,6 +46,14 @@ public class GameConfig {
 		alienExplode4Key = "alienExplode4",
 		alienExplode5Key = "alienExplode5",
 		superKey = "bossAlienIcon";
+	
+	public static Properties getProperties(){
+		return prop;
+	}
+	
+	public static void setProperties(Properties p){
+		prop = p;
+	}
 	
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
@@ -105,7 +113,9 @@ public class GameConfig {
 		return prop.getProperty(redKey);
 	}
 
-	public static String getBossKey() { return  prop.getProperty(bossKey); }
+	public static String getBossKey() { 
+		return prop.getProperty(bossKey); 
+	}
 	
 	/**
 	 * @return The path of the image file fro the yellow alien

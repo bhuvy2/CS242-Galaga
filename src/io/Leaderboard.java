@@ -35,17 +35,7 @@ public class Leaderboard {
 	 * Loads the file into memory and prepares for writing.
 	 */
 	public Leaderboard() throws IOException {
-		createIfNotExists();
 		scores = loadScores();
-	}
-	
-	/**
-	 * @throws IOException, if not writeable
-	 */
-	private void createIfNotExists() throws IOException {
-		File leaderFile = new File(leaderboardFilename);
-		leaderFile.mkdirs();
-		leaderFile.createNewFile();
 	}
 	
 	/**

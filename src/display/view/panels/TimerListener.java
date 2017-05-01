@@ -13,7 +13,7 @@ import model.Game;
  * @author Bhuvan Venkatesh
  *	Performs the main game loop in the panel
  */
-final class TimerListener implements ActionListener {
+public final class TimerListener implements ActionListener {
 	
 	/**
 	 * JPANELS

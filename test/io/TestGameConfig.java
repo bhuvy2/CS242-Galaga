@@ -12,22 +12,15 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
 public class TestGameConfig {
-	
-	@InjectMocks GameConfig conf;
-	
-	@Mock Properties prop;
-	
-	@Before
-	public void setUp(){
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testGet() {
 		String path = "Yesh";
 		String key = "bossAlienKey";
+		Properties prop = mock(Properties.class);
+		GameConfig.setProperties(prop);
 		when(prop.getProperty(key)).thenReturn(path);
-		assertEquals(null, conf.getBossKey());
+		assertEquals("Yesh", GameConfig.getBossKey());
 	}
 
 }

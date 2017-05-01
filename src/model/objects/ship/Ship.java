@@ -66,6 +66,7 @@ public abstract class Ship extends GameSprite {
     	current = ShipState.STOP;
     }
 
+    public abstract void change();
 
     public boolean fire() {
 //        System.out.println(canFire + " M" + MAX_SHOTS + " B" + BONUS_SHOTS + " S" + storage.size());
@@ -133,8 +134,6 @@ public abstract class Ship extends GameSprite {
         storage.add(missile);
     }
 
-
-    public abstract void change();
 
     /**
      * Draws and moves ship's missiles each tick then removes 
@@ -262,6 +261,7 @@ public abstract class Ship extends GameSprite {
         this.multipleShots = multipleShots;
     }
     
+
     public void die(){
     	isDying = true;
     	deathCount = 1;
