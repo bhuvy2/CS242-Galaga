@@ -87,22 +87,22 @@ public abstract class Ship extends GameSprite {
      */
     private void checkBossKills() {
         switch (bossesKilled) {
-        case 0:
+        case 0: // 0 bosses
             game.incrementShotsFired(1);
             addMissile(-4, -35);
             break;
-        case 1:
+        case 1: // 1 boss
             game.incrementShotsFired(2);
             addMissile(-24, -35);
             addMissile(16, -35);
             break;
-        case 2:
+        case 2: // 2 bosses
             game.incrementShotsFired(3);
             addMissile(-4, -30);
             addMissile(-24, -35);
             addMissile(16, -35);
             break;
-        case 3:
+        case 3: // 3 bosses
             game.incrementShotsFired(5);
             addMissile(-4, -30);
             addMissile(-24, -35);
@@ -110,7 +110,7 @@ public abstract class Ship extends GameSprite {
             addMissile(-34, -25);
             addMissile(26, -25);
             break;
-        default:
+        default: // 4+ bosses
             if (bossesKilled > 3) {
                 multipleShots = true;
                 MAX_SHOTS += 20;
@@ -208,77 +208,138 @@ public abstract class Ship extends GameSprite {
      * Handles ship sprites when gaining/losing shields
      */
     private void checkShield() {
+        // Shield Icon if has shield
         if (shield > 0 && getImage().getDescription().equals("Basic Ship")) {
             this.setImage(GameConfig.getShieldShipPath());
             this.getImage().setDescription("Shield Ship");
-        } else if(shield == 0 && getImage().getDescription().equals("Shield Ship")) {
+        } else if(shield == 0 && getImage().getDescription().equals("Shield Ship")) { // Ship icon no shield
             this.setImage(GameConfig.getShipPath());
             this.getImage().setDescription("Basic Ship");
         }
     }
-    
+
+    /**
+     * Sets ship state to left
+     */
     public void setLeft(){
     	current = ShipState.LEFT;
     }
-    
+
+    /**
+     * Sets ship state to right
+     */
     public void setRight(){
     	current = ShipState.RIGHT;
     }
-    
+
+    /**
+     * Sets ship state to stop
+     */
     public void setStop(){
     	current = ShipState.STOP;
     }
 
+    /**
+     * Checks if ship can fire
+     * @return true if canFire
+     */
     public boolean canFire() {
         return canFire;
     }
 
+    /**
+     * Checks if ship can move
+     * @return true if can move
+     */
     public boolean canMove() {
         return canMove;
     }
 
+    /**
+     * Sets ship movement capability
+     * @param canMove true if allowing ship to move
+     */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
 
+    /**
+     * Retrieves number of lives the ship has
+     * @return number of lives
+     */
     public int getLives() {
         return lives;
     }
 
+    /**
+     * Sets the number of lives the ship has
+     * @param lives new life count
+     */
     public void setLives(int lives) {
         if (lives <= MAX_LIVES)
             this.lives = lives;
     }
 
+    /**
+     * Checks if ship is invincible
+     * @return true if invincible
+     */
     public boolean isInvincible() {
         return isInvincible;
     }
 
+    /**
+     * Sets ship as invincible or not
+     * @param isInvincible state of invincibility
+     */
     public void setInvincible(boolean isInvincible) {
         this.isInvincible = isInvincible;
     }
 
+    /**
+     * Checks if ship allows for throttling the game
+     * @return true if game is throttlable
+     */
     public boolean canThrottle() {
         return canThrottle;
     }
 
+    /**
+     * Sets throttle state
+     * @param canThrottle true if allowing throttling
+     */
     public void setCanThrottle(boolean canThrottle) {
         this.canThrottle = canThrottle;
     }
 
+    /**
+     * Retrieves ship storage for missiles
+     * @return
+     */
     public ArrayList<Missile> getStorage() {
         return storage;
     }
 
+    /**
+     * Checks if ship has multi shot enabled
+     * @return true if enabled
+     */
     public boolean isMultipleShots() {
         return multipleShots;
     }
 
+    /**
+     * Sets multi shot state
+     * @param multipleShots state to set multi shot
+     */
     public void setMultipleShots(boolean multipleShots) {
         this.multipleShots = multipleShots;
     }
-    
 
+    /**
+     * Starts Ship death states, death animation is started,
+     * ship is invincible for animation, no user interaction
+     */
     public void die(){
     	isDying = true;
     	deathCount = 1;
@@ -286,6 +347,10 @@ public abstract class Ship extends GameSprite {
     	canMove = false;
     }
 
+    /**
+     * Starts iFrame animation. Ship is invincible for 52 ticks
+     * Used as a power up with a charge rate and as a usage for shields.
+     */
     public void startIframes() {
         iframes = true;
         iframeCount = 1;
@@ -319,6 +384,9 @@ public abstract class Ship extends GameSprite {
 	    }
 	}
 
+    /**
+     * Frame count where ship is invincible
+     */
 	public void iframeAni() {
 	    if (iframes) {
 	        iframeCount++;
@@ -330,18 +398,34 @@ public abstract class Ship extends GameSprite {
         }
     }
 
+    /**
+     * Sets bonus shots to new count. Incremented on boss kills
+     * @param bonusShots new amount of bonus shots
+     */
     public static void setBonusShots(int bonusShots) {
         BONUS_SHOTS = bonusShots;
     }
 
+    /**
+     * Sets number of bosses killed
+     * @param bossesKilled new number of bosses killed
+     */
     public void setBossesKilled(int bossesKilled) {
         this.bossesKilled = bossesKilled;
     }
 
+    /**
+     * Retrieves number of shots ship can fire
+     * @return number of missiles allowed to fire
+     */
     public static int getMaxShots() {
         return MAX_SHOTS;
     }
 
+    /**
+     * Sets new missile limit to 2 + Bonus shots, or to 500 if using cheat code
+     * @param maxShots number of shots allowed for ship
+     */
     public static void setMaxShots(int maxShots) {
         if (maxShots == 500) {
             MAX_SHOTS = maxShots;
@@ -350,41 +434,81 @@ public abstract class Ship extends GameSprite {
         }
     }
 
+    /**
+     * Retrieves the max number of lives a ship can have at any point
+     * @return max number of lives
+     */
     public int getMAX_LIVES() {
         return MAX_LIVES;
     }
 
+    /**
+     * Retrieves number of shields the ship has
+     * @return number of shields present
+     */
     public int getNumShields() {
 	    return shield;
     }
 
+    /**
+     * Increments the number of shields
+     */
     public void incrementShield() {
 	    shield++;
     }
 
+    /**
+     * Decrements the number of shields
+     */
     public void decrementShield() {
 	    shield--;
     }
 
+    /**
+     * Checks if ship is shielded
+     * @return true if ship has shields
+     */
     public boolean isShielded() {
 	    return shield > 0;
     }
 
+    /**
+     * Retrieves the number of bosses killed
+     * @return number of killed bosses
+     */
     public int getBossesKilled() {
         return bossesKilled;
     }
 
+    /**
+     * Increments boss kills and bonus shots then updates max shots unless cheat is on
+     */
     public void incrementBossKills() {
         bossesKilled++;
         BONUS_SHOTS += 4;
         MAX_SHOTS = MAX_SHOTS == 500 ? 500 : 2 + BONUS_SHOTS;
     }
 
+    /**
+     * Checks current iframe charge
+     * @return current charge
+     */
     public int getIframeCharge() {
         return iframeCharge;
     }
 
+    /**
+     * Sets current charge
+     * @param iframeCharge new charge
+     */
     public void setIframeCharge(int iframeCharge) {
         this.iframeCharge = iframeCharge;
+    }
+
+    /**
+     * Clears ship missile storage
+     */
+    public void clearStorage() {
+	    storage.removeAll(storage);
     }
 }

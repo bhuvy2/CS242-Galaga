@@ -352,7 +352,7 @@ public class Game {
      * Retrieves list of aliens present
      * @return list of aliens
      */
-    private ArrayList<Alien> getEnemies() {
+    public ArrayList<Alien> getEnemies() {
         return enemies;
     }
 
@@ -436,10 +436,30 @@ public class Game {
         return level;
     }
 
+    /**
+     * Sets game level
+     * @param level to be set
+     */
+    public void setLevel(int level) {
+        this.level = level;
+        Alien.setBaseHealth((int)(level*.2));
+        this.enemies.clear();
+        populate();
+        resetAttack();
+    }
+
+    /**
+     * Checks if game ended
+     * @return true if gameOver = true
+     */
     public boolean isGameOver(){
     	return this.gameOver;
     }
 
+    /**
+     * Returns number of bosses killed
+     * @return number of killed bosses
+     */
     public int getBossesKilled() {
         return playerShip.getBossesKilled();
     }
