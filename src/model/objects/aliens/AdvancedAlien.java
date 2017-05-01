@@ -1,7 +1,6 @@
 package model.objects.aliens;
 
 import io.GameConfig;
-import model.objects.projectile.AlienMissile;
 
 import java.util.ArrayList;
 
@@ -14,9 +13,7 @@ public class AdvancedAlien extends Alien {
     
     private static final int attackMovingSpeed = 1;
 	private static final int fireLimit = 100;
-	private static final int bossAlienExtraPoints = 200;
-	private static final int bossAlienExtraHealth = 2;
-    
+
     /**
      * Keeps a finite state machine of attacking states
      *
@@ -47,7 +44,6 @@ public class AdvancedAlien extends Alien {
      * as well as loads the image, initializes points, creates a new list of Alien Missiles and set health
      * @param toEdge the to edge is a percentage from left to right, of 100, how up or down the alien is the y coordinate.
      * @param toRight the to right is the same as toEdge but it is the x coordinate.
-     * @param bossAlienExtra 
      */
     public AdvancedAlien(int toEdge, int toRight) {
         super(GameConfig.getGreenPath());
@@ -58,7 +54,7 @@ public class AdvancedAlien extends Alien {
         isMovingRight = true;
         toSpot = AttackingState.AtSpot;
         points = basePoints + 200*baseHealth;
-        list = new ArrayList<AlienMissile>();
+        list = new ArrayList<>();
         health = baseHealth*2 + 2;
     }
 
@@ -81,6 +77,9 @@ public class AdvancedAlien extends Alien {
         }
     }
 
+    /**
+     * Returns alien to original position
+     */
 	private void moveBack() {
 		y -= attackMovingSpeed;
 		if(y == row) {
@@ -89,6 +88,9 @@ public class AdvancedAlien extends Alien {
 		}
 	}
 
+    /**
+     * Performs attack
+     */
 	private void doAttack() {
 		fireCount++;
 		if(count % DELAY == 0)
@@ -99,6 +101,9 @@ public class AdvancedAlien extends Alien {
 		}
 	}
 
+    /**
+     * Moves into position
+     */
 	private void moveToward() {
 		y += attackMovingSpeed;
 		if(getYCenter() == rowAttack) {
@@ -117,6 +122,9 @@ public class AdvancedAlien extends Alien {
         }
     }
 
+    /**
+     * Resets toSpot on game reset/attack reset
+     */
     public void reset() {
         toSpot = AttackingState.AtSpot;
     }

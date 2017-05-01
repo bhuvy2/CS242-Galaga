@@ -3,7 +3,6 @@ package model.objects.aliens;
 import display.view.GameWindow;
 import io.GameConfig;
 import model.objects.projectile.AlienMissile;
-import model.objects.projectile.AlienMissile.Slope;
 import model.superclasses.GameSprite;
 
 import java.awt.*;
@@ -28,14 +27,17 @@ public abstract class Alien extends GameSprite {
     public static int DELAY = 2;
     protected static int baseHealth = 0;
     protected static int basePoints = 100; //Delay is increased to slow the game down
-    public static final int MAX_DELAY = 14;
-    
+
+    /**
+     * Alien states
+     */
     private enum HealthState {
     	Alive,
     	Dying,
     	Dead
     }
-    
+
+    // Original states
     private HealthState dying = HealthState.Alive;
     private int dyingFrame = 0;
 
@@ -50,7 +52,7 @@ public abstract class Alien extends GameSprite {
 
     public abstract void attack(); //A specific attack for each alien
     
-    public abstract void startAttack();
+    public abstract void startAttack(); // Starts alien specific attacks
 
     /**
      * Moves the Alien back and forth
@@ -118,7 +120,10 @@ public abstract class Alien extends GameSprite {
         }
         this.count++;
     }
-    
+
+    /**
+     * Iterates through dying sprite animation
+     */
     private void performDying(){
     	int diff = this.count - this.dyingFrame;
     	if(diff < 1){
@@ -142,40 +147,42 @@ public abstract class Alien extends GameSprite {
     	
     }
 
-
+    /**
+     * Checks if alien is attacking
+     * @return true if attacking
+     */
     public boolean isAttacking() {
         return isAttacking;
     }
 
+    /**
+     * Retrieves list of alienMissiles
+     * @return missiles fired
+     */
     public ArrayList<AlienMissile> getList() {
         return list;
     }
 
-    public static boolean isIsMovingRight() {
-        return isMovingRight;
-    }
-
-    public boolean isMoving() {
-        return isMoving;
-    }
-
-    public static int getBaseHealth() {
-        return baseHealth;
-    }
-
+    /**
+     * Modifies basehealth of aliens
+     * @param baseHealth new base to be set
+     */
     public static void setBaseHealth(int baseHealth) {
         Alien.baseHealth = baseHealth;
     }
 
-
+    /**
+     * Sets alien to new attacking state
+     * @param attacking state of attack to be set
+     */
     public void setAttacking(boolean attacking) {
         isAttacking = attacking;
     }
 
-    public static void setDELAY(int DELAY) {
-        Alien.DELAY = DELAY;
-    }
-
+    /**
+     * Sets alien movement pattern
+     * @param moving true if alien is to move back and forth
+     */
     public void setMoving(boolean moving) {
         isMoving = moving;
     }
@@ -224,20 +231,34 @@ public abstract class Alien extends GameSprite {
     public void hit() {
         health--;
     }
-    
+
+    /**
+     * Starts death animation
+     */
     public void die(){
     	dying = HealthState.Dying;
     	dyingFrame = this.count;
     }
-    
+
+    /**
+     * Checks if alien is dead
+     * @return true if dead
+     */
     public boolean isDead(){
     	return dying == HealthState.Dead;
     }
-    
+
+    /**
+     * Checks if alien is currently dying
+     * @return true if in death animation
+     */
     public boolean isDying(){
     	return dying == HealthState.Dying;
     }
-    
+
+    /**
+     * Rest function to set alien specific values to defaults
+     */
     public abstract void reset();
 
     /**

@@ -66,10 +66,11 @@ public abstract class Ship extends GameSprite {
     	current = ShipState.STOP;
     }
 
-    public abstract void change();
-
+    /**
+     * Fires missiles
+     * @return true if missiles fired
+     */
     public boolean fire() {
-//        System.out.println(canFire + " M" + MAX_SHOTS + " B" + BONUS_SHOTS + " S" + storage.size());
         if (canFire && storage.size() < MAX_SHOTS) {
             if (!multipleShots) {
                 checkBossKills();
@@ -81,6 +82,9 @@ public abstract class Ship extends GameSprite {
         return false;
     }
 
+    /**
+     * Missile patterns per boss kills
+     */
     private void checkBossKills() {
         switch (bossesKilled) {
         case 0:
@@ -116,6 +120,9 @@ public abstract class Ship extends GameSprite {
         }
     }
 
+    /**
+     * Multishot missile pattern
+     */
     private void multiShot() {
         game.incrementShotsFired(7);
         addMissile(-4, -30);
@@ -127,6 +134,11 @@ public abstract class Ship extends GameSprite {
         addMissile(26, -25);
     }
 
+    /**
+     * Adds missiles to storage with an x and y offset
+     * @param offset1 x offset
+     * @param offset2 y offset
+     */
     private void addMissile(int offset1, int offset2) {
         Missile missile = new Missile(this.x +
                 image.getIconWidth()/2+offset1+3, 
@@ -134,6 +146,10 @@ public abstract class Ship extends GameSprite {
         storage.add(missile);
     }
 
+    /**
+     * Changes ship icon
+     */
+    public abstract void change();
 
     /**
      * Draws and moves ship's missiles each tick then removes 
@@ -148,6 +164,9 @@ public abstract class Ship extends GameSprite {
             iframeCharge++;
     }
 
+    /**
+     * Moves missiles on ticks
+     */
     private void moveMissiles() {
         // Move/Remove missiles
         for (int i = 0; i < storage.size(); i++) {
@@ -160,6 +179,9 @@ public abstract class Ship extends GameSprite {
         }
     }
 
+    /**
+     * Checks movement to cause smoother response time
+     */
     private void handleMovement() {
         // Handle movement continuation
         if(this.canMove){
@@ -182,6 +204,9 @@ public abstract class Ship extends GameSprite {
         }
     }
 
+    /**
+     * Handles ship sprites when gaining/losing shields
+     */
     private void checkShield() {
         if (shield > 0 && getImage().getDescription().equals("Basic Ship")) {
             this.setImage(GameConfig.getShieldShipPath());
@@ -206,10 +231,6 @@ public abstract class Ship extends GameSprite {
 
     public boolean canFire() {
         return canFire;
-    }
-
-    public void setCanFire(boolean canFire) {
-        this.canFire = canFire;
     }
 
     public boolean canMove() {
@@ -247,10 +268,6 @@ public abstract class Ship extends GameSprite {
 
     public ArrayList<Missile> getStorage() {
         return storage;
-    }
-
-    public void setStorage(ArrayList<Missile> input) {
-        storage = input;
     }
 
     public boolean isMultipleShots() {

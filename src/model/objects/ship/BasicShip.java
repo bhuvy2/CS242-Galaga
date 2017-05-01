@@ -32,12 +32,21 @@ public class BasicShip extends Ship {
         this.storage = new ArrayList<Missile>(NUM_MISSILES);
         this.lives = NUM_LIVES;
     }
-    
+
+    /**
+     * Draws missiles and ship in game
+     * @param c componenet to be drawn in
+     * @param g graphic drawer
+     */
     public void drawSelf(Component c, Graphics g) {
         this.image.paintIcon(c, g, this.x, this.y);
+
+        // Draw missiles
         for (Missile m : storage) {
             m.getImage().paintIcon(c, g, m.getX(), m.getY());
         }
+
+        // Draw lives
         for(int i = 0; i < this.lives; i++){
         	this.stable.paintIcon(c, g, 
         			i*this.image.getIconWidth(), 
@@ -46,7 +55,7 @@ public class BasicShip extends Ship {
     }
 
     /**
-     * Change order for dying ship
+     * Iterates through sprite order for dying ship
      */
     public void change() {
     	imageIndex++;

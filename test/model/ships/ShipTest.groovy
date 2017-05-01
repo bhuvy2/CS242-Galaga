@@ -1,14 +1,9 @@
-package model.ships
-
-import controller.ShipController
-import display.view.panels.GamePanel
+package model.objects.ship
 /**
  * Created by mscislowski on 4/17/17.
  */
 class ShipTest extends GroovyTestCase {
     Ship ship = new BasicShip()
-    ShipController controller = new ShipController()
-    GamePanel panel = new GamePanel()
 
     void testCanFire() {
         assert ship.canFire()

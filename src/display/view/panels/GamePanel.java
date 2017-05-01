@@ -37,6 +37,11 @@ public class GamePanel extends JPanel {
 	 * Points to next life
 	 */
 	private JLabel toNext;
+
+    /**
+     * Current game level
+     */
+    private JLabel levelLabel;
 	
 	/**
 	 * Scores
@@ -53,11 +58,6 @@ public class GamePanel extends JPanel {
 	 */
 	private JLabel powers;
 
-    /**
-     * Displays when iframes available
-     */
-    private JLabel iframes;
-	
 	/**
 	 * Keeps track of the stars
 	 */
@@ -71,9 +71,10 @@ public class GamePanel extends JPanel {
 	/**
 	 * Keeps track of the point totals and powerups
 	 */
-	public void updateLabels(){
+    public void updateLabels(){
 	    // Set point texts
 		toNext.setText("" + game.getToNextLife());
+		levelLabel.setText("" + game.getLevel());
 		scoreLabel.setText("" + game.getPoints());
 
 		// Set string to display active power ups
@@ -123,6 +124,7 @@ public class GamePanel extends JPanel {
 	// Sets up labels for game panel
 	private void setUpInfoLabels() {
 		addOneUpLabel();
+		addLevelLabel();
 		addScoreLabel();
 		addHighScoreLabel();
 		addPowerUpNotifications();
@@ -149,14 +151,26 @@ public class GamePanel extends JPanel {
     // Adds game score label to panel
 	private void addScoreLabel() {
 		JLabel score = createSimpleLabel("Score");
-		score.setBounds(220, 0, 100, 30);
+		score.setBounds(240, 0, 100, 30);
 		this.add(score);
 
 		scoreLabel = createSimpleLabel("");
 		scoreLabel.setForeground(Color.WHITE);
-		scoreLabel.setBounds(220, 25, 100, 30);
+		scoreLabel.setBounds(240, 25, 100, 30);
 		this.add(scoreLabel);
 	}
+
+    // Adds game level label to panel
+    private void addLevelLabel() {
+        JLabel score = createSimpleLabel("Level");
+        score.setBounds(120, 0, 100, 30);
+        this.add(score);
+
+        levelLabel = createSimpleLabel("");
+        levelLabel.setForeground(Color.WHITE);
+        levelLabel.setBounds(120, 25, 100, 30);
+        this.add(levelLabel);
+    }
 
     // Adds points to oneup label to panel
 	private void addOneUpLabel() {
@@ -184,7 +198,7 @@ public class GamePanel extends JPanel {
 	 * @param lbl, the string to put inside the label
 	 * @return The default 
 	 */
-	public JLabel createSimpleLabel(String lbl){
+    private JLabel createSimpleLabel(String lbl){
 		JLabel jlbl = new JLabel(lbl);
 		jlbl.setFont(new Font("impact", 0, 16));
 		jlbl.setForeground(Color.RED);
@@ -222,7 +236,7 @@ public class GamePanel extends JPanel {
 	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		if (timer.isRunning()) {
+		if (timer.isRunning() ) {
 			game.draw(this, g);
 			for (Star str : this.stars) {
 				str.drawSelf(this, g);
@@ -232,6 +246,10 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+    /**
+     * Displays pause menu stats and current alien health pools
+     * @param g graphics display
+     */
 	private void displayPauseMenu(Graphics g) {
 	    // Set Draw color
         g.setColor(Color.white);
@@ -286,7 +304,10 @@ public class GamePanel extends JPanel {
 		return this.game;
 	}
 
-	// Toggles timer run time effectively pausing the game
+    /**
+     * Toggles the timer on and off.
+     * Repaints to pause screen on stop
+     */
 	public void toggleTimer() {
 		if (timer.isRunning()) {
 			timer.stop();
