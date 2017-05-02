@@ -89,7 +89,9 @@ public class TestAlien {
 		Component c = mock(Component.class);
 		Graphics g = mock(Graphics.class);
 		al.setList(mis);
+		
 		al.tick();
+		
 		for(AlienMissile m : mis){
 			verify(m).move();
 		}
