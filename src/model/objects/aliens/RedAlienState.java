@@ -1,10 +1,10 @@
 package model.objects.aliens;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import display.view.GameWindow;
 import model.objects.Delta;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public abstract class RedAlienState {
    public static final class Normal extends RedAlienState {

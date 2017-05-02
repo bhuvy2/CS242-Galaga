@@ -43,12 +43,12 @@ public class Game {
     /**
      * Makes sure that the game is over
      */
-    private boolean gameOver;
-    
+    private boolean gameOver, start = true;
+
     /**
 	 * Puts the yellow aliens on the grid
 	 */
-	public static final int[][] BasicPosition =
+	private static final int[][] BasicPosition =
 			{{70,88}, 
 				{110, 88}, 
 				{150,88},
@@ -63,7 +63,7 @@ public class Game {
 	/**
 	 * Keeps track of the red aliens on the grid
 	 */
-	public static final int[][] RedPosition =
+	private static final int[][] RedPosition =
         {{90,112}, {130, 112}, {170,112},
                 {210,112}, {250, 112}, {290, 112},
                 {330, 112}, {370, 112},{410, 112},
@@ -73,17 +73,11 @@ public class Game {
 	 * Keeps track of the green boss aliens initial
 	 * Positions
 	 */
-	public static final int[][] BossPosition =
+	private static final int[][] BossPosition =
         {{84, 48}, {124, 48}, {164,48},
                 {204,48}, {244, 48}, {284, 48},
                 {324, 48}, {364, 48},{404, 48},
         };
-    
-    enum State {
-    	GameIntro,
-    	NormalStage,
-    	BonusStage,
-    };
     
     public GameSoundboard brd;
 
@@ -123,10 +117,13 @@ public class Game {
      * Reset aliens a enemies back to attack formation after being hit
      */
     public void resetAttack() {
+        // Resets all aliens currently present to initial positions
         for (Alien a : this.getEnemies()) {
             a.getList().clear();
             a.setAttacking(false);
-            a.setMoving(true);
+            // Set moving to true only if its not a boss stage and an advanced alien
+            if (!(level % 5 == 0 && a instanceof AdvancedAlien))
+                a.setMoving(true);
             a.reset();
             a.returnToPosition();
         }
@@ -138,15 +135,17 @@ public class Game {
      * @return true if ship was hit
      */
     private boolean checkShipHit(){
+        // If not invincible and hit
     	if (!playerShip.isInvincible() && isHit()) {
+    	    // Remove shield if shielded and start iframes
     	    if (playerShip.isShielded()) {
     	        playerShip.decrementShield();
     	        playerShip.startIframes();
-            } else if (playerShip.getLives() > 0) {
+            } else if (playerShip.getLives() > 0) { // Else decrement current lives
             	playerShip.setLives(playerShip.getLives() - 1);
             	playerShip.die();
             	toNextLife = 5000;
-            } else {
+            } else { // Else set gameoveer
                 this.gameOver = true;
             }
         }
@@ -176,9 +175,15 @@ public class Game {
         return false;
     }
 
+    /**
+     * Performs a hit on an alien
+     * @param alien being hit
+     * @param i index of enemies array
+     * @return true if hit properly performed
+     */
 	private boolean performHit(Alien alien, int i) {
 		if (alien.getHealth() > 1) {
-		    alien.setHealth(alien.getHealth() - 1);
+		    alien.hit();
 		    playerShip.getStorage().remove(i);
 		    i--;
 		    shotsHit++;
@@ -235,15 +240,18 @@ public class Game {
 
     /**
      * Checks if ship is hit. Compared to center of ship rather than entire sprite
-     * @return
+     * @return true if ship is hit
      */
 	public boolean isHit() {
         Alien a;
+        // Get alien
         for (int i = 0; i < getEnemies().size(); i++) {
             a = getEnemies().get(i);
             AlienMissile m;
+            // Get missiles
             for (int j = 0; j < a.getList().size(); j++) {
                 m = a.getList().get(j);
+                // Check bounds
                 if (checkShipBounds(playerShip, m)) {
                     a.getList().remove(j);
                     j--;
@@ -301,10 +309,11 @@ public class Game {
      */
     private void check1up() {
         if (toNextLife <= 0) {
+            // Gain shield if max lives and points gathered
             if (playerShip.getLives() == playerShip.getMAX_LIVES()) {
                 toNextLife += 10000*(playerShip.getNumShields() + 1);
                 playerShip.incrementShield();
-            } else {
+            } else { // Gain extra life
                 toNextLife += 5000;
                 playerShip.setLives(playerShip.getLives() + 1);
             }
@@ -315,10 +324,13 @@ public class Game {
      */
     private void populate() {
 		enemies = new ArrayList<>();
+		// Update base alien health
         Alien.setBaseHealth((int)(level*.2));
+
+        // Every 5 levels spawn boss
         if (level % 5 == 0) {
             enemies.add(new BossAlien(48, 244, this));
-        } else {
+        } else { // Spawn basic setup
             Alien in;
             for (int[] a : Game.BasicPosition) {
                 in = new BasicAlien(a[1], a[0]);
@@ -379,27 +391,11 @@ public class Game {
     }
 
     /**
-     * Updates shots fired in game
-     * @param shotsFired new value of fired shots
-     */
-    public void setShotsFired(int shotsFired) {
-        this.shotsFired = shotsFired;
-    }
-
-    /**
      * Number of connected shots
      * @return shots hit
      */
     public int getShotsHit() {
         return this.shotsHit;
-    }
-
-    /**
-     * Updates shots hit
-     * @param shotsHit total shots hit
-     */
-    public void setShotsHit(int shotsHit) {
-        this.shotsHit = shotsHit;
     }
 
     /**
@@ -411,27 +407,11 @@ public class Game {
     }
 
     /**
-     * Sets points earned
-     * @param points new value of earned points
-     */
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    /**
      * Retrieves total enemies killed
      * @return enemeies killed
      */
     public int getEnemiesKilled() {
         return enemiesKilled;
-    }
-
-    /**
-     * Sets enemies killed
-     * @param enemiesKilled new value of enemies killed
-     */
-    public void setEnemiesKilled(int enemiesKilled) {
-        this.enemiesKilled = enemiesKilled;
     }
 
     /**
@@ -451,14 +431,6 @@ public class Game {
     }
 
     /**
-     * Set points needed for next life
-     * @param toNextLife points needed
-     */
-    public void setToNextLife(int toNextLife) {
-        this.toNextLife = toNextLife;
-    }
-
-    /**
      * Retrieves current game level
      * @return level of game
      */
@@ -467,25 +439,37 @@ public class Game {
     }
 
     /**
-     * Sets level of the game
+     * Sets game level
      * @param level to be set
      */
     public void setLevel(int level) {
         this.level = level;
+        Alien.setBaseHealth((int)(level*.2));
+        this.enemies.clear();
+        populate();
+        resetAttack();
     }
-    
+
+    /**
+     * Checks if game ended
+     * @return true if gameOver = true
+     */
     public boolean isGameOver(){
     	return this.gameOver;
     }
 
+    /**
+     * Returns number of bosses killed
+     * @return number of killed bosses
+     */
     public int getBossesKilled() {
         return playerShip.getBossesKilled();
     }
 
     /**
      * Draws all aliens
-     * @param c
-     * @param g
+     * @param c Board
+     * @param g graphics display
      */
     public void draw(Component c, Graphics g){
     	this.playerShip.drawSelf(c, g);
@@ -494,17 +478,24 @@ public class Game {
     	}
     }
 
+    public boolean isStart() {
+        return start;
+    }
+
     /**
      * Resets game to level 1 and clears all stats
      */
     public void resetGame() {
+        // Reset Game vars
         points = 0;
         level = 1;
         shotsFired = 0;
         shotsHit = 0;
         enemiesKilled = 0;
-        playerShip.setIframeCharge(0);
         toNextLife = 5000;
+
+        // Reset Ship vars
+        playerShip.setIframeCharge(0);
         playerShip.getStorage().clear();
         playerShip.setBossesKilled(0);
         Ship.setBonusShots(0);
@@ -512,6 +503,8 @@ public class Game {
         playerShip.setMultipleShots(false);
         while (playerShip.isShielded())
             playerShip.decrementShield();
+
+        // Repopulate game
         this.enemies.clear();
         populate();
         resetAttack();

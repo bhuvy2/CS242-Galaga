@@ -1,9 +1,7 @@
 package tests
 
-import model.ships.AdvancedAlien
-import model.ships.BasicAlien
-import model.ships.BasicShip
-import model.ships.RedAlien
+import model.objects.aliens.*
+import model.objects.ship.*
 
 class ShipTests extends GroovyTestCase {
     void testBasicShip() {

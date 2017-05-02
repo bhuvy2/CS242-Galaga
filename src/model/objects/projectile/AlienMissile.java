@@ -68,34 +68,66 @@ public class AlienMissile extends Missile implements Projectile {
 
     }
 
+    /**
+     * X modifier per tick
+     * @return x variation
+     */
     public int getxMove() {
         return xMove;
     }
 
+    /**
+     * Y modifier per tick
+     * @return y variation
+     */
     public int getyMove() {
         return yMove;
     }
 
+    /**
+     * Check if finished bouncing
+     * @return true if bounceCount = 0
+     */
     public boolean doneBounce() {
         return bounceCount == 0;
     }
 
+    /**
+     * Decrements the number of bounces left
+     */
     public void decrementBounceCount() {
         bounceCount--;
     }
 
+    /**
+     * Sets x variation per tick
+     * @param xMove new x variation
+     */
     public void setxMove(int xMove) {
         this.xMove = xMove;
     }
 
+    /**
+     * Sets y variation per tick
+     * @param yMove new y variation
+     */
     public void setyMove(int yMove) {
         this.yMove = yMove;
     }
 
+    /**
+     * Asserts that a missile can bounce
+     * @return true if can bounce
+     */
     public boolean isBounce() {
         return isBounce;
     }
 
+    /**
+     * Sets missile to bounce n times
+     * @param bounce boolean set to true if can bounce
+     * @param nBounce number of times missile can bounce
+     */
     public void setBounce(boolean bounce, int nBounce) {
         isBounce = bounce;
         bounceCount = nBounce;

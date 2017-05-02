@@ -59,11 +59,6 @@ public class RedAlien extends Alien {
         }
     }
 
-	private boolean inRange() {
-		return this.getYCenter() >= 400 && this.getYCenter() <= 403 
-				|| this.getYCenter() >= 200 && this.getYCenter() <= 203;
-	}
-
     /**
      * Starts attack for alien
      */

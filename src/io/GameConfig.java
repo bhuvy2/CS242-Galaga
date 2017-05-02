@@ -46,84 +46,130 @@ public class GameConfig {
 		alienExplode4Key = "alienExplode4",
 		alienExplode5Key = "alienExplode5",
 		superKey = "bossAlienIcon";
-	
-	public static Properties getProperties(){
-		return prop;
-	}
-	
-	public static void setProperties(Properties p){
+
+
+	static void setProperties(Properties p){
 		prop = p;
 	}
 	
+    /**
+     * @return The path of the image file for the basic ship
+     */
 	public static String getShipPath(){
 		return prop.getProperty(shipIconKey);
 	}
 
+    /**
+     * @return The path of the image file for the shielded ship
+     */
 	public static String getShieldShipPath() { return prop.getProperty(shieldShipKey); }
-	
+
+    /**
+     * @return The path of the image file for the ship explosion frame 1
+     */
 	public static String getShipExplode1(){
 		return prop.getProperty(explode1Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the ship explosion frame 2
+     */
 	public static String getShipExplode2(){
 		return prop.getProperty(explode2Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the ship explosion frame 3
+     */
 	public static String getShipExplode3(){
 		return prop.getProperty(explode3Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the ship explosion frame 4
+     */
 	public static String getShipExplode4(){
 		return prop.getProperty(explode4Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the alien explosion frame 1
+     */
 	public static String getAlienExplode1(){
 		return prop.getProperty(alienExplode1Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the alien explosion frame 2
+     */
 	public static String getAlienExplode2(){
 		return prop.getProperty(alienExplode2Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the alien explosion frame 3
+     */
 	public static String getAlienExplode3(){
 		return prop.getProperty(alienExplode3Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the alien explosion frame 4
+     */
 	public static String getAlienExplode4(){
 		return prop.getProperty(alienExplode4Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the alien explosion frame 5
+     */
 	public static String getAlienExplode5(){
 		return prop.getProperty(alienExplode5Key);
 	}
-	
+
+    /**
+     * @return The path of the image file for the missile
+     */
 	public static String getMissilePath(){
 		return prop.getProperty(missileKey);
 	}
-	
+
+    /**
+     * @return The path of the image file for the blue alien
+     */
 	public static String getBluePath(){
 		return prop.getProperty(blueKey);
 	}
-	
+
+    /**
+     * @return The path of the image file for the green alien
+     */
 	public static String getGreenPath(){
 		return prop.getProperty(greenKey);
 	}
-	
+
+    /**
+     * @return The path of the image file for the red alien
+     */
 	public static String getRedPath(){
 		return prop.getProperty(redKey);
 	}
 
-	public static String getBossKey() { 
-		return prop.getProperty(bossKey); 
-	}
-	
+    /**
+     * @return The path of the image file for the Boss key
+     */
+	public static String getBossKey() { return  prop.getProperty(bossKey); }
+
 	/**
-	 * @return The path of the image file fro the yellow alien
+	 * @return The path of the image file for the yellow alien
 	 */
 	public static String getYellowPath(){
 		return prop.getProperty(yellowKey);
 	}
-	
+
+    /**
+     * @return The path of the image file for the Boss alien
+     */
 	public static String getBossPath(){
 		return prop.getProperty(superKey);
 	}

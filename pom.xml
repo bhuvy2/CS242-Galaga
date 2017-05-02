@@ -44,6 +44,11 @@
   		<artifactId>powermock-api-easymock</artifactId>
   		<version>1.6.5</version>
   	</dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>RELEASE</version>
+      </dependency>
   </dependencies>
     <repositories>
     <repository>
